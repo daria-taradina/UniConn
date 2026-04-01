@@ -28,11 +28,9 @@ public class Post {
 	private String contentText;
 	
 	@Column(nullable = false)
-	@ColumnDefault("0")
 	private int likeCount = 0;
 	
 	@Column(nullable = false)
-	@ColumnDefault("0")
 	private int commentCount = 0;
 	
 	@CreationTimestamp

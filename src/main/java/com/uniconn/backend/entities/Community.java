@@ -3,7 +3,9 @@ package com.uniconn.backend.entities;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
+import java.util.*;
 
 @Table(name = "community")
 @Entity
@@ -18,22 +20,32 @@ public class Community {
 	 private String communityName;
 	 
 	 @Column(length = 500, nullable = false)
-	 private String description;
-	 
-	 /*@Column(name = "category", length = 50)
-	 private String category;*/
+	 private String description;	 
 	 
 	 @ManyToOne(fetch = FetchType.LAZY)
 	 @JoinColumn(name = "created_by", referencedColumnName = "user_id", nullable = false)
 	 private User createdBy;
 	 
 	 @Column(nullable = false)
-	 @ColumnDefault("0")
 	 private int memberCount = 0;
 	 
 	 @CreationTimestamp
 	 @Column(updatable = false)
 	 private LocalDateTime createdAt;
+	 
+	 @Enumerated(EnumType.STRING)
+	 @Column(name = "category", length = 50)
+	 private CommunityCategory category;
+	 
+	 @UpdateTimestamp
+	 @Column
+	 private LocalDateTime updatedAt;
+	 
+	 @Column(name = "community_picture_path", length = 255)
+	 private String communityPicture;
+	 
+	 @OneToMany(mappedBy = "community", cascade = CascadeType.ALL, orphanRemoval = true)
+	 private List<CommunityTag> tags = new ArrayList<>();
 	 
 	//getters&setters
 	 public String getCommunityName() {
@@ -75,6 +87,34 @@ public class Community {
 
 	 public LocalDateTime getCreatedAt() {
 		 return createdAt;
-	 }	 	 
+	 }
 
+	 public CommunityCategory getCategory() {
+		 return category;
+	 }
+
+	 public void setCategory(CommunityCategory category) {
+		 this.category = category;
+	 }
+
+	 public String getCommunityPicture() {
+		 return communityPicture;
+	 }
+
+	 public void setCommunityPicture(String communityPicture) {
+		 this.communityPicture = communityPicture;
+	 }
+
+	 public List<CommunityTag> getTags() {
+		 return tags;
+	 }
+
+	 public void setTags(List<CommunityTag> tags) {
+		 this.tags = tags;
+	 }
+
+	 public LocalDateTime getUpdatedAt() {
+		 return updatedAt;
+	 }	 	 
+	 
 }

@@ -33,10 +33,7 @@ public class CommunityMemberService extends BaseService {
             throw new RuntimeException("Already a member of this community");
         }
 		
-		CommunityMember member = new CommunityMember();
-		member.setId(memberId);
-		member.setCommunity(community);
-		member.setUser(currentUser);
+		CommunityMember member = new CommunityMember(community, currentUser);
 		communityMemberRepository.save(member);
 		
 		community.setMemberCount(community.getMemberCount() + 1);
