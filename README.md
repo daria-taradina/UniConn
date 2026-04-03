@@ -118,3 +118,48 @@ You should see 20 users and 10 communities.
 - After first run:
    - Verify all tables were created in databse properly and test data was populated
    - Switch `spring.jpa.hibernate.ddl-auto` to `validate` — Hibernate will be checking entity/schema alignment on startup but will not modify the database
+ 
+
+
+## User Authentication (Lillian Foster)
+
+### Endpoints
+- `POST /api/auth/register` — Register a new UniConn user
+- `POST /api/auth/login` — Login with existing credentials
+- `GET /api/auth/logout` — Logout current user
+
+### Testing Authentication (Before UI is Complete)
+Use Postman to test endpoints directly while HTML forms are in progress.
+
+**Register a new user:**
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "fullName": "Test User",
+  "csunEmail": "testuser@my.csun.edu",
+  "password": "Password123!",
+  "secretQuestion": "What is your pet's name?",
+  "secretAnswer": "fluffy"
+}
+
+**Login:**
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "csunEmail": "testuser@my.csun.edu",
+  "password": "Password123!"
+}
+
+**Logout:**
+GET http://localhost:8080/api/auth/logout
+
+### Notes
+- Email must end in @my.csun.edu with no spaces
+- Passwords are hashed using BCrypt before saving
+- Secret question reset is ready in UserService.java — pending
+  DB teammate adding secretQuestion and secretAnswer columns
+  to User entity
+- All auth files are in feature/lily-auth branch
