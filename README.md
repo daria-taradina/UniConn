@@ -85,31 +85,25 @@ Sample seed data is provided in `src/main/resources/db/`.
 >Run the scripts <ins>in order</ins> after the app has started at least once (so Hibernate can generate the tables).
  
 ### 1. Open MySQL Workbench and connect to your local instance
- 
-### 2. Select the database
- 
-```sql
-USE uni_conn;
-```
- 
-### 3. Run the scripts in order
+  
+### 2. Run the scripts in order
  
 **Step 1 — Users:**
 Open `src/main/resources/db/users_test_data.sql` in Workbench and execute.
  
 **Step 2 — Communities:**
 Open `src/main/resources/db/community_test_data.sql` in Workbench and execute.
- 
-> ⚠️ Communities must be inserted **after** users since they reference `user_id` as a foreign key.
- 
-### 4. Verify
- 
-```sql
-SELECT COUNT(*) FROM users;
-SELECT COUNT(*) FROM community;
-```
- 
-You should see 20 users and 10 communities.
+
+### Test data summary:
+* 20 Active Users:
+  * Password for all accounts: `Password123!`
+  * Emails end with `@my.csun.edu`
+  * Optional fields omitted: `name`, `user_bio`, `profile_picture_path`
+* 20 Tags (used both by communities and posts - max 5)
+* 10 Communities (only community_picture_path = NULL)
+* Members added to communities 
+
+### :white_check_mark: Verification is included in sql files so will run after data is populated. 
 
  ## ⚠️ Important
 
