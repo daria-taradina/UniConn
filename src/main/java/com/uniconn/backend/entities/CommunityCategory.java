@@ -3,7 +3,7 @@ package com.uniconn.backend.entities;
 public enum CommunityCategory {
 	ACADEMICS("Academics"),
 	CAREER("Career"),
-	Social("Social"),
+	SOCIAL("Social"),
 	CAMPUS_AND_EVENTS("Campus&Events"),
 	OTHER("Other");
 	

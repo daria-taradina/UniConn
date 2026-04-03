@@ -1,6 +1,8 @@
 package com.uniconn.backend.entities;
 
 import java.time.LocalDateTime;
+import java.util.*;
+import java.util.List;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import jakarta.persistence.*;
@@ -40,6 +42,9 @@ public class Post {
 	@Column(nullable = false)
 	@ColumnDefault("false")
 	private boolean isDeleted = false;
+	
+	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+	 private List<PostTag> tags = new ArrayList<>();
 	
 	//getters&setters
 	public User getAuthor() {

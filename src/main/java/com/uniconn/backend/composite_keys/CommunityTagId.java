@@ -6,8 +6,7 @@ import jakarta.persistence.*;
 
 @Embeddable
 public class CommunityTagId implements Serializable {
-	private Integer communityId;
-	
+	private Integer communityId;	
 	private Integer tagId;
 	
 	public CommunityTagId() {}

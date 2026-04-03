@@ -38,6 +38,7 @@ public class CommunityService extends BaseService {
 		}
 		
 		Community community = new Community();
+		// add case sensitivity test/resolution
 		community.setCommunityName(communityDTO.getCommunityName());
 		community.setDescription(communityDTO.getDescription());
 		community.setCreatedBy(currentUser);

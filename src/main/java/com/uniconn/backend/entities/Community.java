@@ -34,7 +34,7 @@ public class Community {
 	 private LocalDateTime createdAt;
 	 
 	 @Enumerated(EnumType.STRING)
-	 @Column(name = "category", length = 50)
+	 @Column(name = "category", length = 50, nullable = false) // nullable false
 	 private CommunityCategory category;
 	 
 	 @UpdateTimestamp
