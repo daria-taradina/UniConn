@@ -27,6 +27,12 @@ public class CommunityMember {
 	
 	public CommunityMember() {}
 	
+	public CommunityMember(Community community, User user) {
+		this.id = new CommunityMemberId(community.getCommunityId(), user.getUserId());
+		this.community = community;
+		this.user = user;
+	}
+	
 	//getters&setters
 	public CommunityMemberId getId() {
 		return id;
