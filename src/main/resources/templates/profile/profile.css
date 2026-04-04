@@ -80,6 +80,21 @@ body {
   border: 2px solid black;
   flex: 0 0 28%;
   border-top: none;
+  padding: 20px;
+}
+
+.profile-top {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 8px;
+}
+.profile-wrap {
+    flex-shrink: 0;
+}
+.profile-stats {
+  display: flex;
+  gap: 20px;
 }
 
 .right-container {
@@ -149,12 +164,16 @@ img {
   width: 100%;
 }
 
-
-
 hr {
   border: none;
   border-bottom: 1px solid #3d3d3d;
   width: 100%;
+}
+
+#left-container-break {
+  width: 99%;
+  border: none;
+  border-bottom: 1px solid #3d3d3d;
 }
 
 button {
