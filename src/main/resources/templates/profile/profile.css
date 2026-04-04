@@ -41,6 +41,26 @@ body {
   cursor: url(https://i.imgur.com/gENXYip.gif), auto;
 }
 
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 8px 20px 0 20px;
+}
+ 
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+ 
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .wrap{
   display:flex;
   justify-content:center;
@@ -120,13 +140,16 @@ a:hover {
   color: #65adc9;
 }
 
+
 img {
   margin-top: 5px;
   margin-left: 8px;
-  border: 1px solid #3d3d3d;
+  border: none;
   display: block;
-  width: 88%;
+  width: 100%;
 }
+
+
 
 hr {
   border: none;
