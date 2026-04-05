@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="utf-8">
@@ -46,16 +46,16 @@
         <div class="profile-top">
           <div class="profile-wrap"><br>
           <!-- profile img -->
-            <img src="/Vector Logos/usernameSignIn.svg" alt="User Avatar" width="72" height="72" class="avatar-img">
+            <img th:src="${avatarUrl}" src="/Vector Logos/usernameSignIn.svg" alt="User Avatar" width="72" height="72" class="avatar-img">
           </div>
           <!-- follower/friend count -->
           <div class="profile-stats">
             <div class="stat">
-              <span class="stat-num">&lt;placeholder&gt;</span>
+              <span class="stat-num" th:text="${followerCount}">0</span>
               <span class="stat-label">followers</span>
             </div>
             <div class="stat">
-              <span class="stat-num">&lt;placeholder&gt;</span>
+              <span class="stat-num" th:text="${friendCount}">0</span>
               <span class="stat-label">friends</span>
             </div>
           </div>
@@ -64,33 +64,33 @@
         <!-- biography -->
         <div class="info-section">
           <p class="info-label">Biography</p>
-          <p class="info-value">&lt;placeholder&gt;</p>
+          <p class="info-value" th:text="${biography}">biography</p>
         </div>
 
         <!-- major information -->
         <div class="info-section">
           <p class="info-label">Major:</p>
-          <p class="info-value">&lt;placeholder&gt;</p>
+          <p class="info-value" th:text="${major}">major</p>
         </div>
 
         <!-- year information -->
         <div class="info-section">
           <p class="info-label">Year:</p>
-          <p class="info-value">&lt;placeholder&gt;</p>
+          <p class="info-value" th:text="${year}">year</p>
         </div>
 
         <!--hobbies information -->
         <div class="info-section">
           <p class="info-label">Hobbies:</p>
-          <p class="info-value">&lt;placeholder&gt;</p>
+          <p class="info-value" th:text="${hobbies}">hobbies</p>
         </div>
     </div><hr id="left-container-break">
 
     <!--communities section-->
-      <img src="/Vector Logos/clubLogo.svg" alt="Community" width="38" height="38">
-        <div class="club-card">
-          <span class="community-name">&lt; club name placeholder&gt;</span>
-    </div>
+      <div class="club-row">
+        <img src="/Vector Logos/clubLogo.svg" alt="Community" width="38" height="38" class="club-icon">
+        <span class="community-name" th:text="${clubName}">club name</span>
+      </div>
   </div><div>
 </div> <!--end of left-container-->
     

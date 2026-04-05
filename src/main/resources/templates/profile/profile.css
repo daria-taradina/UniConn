@@ -176,6 +176,19 @@ hr {
   border-bottom: 1px solid #3d3d3d;
 }
 
+.club-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.club-icon {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  margin: 0;
+}
+
 button {
   width: 100%;
   height: 40px;
