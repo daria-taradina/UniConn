@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="userFeed.css">
+  <title>My Feed</title>
+</head>
+
+<body>
+<!--navigation bar-->
+  <nav class="navbar">
+    <div class="navbar-left">
+      <img class="logo-icon" src="/Vector Logos/unicornLogo.png" alt="UniConn Logo" width="100" height="100">
+      <a href="index.html" class="main">UniConn</a><hr><br>
+    </div>
+
+    <div class="navbar-right">
+      <a href="#" class="nav-icon" title="Search">
+        <img src="/Vector Logos/magnifyGlass.svg" alt="Search" width="36" height="36">
+      </a>
+
+      <a href="#" class="nav-icon" title="Add">
+        <img src="/Vector Logos/addPost.svg" alt="Add Post" width="36" height="36">
+
+      <a href="#" class="nav-icon" title="Communities">
+        <img src="/Vector Logos/clubLogo.svg" alt="Communities" width="36" height="36">
+      
+      <a href="#" class="nav-icon" title="Profile">
+        <img src="/Vector Logos/usernameSignIn.svg" alt="Profile" width="26" height="36">
+      </a>
+      <span class="signout-divider">|</span>
+      <a href="#" class="signout-link">Sign Out</a>
+    </div>
+  </nav><hr><br>
+
+  <div class="wrap">
+    <form action="http://localhost:9090/auth/register" method="POST"></form>
+  
+<!-- left container: main user feed-->
+    <div class="left-container">
+        <div class="header-left"><h3>For You</h3></div>
+    </div>
+
+
+
+    <div class="right-wrap">
+
+    <div class="right-container">
+<!--right upper container: recommended communities -->
+    <div class="right-upper-container">
+        <div class="header-right"><h3>Recommended Communities</h3></div>
+    </div><br>
+<!--right lower container: recommended users -->
+    <div class="right-lower-container">
+        <div class="header-right"><h3>Recommmended Users</h3></div>
+    </div>
+    </div>
+    </div> <!--end of right-container-->
+
+    
+  </div>
+
+</form>
+</body>
+
+</html>
