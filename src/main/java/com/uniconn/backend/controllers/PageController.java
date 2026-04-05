@@ -17,6 +17,11 @@ public class PageController {
         return "login/register";
     }
 
+    @GetMapping("/feed")
+    public String feedPage() {
+        return "userFeed/userFeed";
+    }
+
     @GetMapping("/profile")
     public String profilePage(Model model) {
         model.addAttribute("avatarUrl", "/Vector Logos/usernameSignIn.svg");
