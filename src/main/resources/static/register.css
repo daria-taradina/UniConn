@@ -31,7 +31,7 @@ body {
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 
   background-size: cover;
@@ -39,6 +39,14 @@ body {
   font-family: "opensans", sans-serif;
   line-height: 30px;
   cursor: url(https://i.imgur.com/gENXYip.gif), auto;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 8px 20px 0 20px;
+  gap: 8px;
 }
 
 .login-container {
@@ -56,9 +64,9 @@ body {
 .header {
     height:30px;
     width: 699px;
-    overflow: hidden;
+    overflow:hidden;
     position: absolute;
-    margin-top: -175px;
+    margin-top: -115px;
     margin-left: -194px;
     background: #91c5e8;
     border: 2px solid black;
@@ -122,9 +130,8 @@ a:hover {
 img {
   margin-top: 5px;
   margin-left: 8px;
-  border: 1px solid #3d3d3d;
+  border: none;
   display: block;
-  width: 88%;
 }
 
 hr {

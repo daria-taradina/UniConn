@@ -4,14 +4,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="login.css">
+  <link rel="stylesheet" th:href="@{/login.css}">
   <title>Register - UniConn</title>
 </head>
 
 <body>
-      <script type="module" src="/Vector Logos/unicornLogo.svg"></script>
-      <a href="index.html" class="main">UniConn</a><br>
-    <hr><br><br>
+<!--navigation bar-->
+  <nav class="navbar">
+    <img th:src="@{/vector-logos/unicornLogo.png}" alt="UniConn Logo" width="110" height="100">
+    <a href="/" class="main">UniConn</a>
+  </nav><hr><br><br>
+
     <div class="login-container">
       <form action="http://localhost:9090/auth/register" method="POST">
 
@@ -20,24 +23,24 @@
     </div>
 
       <div class="input-box">
-        <img class="icon" src="/Vector Logos/usernameSignIn.svg">
-        <input type="username" required placeholder=" ">               
+        <img class="icon" th:src="@{/vector-logos/usernameSignIn.svg}">
+        <input type="username" required placeholder=" ">
                <label>Username</label>
       </div>
 
         <div class="input-box">
-          <img class="icon" src="/Vector Logos/passwordSignIn.svg">
+          <img class="icon" th:src="@{/vector-logos/passwordSignIn.svg}">
           <input type="password" required placeholder=" ">
           <label>Password</label>
         </div>
 
         <div class="forgot-password">
-          <a href="forgotPassword.html">Forgot Password?</a>
+          <a href="/forgot-password">Forgot Password?</a>
         </div>
-        
+
         <button type="submit">Login</button>
         <div class="register-link">
-          <p>Don't have an account?<a href="register.html"> Register!</a>
+          <p>Don't have an account?<a href="/register"> Register!</a>
       </form>
         </div>
 

@@ -20,11 +20,10 @@
     <description>UniConn Backend</description>
 
     <properties>
-        <java.version>22</java.version>
+        <java.version>17</java.version>
     </properties>
 
     <dependencies>
-
         <!-- REST APIs -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -54,8 +53,10 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <version>1.18.20</version>
+            <scope>provided</scope>
         </dependency>
+
 
         <!-- Testing -->
         <dependency>
@@ -92,6 +93,14 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <!-- remove before committing -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
         </dependency>
 
 

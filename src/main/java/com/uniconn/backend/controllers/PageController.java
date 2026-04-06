@@ -7,9 +7,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class PageController {
 
+    @GetMapping("/")
+    public String home() {
+        return "userFeed/userFeed";
+    }
+
     @GetMapping("/login")
     public String loginPage() {
         return "login/login";
+    }
+
+    @GetMapping("/forgot-password")
+    public String forgotPasswordPage() {
+        return "login/forgotPassword";
     }
 
     @GetMapping("/register")
@@ -24,7 +34,7 @@ public class PageController {
 
     @GetMapping("/profile")
     public String profilePage(Model model) {
-        model.addAttribute("avatarUrl", "/Vector Logos/usernameSignIn.svg");
+        model.addAttribute("avatarUrl", "/vector-logos/usernameSignIn.svg");
         model.addAttribute("followerCount", 0);
         model.addAttribute("friendCount", 0);
         model.addAttribute("biography", "");
@@ -34,4 +44,5 @@ public class PageController {
         model.addAttribute("clubName", "");
         return "profile/profile";
     }
+
 }
