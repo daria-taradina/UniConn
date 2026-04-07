@@ -16,7 +16,7 @@
     </div>
 
     <div class="navbar-right">
-      <a href="#" class="nav-icon" title="Search">
+      <a href="#" class="nav-icon" title="Search" id="search-toggle">
         <img th:src="@{/vector-logos/magnifyGlass.svg}" alt="Search" width="36" height="36">
       </a>
 
@@ -34,6 +34,18 @@
     </div>
   </nav><hr><br>
 
+<!-- search modal -->
+  <div id="search-modal" class="search-modal-overlay" aria-hidden="true">
+    <div class="search-modal">
+      <div class="header-right">
+        <h3 class="search-modal-title">Search</h3>
+      </div>
+      <button class="search-modal-close" id="search-close" aria-label="Close">&times;</button>
+      <input type="text" id="search-input" class="search-modal-input" placeholder="Search by title, username, or community...">
+      <ul id="search-results" class="search-results-list"></ul>
+    </div>
+  </div>
+
   <div class="wrap">
     <form action="http://localhost:9090/auth/register" method="POST"></form>
   
@@ -46,7 +58,7 @@
         <div class="profile-top">
           <div class="profile-wrap"><br>
           <!-- profile img -->
-            <img th:src="${avatarUrl}" th:src="@{/vector-logos/usernameSignIn.svg}" alt="User Avatar" width="72" height="72" class="avatar-img">
+            <img th:src="${avatarUrl}" alt="User Avatar" width="72" height="72" class="avatar-img">
           </div>
           <!-- follower/friend count -->
           <div class="profile-stats">
@@ -104,6 +116,8 @@
   </div>
 
 </form>
+
+<script th:src="@{/searchFunction.js}" defer></script>
 </body>
 
 </html>

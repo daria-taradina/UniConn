@@ -17,7 +17,7 @@
     </div>
 
     <div class="navbar-right">
-      <a href="#" class="nav-icon" title="Search">
+      <a href="#" class="nav-icon" title="Search" id="search-toggle">
         <img th:src="@{/vector-logos/magnifyGlass.svg}" alt="Search" width="36" height="36">
       </a>
 
@@ -27,7 +27,7 @@
       <a href="#" class="nav-icon" title="Communities">
         <img th:src="@{/vector-logos/clubLogo.svg}" alt="Communities" width="36" height="36">
       
-      <a href="#" class="nav-icon" title="Profile">
+      <a th:href="@{/profile}" class="nav-icon" title="Profile">
         <img th:src="@{/vector-logos/usernameSignIn.svg}" alt="Profile" width="26" height="36">
       </a>
       <span class="signout-divider">|</span>
@@ -35,6 +35,18 @@
     </div>
   </nav><hr><br>
 
+<!-- search modal -->
+ <div id="search-modal" class="search-modal-overlay" aria-hidden="true">
+    <div class="search-modal">
+      <div class="header-right">
+        <h3 class="search-modal-title">Search</h3>
+      </div>
+      <button class="search-modal-close" id="search-close" aria-label="Close">&times;</button>
+      <input type="text" id="search-input" class="search-modal-input" placeholder="Search by title, username, or community...">
+        <ul id="search-results" class="search-results-list"></ul>
+    </div> <!-- end of search modal class-->
+  </div> <!-- end of search modal overlay id-->
+  
   <div class="wrap">
     <form action="http://localhost:9090/auth/register" method="POST"></form>
   
@@ -43,10 +55,7 @@
         <div class="header-left"><h3>For You</h3></div>
     </div>
 
-
-
-    <div class="right-wrap">
-
+  <div class="right-wrap">
     <div class="right-container">
 <!--right upper container: recommended communities -->
     <div class="right-upper-container">
@@ -55,14 +64,13 @@
 <!--right lower container: recommended users -->
     <div class="right-lower-container">
         <div class="header-right"><h3>Recommmended Users</h3></div>
+      </div>
     </div>
-    </div>
-    </div> <!--end of right-container-->
-
-    
-  </div>
-
+  </div> <!--end of right-container-->
+</div> <!--end of right wrap-->
 </form>
+
+<script th:src="@{/searchFunction.js}" defer></script>
 </body>
 
 </html>
