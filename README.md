@@ -22,9 +22,9 @@ Make sure you have the following installed before running the project:
 
 ## :arrow_forward: Getting Started
 
-### 1. Clone the repository
+**1. Clone the repository**
 
-### 2. Create the database
+**2. Create the database**
 
 Open MySQL Workbench or your MySQL client and run:
 
@@ -32,7 +32,7 @@ Open MySQL Workbench or your MySQL client and run:
 CREATE DATABASE uni_conn;
 ```
 
-### 3. Configure environment variables
+**3. Configure environment variables**
 
 Open `src/main/resources/application.properties` and update the following with your local MySQL credentials:
 
@@ -42,7 +42,7 @@ spring.datasource.username=your_mysql_username  // I have root
 spring.datasource.password=your_mysql_password
 ```
 
-### 4. Run the application :rocket: 
+**4. Run the application** :rocket: 
 
 **Option A — IntelliJ IDEA:**
 Open the project and click the green Run button. IntelliJ will automatically download all dependencies on first launch.
@@ -80,9 +80,9 @@ src/
  
 **Sample seed data is provided in `src/main/resources/db/`.** 
  
-### 1. Open MySQL Workbench and connect to your local instance
+**1. Open MySQL Workbench and connect to your local instance**
   
-### 2. Run the scripts in order
+**2. Run the scripts in order**
  
 **Step 1 — Users:**
 Open `src/main/resources/db/users_test_data.sql` in Workbench and execute.
@@ -90,7 +90,7 @@ Open `src/main/resources/db/users_test_data.sql` in Workbench and execute.
 **Step 2 — Communities:**
 Open `src/main/resources/db/community_test_data.sql` in Workbench and execute.
 
-### Test data summary:
+**Test data summary:**
 * 20 Active Users (password for all accounts: `Password123!`, emails end with `@my.csun.edu`, optional fields omitted: `name`, `user_bio`, `profile_picture_path`)
 * 20 Tags (used both by communities and posts - **MAX 5**)
 * 10 Communities (only `community_picture_path = NULL`)
