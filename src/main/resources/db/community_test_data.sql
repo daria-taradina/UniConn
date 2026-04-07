@@ -144,68 +144,77 @@ INSERT INTO community_tag (community_id, tag_id) VALUES
 -- ============================================================
 -- Community Members
 -- ============================================================
-INSERT INTO community_member (community_id, user_id, joined_at)
+INSERT INTO community_member (community_id, user_id, joined_at, role)
 VALUES
-((SELECT community_id FROM community WHERE community_name = 'CS_Capstone'), (SELECT user_id FROM users WHERE username = 'alex_m92'),  NOW()),
-((SELECT community_id FROM community WHERE community_name = 'CS_Capstone'), (SELECT user_id FROM users WHERE username = 'carlos_v'),  NOW()),
-((SELECT community_id FROM community WHERE community_name = 'CS_Capstone'), (SELECT user_id FROM users WHERE username = 'kevin_nb'),  NOW()),
-((SELECT community_id FROM community WHERE community_name = 'CS_Capstone'), (SELECT user_id FROM users WHERE username = 'miguel_cr'), NOW()),
-((SELECT community_id FROM community WHERE community_name = 'CS_Capstone'), (SELECT user_id FROM users WHERE username = 'raj_pt'),    NOW()),
-((SELECT community_id FROM community WHERE community_name = 'CS_Capstone'), (SELECT user_id FROM users WHERE username = 'tyler_mc'), NOW()),
+-- CS_Capstone: alex_m92 = ADMIN, carlos_v = MODERATOR
+((SELECT community_id FROM community WHERE community_name = 'CS_Capstone'), (SELECT user_id FROM users WHERE username = 'alex_m92'),  NOW(), 'ADMIN'),
+((SELECT community_id FROM community WHERE community_name = 'CS_Capstone'), (SELECT user_id FROM users WHERE username = 'carlos_v'),  NOW(), 'MODERATOR'),
+((SELECT community_id FROM community WHERE community_name = 'CS_Capstone'), (SELECT user_id FROM users WHERE username = 'kevin_nb'),  NOW(), 'REGULAR_MEMBER'),
+((SELECT community_id FROM community WHERE community_name = 'CS_Capstone'), (SELECT user_id FROM users WHERE username = 'miguel_cr'), NOW(), 'REGULAR_MEMBER'),
+((SELECT community_id FROM community WHERE community_name = 'CS_Capstone'), (SELECT user_id FROM users WHERE username = 'raj_pt'),    NOW(), 'REGULAR_MEMBER'),
+((SELECT community_id FROM community WHERE community_name = 'CS_Capstone'), (SELECT user_id FROM users WHERE username = 'tyler_mc'), NOW(), 'REGULAR_MEMBER'),
 
-((SELECT community_id FROM community WHERE community_name = 'DataScience_Hub'), (SELECT user_id FROM users WHERE username = 'brianna_t'),  NOW()),
-((SELECT community_id FROM community WHERE community_name = 'DataScience_Hub'), (SELECT user_id FROM users WHERE username = 'jasmine_hl'), NOW()),
-((SELECT community_id FROM community WHERE community_name = 'DataScience_Hub'), (SELECT user_id FROM users WHERE username = 'kevin_nb'),   NOW()),
-((SELECT community_id FROM community WHERE community_name = 'DataScience_Hub'), (SELECT user_id FROM users WHERE username = 'raj_pt'),     NOW()),
-((SELECT community_id FROM community WHERE community_name = 'DataScience_Hub'), (SELECT user_id FROM users WHERE username = 'sofia_er'),   NOW()),
+-- DataScience_Hub: brianna_t = ADMIN, jasmine_hl = MODERATOR
+((SELECT community_id FROM community WHERE community_name = 'DataScience_Hub'), (SELECT user_id FROM users WHERE username = 'brianna_t'),  NOW(), 'ADMIN'),
+((SELECT community_id FROM community WHERE community_name = 'DataScience_Hub'), (SELECT user_id FROM users WHERE username = 'jasmine_hl'), NOW(), 'MODERATOR'),
+((SELECT community_id FROM community WHERE community_name = 'DataScience_Hub'), (SELECT user_id FROM users WHERE username = 'kevin_nb'),   NOW(), 'REGULAR_MEMBER'),
+((SELECT community_id FROM community WHERE community_name = 'DataScience_Hub'), (SELECT user_id FROM users WHERE username = 'raj_pt'),     NOW(), 'REGULAR_MEMBER'),
+((SELECT community_id FROM community WHERE community_name = 'DataScience_Hub'), (SELECT user_id FROM users WHERE username = 'sofia_er'),   NOW(), 'REGULAR_MEMBER'),
 
-((SELECT community_id FROM community WHERE community_name = 'FullStack_Dev'), (SELECT user_id FROM users WHERE username = 'carlos_v'),  NOW()),
-((SELECT community_id FROM community WHERE community_name = 'FullStack_Dev'), (SELECT user_id FROM users WHERE username = 'alex_m92'),  NOW()),
-((SELECT community_id FROM community WHERE community_name = 'FullStack_Dev'), (SELECT user_id FROM users WHERE username = 'ethan_rc'),  NOW()),
-((SELECT community_id FROM community WHERE community_name = 'FullStack_Dev'), (SELECT user_id FROM users WHERE username = 'kevin_nb'),  NOW()),
-((SELECT community_id FROM community WHERE community_name = 'FullStack_Dev'), (SELECT user_id FROM users WHERE username = 'laura_fd'),  NOW()),
-((SELECT community_id FROM community WHERE community_name = 'FullStack_Dev'), (SELECT user_id FROM users WHERE username = 'miguel_cr'), NOW()),
-((SELECT community_id FROM community WHERE community_name = 'FullStack_Dev'), (SELECT user_id FROM users WHERE username = 'tyler_mc'),  NOW()),
+-- FullStack_Dev: carlos_v = ADMIN, alex_m92 = MODERATOR
+((SELECT community_id FROM community WHERE community_name = 'FullStack_Dev'), (SELECT user_id FROM users WHERE username = 'carlos_v'),  NOW(), 'ADMIN'),
+((SELECT community_id FROM community WHERE community_name = 'FullStack_Dev'), (SELECT user_id FROM users WHERE username = 'alex_m92'),  NOW(), 'MODERATOR'),
+((SELECT community_id FROM community WHERE community_name = 'FullStack_Dev'), (SELECT user_id FROM users WHERE username = 'ethan_rc'),  NOW(), 'REGULAR_MEMBER'),
+((SELECT community_id FROM community WHERE community_name = 'FullStack_Dev'), (SELECT user_id FROM users WHERE username = 'kevin_nb'),  NOW(), 'REGULAR_MEMBER'),
+((SELECT community_id FROM community WHERE community_name = 'FullStack_Dev'), (SELECT user_id FROM users WHERE username = 'laura_fd'),  NOW(), 'REGULAR_MEMBER'),
+((SELECT community_id FROM community WHERE community_name = 'FullStack_Dev'), (SELECT user_id FROM users WHERE username = 'miguel_cr'), NOW(), 'REGULAR_MEMBER'),
+((SELECT community_id FROM community WHERE community_name = 'FullStack_Dev'), (SELECT user_id FROM users WHERE username = 'tyler_mc'),  NOW(), 'REGULAR_MEMBER'),
 
-((SELECT community_id FROM community WHERE community_name = 'Robotics_Club'), (SELECT user_id FROM users WHERE username = 'diana_wu'),  NOW()),
-((SELECT community_id FROM community WHERE community_name = 'Robotics_Club'), (SELECT user_id FROM users WHERE username = 'ivan_mk'),   NOW()),
-((SELECT community_id FROM community WHERE community_name = 'Robotics_Club'), (SELECT user_id FROM users WHERE username = 'miguel_cr'), NOW()),
-((SELECT community_id FROM community WHERE community_name = 'Robotics_Club'), (SELECT user_id FROM users WHERE username = 'omar_hs'),   NOW()),
-((SELECT community_id FROM community WHERE community_name = 'Robotics_Club'), (SELECT user_id FROM users WHERE username = 'tyler_mc'),  NOW()),
+-- Robotics_Club: diana_wu = ADMIN, ivan_mk = MODERATOR
+((SELECT community_id FROM community WHERE community_name = 'Robotics_Club'), (SELECT user_id FROM users WHERE username = 'diana_wu'),  NOW(), 'ADMIN'),
+((SELECT community_id FROM community WHERE community_name = 'Robotics_Club'), (SELECT user_id FROM users WHERE username = 'ivan_mk'),   NOW(), 'MODERATOR'),
+((SELECT community_id FROM community WHERE community_name = 'Robotics_Club'), (SELECT user_id FROM users WHERE username = 'miguel_cr'), NOW(), 'REGULAR_MEMBER'),
+((SELECT community_id FROM community WHERE community_name = 'Robotics_Club'), (SELECT user_id FROM users WHERE username = 'omar_hs'),   NOW(), 'REGULAR_MEMBER'),
+((SELECT community_id FROM community WHERE community_name = 'Robotics_Club'), (SELECT user_id FROM users WHERE username = 'tyler_mc'),  NOW(), 'REGULAR_MEMBER'),
 
-((SELECT community_id FROM community WHERE community_name = 'EdTech_Builders'), (SELECT user_id FROM users WHERE username = 'ethan_rc'),   NOW()),
-((SELECT community_id FROM community WHERE community_name = 'EdTech_Builders'), (SELECT user_id FROM users WHERE username = 'laura_fd'),   NOW()),
-((SELECT community_id FROM community WHERE community_name = 'EdTech_Builders'), (SELECT user_id FROM users WHERE username = 'natalie_bw'), NOW()),
-((SELECT community_id FROM community WHERE community_name = 'EdTech_Builders'), (SELECT user_id FROM users WHERE username = 'quinn_aj'),   NOW()),
+-- EdTech_Builders: ethan_rc = ADMIN, laura_fd = MODERATOR
+((SELECT community_id FROM community WHERE community_name = 'EdTech_Builders'), (SELECT user_id FROM users WHERE username = 'ethan_rc'),   NOW(), 'ADMIN'),
+((SELECT community_id FROM community WHERE community_name = 'EdTech_Builders'), (SELECT user_id FROM users WHERE username = 'laura_fd'),   NOW(), 'MODERATOR'),
+((SELECT community_id FROM community WHERE community_name = 'EdTech_Builders'), (SELECT user_id FROM users WHERE username = 'natalie_bw'), NOW(), 'REGULAR_MEMBER'),
+((SELECT community_id FROM community WHERE community_name = 'EdTech_Builders'), (SELECT user_id FROM users WHERE username = 'quinn_aj'),   NOW(), 'REGULAR_MEMBER'),
 
-((SELECT community_id FROM community WHERE community_name = 'UX_Design_CSUN'), (SELECT user_id FROM users WHERE username = 'fatima_ok'),  NOW()),
-((SELECT community_id FROM community WHERE community_name = 'UX_Design_CSUN'), (SELECT user_id FROM users WHERE username = 'laura_fd'),   NOW()),
-((SELECT community_id FROM community WHERE community_name = 'UX_Design_CSUN'), (SELECT user_id FROM users WHERE username = 'natalie_bw'), NOW()),
-((SELECT community_id FROM community WHERE community_name = 'UX_Design_CSUN'), (SELECT user_id FROM users WHERE username = 'paula_gm'),   NOW()),
-((SELECT community_id FROM community WHERE community_name = 'UX_Design_CSUN'), (SELECT user_id FROM users WHERE username = 'quinn_aj'),   NOW()),
+-- UX_Design_CSUN: fatima_ok = ADMIN, laura_fd = MODERATOR
+((SELECT community_id FROM community WHERE community_name = 'UX_Design_CSUN'), (SELECT user_id FROM users WHERE username = 'fatima_ok'),  NOW(), 'ADMIN'),
+((SELECT community_id FROM community WHERE community_name = 'UX_Design_CSUN'), (SELECT user_id FROM users WHERE username = 'laura_fd'),   NOW(), 'MODERATOR'),
+((SELECT community_id FROM community WHERE community_name = 'UX_Design_CSUN'), (SELECT user_id FROM users WHERE username = 'natalie_bw'), NOW(), 'REGULAR_MEMBER'),
+((SELECT community_id FROM community WHERE community_name = 'UX_Design_CSUN'), (SELECT user_id FROM users WHERE username = 'paula_gm'),   NOW(), 'REGULAR_MEMBER'),
+((SELECT community_id FROM community WHERE community_name = 'UX_Design_CSUN'), (SELECT user_id FROM users WHERE username = 'quinn_aj'),   NOW(), 'REGULAR_MEMBER'),
 
-((SELECT community_id FROM community WHERE community_name = 'CyberSec_CTF'), (SELECT user_id FROM users WHERE username = 'george_lp'), NOW()),
-((SELECT community_id FROM community WHERE community_name = 'CyberSec_CTF'), (SELECT user_id FROM users WHERE username = 'alex_m92'),  NOW()),
-((SELECT community_id FROM community WHERE community_name = 'CyberSec_CTF'), (SELECT user_id FROM users WHERE username = 'kevin_nb'),  NOW()),
-((SELECT community_id FROM community WHERE community_name = 'CyberSec_CTF'), (SELECT user_id FROM users WHERE username = 'omar_hs'),   NOW()),
-((SELECT community_id FROM community WHERE community_name = 'CyberSec_CTF'), (SELECT user_id FROM users WHERE username = 'raj_pt'),    NOW()),
+-- CyberSec_CTF: george_lp = ADMIN, alex_m92 = MODERATOR
+((SELECT community_id FROM community WHERE community_name = 'CyberSec_CTF'), (SELECT user_id FROM users WHERE username = 'george_lp'), NOW(), 'ADMIN'),
+((SELECT community_id FROM community WHERE community_name = 'CyberSec_CTF'), (SELECT user_id FROM users WHERE username = 'alex_m92'),  NOW(), 'MODERATOR'),
+((SELECT community_id FROM community WHERE community_name = 'CyberSec_CTF'), (SELECT user_id FROM users WHERE username = 'kevin_nb'),  NOW(), 'REGULAR_MEMBER'),
+((SELECT community_id FROM community WHERE community_name = 'CyberSec_CTF'), (SELECT user_id FROM users WHERE username = 'omar_hs'),   NOW(), 'REGULAR_MEMBER'),
+((SELECT community_id FROM community WHERE community_name = 'CyberSec_CTF'), (SELECT user_id FROM users WHERE username = 'raj_pt'),    NOW(), 'REGULAR_MEMBER'),
 
-((SELECT community_id FROM community WHERE community_name = 'PreMed_Network'), (SELECT user_id FROM users WHERE username = 'hannah_s9'),  NOW()),
-((SELECT community_id FROM community WHERE community_name = 'PreMed_Network'), (SELECT user_id FROM users WHERE username = 'natalie_bw'), NOW()),
-((SELECT community_id FROM community WHERE community_name = 'PreMed_Network'), (SELECT user_id FROM users WHERE username = 'paula_gm'),   NOW()),
-((SELECT community_id FROM community WHERE community_name = 'PreMed_Network'), (SELECT user_id FROM users WHERE username = 'sofia_er'),   NOW()),
+-- PreMed_Network: hannah_s9 = ADMIN, natalie_bw = MODERATOR
+((SELECT community_id FROM community WHERE community_name = 'PreMed_Network'), (SELECT user_id FROM users WHERE username = 'hannah_s9'),  NOW(), 'ADMIN'),
+((SELECT community_id FROM community WHERE community_name = 'PreMed_Network'), (SELECT user_id FROM users WHERE username = 'natalie_bw'), NOW(), 'MODERATOR'),
+((SELECT community_id FROM community WHERE community_name = 'PreMed_Network'), (SELECT user_id FROM users WHERE username = 'paula_gm'),   NOW(), 'REGULAR_MEMBER'),
+((SELECT community_id FROM community WHERE community_name = 'PreMed_Network'), (SELECT user_id FROM users WHERE username = 'sofia_er'),   NOW(), 'REGULAR_MEMBER'),
 
-((SELECT community_id FROM community WHERE community_name = 'Formula_SAE'), (SELECT user_id FROM users WHERE username = 'ivan_mk'),   NOW()),
-((SELECT community_id FROM community WHERE community_name = 'Formula_SAE'), (SELECT user_id FROM users WHERE username = 'diana_wu'),  NOW()),
-((SELECT community_id FROM community WHERE community_name = 'Formula_SAE'), (SELECT user_id FROM users WHERE username = 'miguel_cr'), NOW()),
-((SELECT community_id FROM community WHERE community_name = 'Formula_SAE'), (SELECT user_id FROM users WHERE username = 'omar_hs'),   NOW()),
+-- Formula_SAE: ivan_mk = ADMIN, diana_wu = MODERATOR
+((SELECT community_id FROM community WHERE community_name = 'Formula_SAE'), (SELECT user_id FROM users WHERE username = 'ivan_mk'),   NOW(), 'ADMIN'),
+((SELECT community_id FROM community WHERE community_name = 'Formula_SAE'), (SELECT user_id FROM users WHERE username = 'diana_wu'),  NOW(), 'MODERATOR'),
+((SELECT community_id FROM community WHERE community_name = 'Formula_SAE'), (SELECT user_id FROM users WHERE username = 'miguel_cr'), NOW(), 'REGULAR_MEMBER'),
+((SELECT community_id FROM community WHERE community_name = 'Formula_SAE'), (SELECT user_id FROM users WHERE username = 'omar_hs'),   NOW(), 'REGULAR_MEMBER'),
 
-((SELECT community_id FROM community WHERE community_name = 'Music_And_AI'), (SELECT user_id FROM users WHERE username = 'jasmine_hl'), NOW()),
-((SELECT community_id FROM community WHERE community_name = 'Music_And_AI'), (SELECT user_id FROM users WHERE username = 'brianna_t'),  NOW()),
-((SELECT community_id FROM community WHERE community_name = 'Music_And_AI'), (SELECT user_id FROM users WHERE username = 'laura_fd'),   NOW()),
-((SELECT community_id FROM community WHERE community_name = 'Music_And_AI'), (SELECT user_id FROM users WHERE username = 'quinn_aj'),   NOW()),
-((SELECT community_id FROM community WHERE community_name = 'Music_And_AI'), (SELECT user_id FROM users WHERE username = 'sofia_er'),   NOW());
-
+-- Music_And_AI: jasmine_hl = ADMIN, brianna_t = MODERATOR
+((SELECT community_id FROM community WHERE community_name = 'Music_And_AI'), (SELECT user_id FROM users WHERE username = 'jasmine_hl'), NOW(), 'ADMIN'),
+((SELECT community_id FROM community WHERE community_name = 'Music_And_AI'), (SELECT user_id FROM users WHERE username = 'brianna_t'),  NOW(), 'MODERATOR'),
+((SELECT community_id FROM community WHERE community_name = 'Music_And_AI'), (SELECT user_id FROM users WHERE username = 'laura_fd'),   NOW(), 'REGULAR_MEMBER'),
+((SELECT community_id FROM community WHERE community_name = 'Music_And_AI'), (SELECT user_id FROM users WHERE username = 'quinn_aj'),   NOW(), 'REGULAR_MEMBER'),
+((SELECT community_id FROM community WHERE community_name = 'Music_And_AI'), (SELECT user_id FROM users WHERE username = 'sofia_er'),   NOW(), 'REGULAR_MEMBER');
 
 -- ============================================================
 -- Sync community_count on users

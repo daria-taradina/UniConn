@@ -47,7 +47,7 @@ public class CommunityService extends BaseService {
 		Community saved = communityRepository.save(community);
 		communityTagService.saveTags(saved, communityDTO.getTags());
 		
-		CommunityMember member = new CommunityMember(saved, currentUser);
+		CommunityMember member = new CommunityMember(saved, currentUser, CommunityMemberRole.ADMIN);
 		communityMemberRepository.save(member);
 		
 		currentUser.setCommunityCount(currentUser.getCommunityCount() + 1);

@@ -25,12 +25,17 @@ public class CommunityMember {
 	@Column(updatable = false)
 	private LocalDateTime joinedAt;
 	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "role", length = 50, nullable = false) // nullable false
+	private CommunityMemberRole role;
+	
 	public CommunityMember() {}
 	
-	public CommunityMember(Community community, User user) {
+	public CommunityMember(Community community, User user, CommunityMemberRole role) {
 		this.id = new CommunityMemberId(community.getCommunityId(), user.getUserId());
 		this.community = community;
 		this.user = user;
+		this.role = role;
 	}
 	
 	//getters&setters
@@ -61,5 +66,13 @@ public class CommunityMember {
 	public LocalDateTime getJoinedAt() {
 		return joinedAt;
 	}
-	
+
+	public CommunityMemberRole getRole() {
+		return role;
+	}
+
+	public void setRole(CommunityMemberRole role) {
+		this.role = role;
+	}
+		
 }
