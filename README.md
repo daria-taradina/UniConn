@@ -1,16 +1,14 @@
 # UniConn-COMP-380 :unicorn: 
 
-A Spring Boot REST API backend for UniConn, a social platform for CSUN students.
+Social platform for CSUN students.
 
 ## :computer: Tech Stack
 
 - Java 17+ (in pom it's set to 22)
 - Spring Boot (3.3.5 version)
-- Spring Security
-- Spring Data JPA (Hibernate)
-- MySQL
+- MySQL Community Server and Workbench
 - Maven
-
+- Front-end: HTML, CSS, JS (Thymeleaf implementation)
 
 ## Prerequisites
 
@@ -80,9 +78,7 @@ src/
  
 ## :arrows_clockwise: Loading Test Data
  
-Sample seed data is provided in `src/main/resources/db/`. 
-> [!IMPORTANT]
->Run the scripts <ins>in order</ins> after the app has started at least once (so Hibernate can generate the tables).
+**Sample seed data is provided in `src/main/resources/db/`.** 
  
 ### 1. Open MySQL Workbench and connect to your local instance
   
@@ -95,21 +91,27 @@ Open `src/main/resources/db/users_test_data.sql` in Workbench and execute.
 Open `src/main/resources/db/community_test_data.sql` in Workbench and execute.
 
 ### Test data summary:
-* 20 Active Users:
-  * Password for all accounts: `Password123!`
-  * Emails end with `@my.csun.edu`
-  * Optional fields omitted: `name`, `user_bio`, `profile_picture_path`
-* 20 Tags (used both by communities and posts - max 5)
-* 10 Communities (only community_picture_path = NULL)
+* 20 Active Users (password for all accounts: `Password123!`, emails end with `@my.csun.edu`, optional fields omitted: `name`, `user_bio`, `profile_picture_path`)
+* 20 Tags (used both by communities and posts - **MAX 5**)
+* 10 Communities (only `community_picture_path = NULL`)
 * Members added to communities
-* Community member roles:
-  * ADMIN - creator of community automatically
-  * MODERATOR - in sql just autofill, but there will be logic added, so that only ADMIN can assign MODERATOR
-  * REGULAR_MEMBER - default on join
+* Community member roles (`ADMIN`, `MODERATOR`, `REGULAR_MEMBER`)
 
-### :white_check_mark: Verification is included in sql files so will run after data is populated. 
+:white_check_mark: **Verification is included in sql files so will run after data is populated.** 
 
- ## ⚠️ Important
+## :computer: Front-end (Hanna)
+
+## :woman_technologist: User Management System (Lily)
+
+## :two_women_holding_hands: Connection Between Users&Communities (Daria)
+
+## :joystick: Interactive Systems (Abi)
+
+## :pencil: Post Management System (Supti)
+
+## :bell: Notification System (Hanna)
+
+## ⚠️ Important
 
 > [!CAUTION]
 > _**Do not edit**_ any entities/composite keys
