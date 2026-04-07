@@ -101,7 +101,11 @@ Open `src/main/resources/db/community_test_data.sql` in Workbench and execute.
   * Optional fields omitted: `name`, `user_bio`, `profile_picture_path`
 * 20 Tags (used both by communities and posts - max 5)
 * 10 Communities (only community_picture_path = NULL)
-* Members added to communities 
+* Members added to communities
+* Community member roles:
+  * ADMIN - creator of community automatically
+  * MODERATOR - in sql just autofill, but there will be logic added, so that only ADMIN can assign MODERATOR
+  * REGULAR_MEMBER - default on join
 
 ### :white_check_mark: Verification is included in sql files so will run after data is populated. 
 
