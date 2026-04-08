@@ -1,15 +1,1 @@
-<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="-47.00000000000002 0 247.00000000000003 200" width="248" height="200">
-	<style>
-		.s0 { fill: #83b5d6;stroke: #83b5d6;stroke-miterlimit:10;stroke-width: 171 } 
-		.s1 { fill: #83b5d6;stroke: #030303;stroke-miterlimit:10;stroke-width: 15 } 
-	</style>
-	<g id="Layer 1">
-		<path id="Shape 3" fill-rule="evenodd" class="s0" d="m-33 99.41l223 1.59z"/>
-		<path id="Shape 2 copy" fill-rule="evenodd" class="s1" d="m-24.6 7.74l193.87-0.07zm2.56 185.06l193.87-0.06zm-17.34-14.18l0.01-153.8zm232.64-0.08l0.02-153.79zm-209.01-168.58m-2.3-1.86m5.84 0.4c0 0-29.5-6.85-27.47 24.52m205.02-24.58c0 0 29.5-6.87 27.49 24.5m-0.13 137.08c0 0 8.49 23.85-30.31 22.23m-200.59-21.14c0 0-8.48 23.86 30.32 22.21"/>
-		<path id="Shape 5 copy" fill-rule="evenodd" class="s1" d="m110.02 110.17l82.59 63.03z"/>
-		<path id="Shape 5 copy 2" fill-rule="evenodd" class="s1" d="m49.54 114.92l-84.54 68.5z"/>
-		<path id="Shape 6" fill-rule="evenodd" class="s1" d="m-35.13 23.62l91.95 94.79z"/>
-		<path id="Shape 6 copy" fill-rule="evenodd" class="s1" d="m192.82 23.62l-91.95 94.79z"/>
-		<path id="Shape 7" fill-rule="evenodd" class="s1" d="m54.28 114.45c0 0 24.44 32.89 47.68 2.69"/>
-	</g>
-</svg>
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 248 200" width="248" height="200"><style>.a{fill:#83b5d6;stroke:#83b5d6;stroke-miterlimit:10;stroke-width:176}.b{fill:#83b5d6;stroke:#030303;stroke-miterlimit:10;stroke-width:10}</style><path fill-rule="evenodd" class="a" d="m12 99.4l225.5 1.6z"/><path fill-rule="evenodd" class="b" d="m22.9 7.7h193.9zm2.5 185h193.9zm-17.3-14.2v-153.8zm232.6-0.1v-153.8zm-205.4-170c0 0-29.5-6.9-27.5 24.5m205-24.6c0 0 29.5-6.9 27.5 24.5m-0.1 137.1c0 0 8.5 23.8-30.3 22.2m-200.6-21.1c0 0-8.5 23.8 30.3 22.2"/><path fill-rule="evenodd" class="b" d="m157.5 110.2l82.6 63z"/><path fill-rule="evenodd" class="b" d="m97 114.9l-84.5 68.5z"/><path fill-rule="evenodd" class="b" d="m11.4 21.6l91.9 94.8z"/><path fill-rule="evenodd" class="b" d="m240.3 23.6l-91.9 94.8z"/><path fill-rule="evenodd" class="b" d="m101 114.3c0 0 24.8 33.5 48.5 2.8"/></svg>
