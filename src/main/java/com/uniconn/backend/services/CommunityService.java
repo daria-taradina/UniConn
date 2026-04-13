@@ -13,15 +13,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CommunityService extends BaseService {
-	
+public class CommunityService extends BaseService {	
 	private final CommunityRepository communityRepository;
 	private final CommunityMemberRepository communityMemberRepository;
+	private final CommunityTagService communityTagService;
 	
 	public CommunityService(CommunityRepository communityRepository, 
-			CommunityMemberRepository communityMemberRepository) {
+			CommunityMemberRepository communityMemberRepository, CommunityTagService communityTagService) {
 		this.communityRepository = communityRepository;
 		this.communityMemberRepository = communityMemberRepository;
+		this.communityTagService = communityTagService;
 	}
 	
 	@Transactional
@@ -37,16 +38,16 @@ public class CommunityService extends BaseService {
 		}
 		
 		Community community = new Community();
+		// add case sensitivity test/resolution
 		community.setCommunityName(communityDTO.getCommunityName());
 		community.setDescription(communityDTO.getDescription());
-		community.setCreatedBy(currentUser);		
+		community.setCreatedBy(currentUser);
+		community.setCategory(communityDTO.getCategory());
+		community.setCommunityPicture(communityDTO.getCommunityPicture());
 		Community saved = communityRepository.save(community);
+		communityTagService.saveTags(saved, communityDTO.getTags());
 		
-		CommunityMemberId memberId = new CommunityMemberId(saved.getCommunityId(), currentUser.getUserId());
-		CommunityMember member = new CommunityMember();
-		member.setId(memberId);
-		member.setCommunity(saved);
-		member.setUser(currentUser);
+		CommunityMember member = new CommunityMember(saved, currentUser, CommunityMemberRole.ADMIN);
 		communityMemberRepository.save(member);
 		
 		currentUser.setCommunityCount(currentUser.getCommunityCount() + 1);
@@ -59,6 +60,13 @@ public class CommunityService extends BaseService {
 	}
 	
 	private CommunityResponseDTO mapToResponseDTO(Community community) {
+		Community fresh = communityRepository.findById(community.getCommunityId())
+				.orElseThrow(() -> new RuntimeException("Community not found"));
+		List<String> tagNames = fresh.getTags()
+                .stream()
+                .map(ct -> ct.getTag().getName())
+                .toList();
+		
 		return new CommunityResponseDTO(
 				community.getCommunityId(),
                 community.getCommunityName(),
@@ -66,7 +74,10 @@ public class CommunityService extends BaseService {
                 community.getMemberCount(),
                 community.getCreatedAt(),
                 community.getCreatedBy().getUserId(),
-                community.getCreatedBy().getUsername()
+                community.getCreatedBy().getUsername(),
+                community.getCategory(),
+                community.getCommunityPicture(),
+                tagNames
 			);
 	}
 	
@@ -75,14 +86,7 @@ public class CommunityService extends BaseService {
 	public List<CommunityResponseDTO> getAllCommunities() {
 	    return communityRepository.findAll()
 	        .stream()
-	        .map(community -> new CommunityResponseDTO(community.getCommunityId(),
-	                community.getCommunityName(),
-	                community.getDescription(),
-	                community.getMemberCount(),
-	                community.getCreatedAt(),
-	                community.getCreatedBy().getUserId(),
-	                community.getCreatedBy().getUsername()
-	                ))
+	        .map(this::mapToResponseDTO)
 	        .collect(Collectors.toList());
 	}
 }

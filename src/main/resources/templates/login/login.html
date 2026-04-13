@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" th:href="@{/login.css}">
+  <title>Log In - UniConn</title>
+</head>
+
+<body>
+<!--navigation bar-->
+  <nav class="navbar">
+    <img th:src="@{/vector-logos/unicornLogo.png}" alt="UniConn Logo" width="110" height="100">
+    <a th:href="@{/login}" class="main">UniConn</a>
+  </nav><hr><br><br>
+
+    <div class="login-container">
+      <form action="http://localhost:9090/auth/register" method="POST">
+
+    <div class="header">
+      <h3>Login</h3>
+    </div>
+
+      <div class="input-box">
+        <img class="icon" th:src="@{/vector-logos/usernameSignIn.svg}">
+        <input type="username" required placeholder=" ">
+               <label>Username</label>
+      </div>
+
+        <div class="input-box">
+          <img class="icon" th:src="@{/vector-logos/passwordSignIn.svg}">
+          <input type="password" required placeholder=" ">
+          <label>Password</label>
+        </div>
+
+        <div class="forgot-password">
+          <a href="/forgot-password">Forgot Password?</a>
+        </div>
+
+        <button type="submit">Login</button>
+        <div class="register-link">
+          <p>Don't have an account?<a href="/register"> Register!</a>
+      </form>
+        </div>
+
+</body>
+
+</html>
