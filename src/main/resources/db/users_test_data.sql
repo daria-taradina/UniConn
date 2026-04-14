@@ -32,8 +32,4 @@ VALUES
 -- ============================================================
 -- Verification
 -- ============================================================
-SELECT COUNT(*)                                   AS total_inserted  FROM users WHERE is_active = true;
-SELECT COUNT(*)                                   AS all_null_bio    FROM users WHERE user_bio IS NULL;
-SELECT COUNT(*)                                   AS all_null_name   FROM users WHERE name IS NULL;
-SELECT COUNT(*)                                   AS all_null_pic    FROM users WHERE profile_picture_path IS NULL;
-SELECT username, email, is_active, created_at     FROM users         ORDER BY created_at DESC LIMIT 20;
+SELECT username, email, is_active, created_at FROM users ORDER BY created_at DESC LIMIT 20;
