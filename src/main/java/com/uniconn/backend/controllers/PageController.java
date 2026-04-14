@@ -32,6 +32,12 @@ public class PageController {
         return "userFeed/userFeed";
     }
 
+    @GetMapping("/post/createPost")
+    public String createPostPage(Model model) {
+        model.addAttribute("avatarUrl", "/vector-logos/usernameSignIn.svg");
+        return "post/createPost";
+    }
+
     @GetMapping("/profile")
     public String profilePage(Model model) {
         model.addAttribute("avatarUrl", "/vector-logos/usernameSignIn.svg");
