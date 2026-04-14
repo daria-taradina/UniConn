@@ -163,3 +163,20 @@ GET http://localhost:8080/api/auth/logout
   DB teammate adding secretQuestion and secretAnswer columns
   to User entity
 - All auth files are in feature/lily-auth branch
+
+## User Authentication (Lillian Foster)
+
+### Endpoints
+- `POST /api/auth/register` — Register a new UniConn user
+- `POST /api/auth/login` — Login with existing credentials
+- `GET /api/auth/logout` — Logout current user
+
+### Accessing the Current Logged In User
+In any service class that extends BaseService, call:
+
+User currentUser = getAuthenticatedUser();
+
+To get specific fields:
+- currentUser.getUserId()
+- currentUser.getUsername()
+- currentUser.get
