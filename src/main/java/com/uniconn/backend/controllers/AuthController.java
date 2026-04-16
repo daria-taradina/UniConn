@@ -1,44 +1,36 @@
-// Lillian Foster - Auth Controller
+// Lillian Foster
+// AuthController.java - handles login and registration endpoints
+// returns JWT token on success so frontend can store and use it
 
 package com.uniconn.backend.controllers;
 
+import com.uniconn.backend.dtos.AuthResponse;
 import com.uniconn.backend.dtos.LoginRequest;
 import com.uniconn.backend.dtos.RegisterRequest;
-import com.uniconn.backend.entities.User;
-
-import com.uniconn.backend.services.UserService;
+import com.uniconn.backend.services.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-/**
- * handles all authentication endpoints for UniConn.
- * Covers registration, login, and logout.
- * Teammates can get the current logged in user
- * via Spring Security context after login.
- */
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private final UserService userService;
+    private final AuthService authService;
 
-    // Constructor injection following team pattern
-    public AuthController(UserService userService) {
-        this.userService = userService;
+    // constructor injection - same pattern as rest of the project
+    public AuthController(AuthService authService) {
+        this.authService = authService;
     }
 
     /**
      * POST /api/auth/register
-     * Registers a new UniConn user.
-     * Email must end in @my.csun.edu with no spaces.
-     * Password is hashed before saving.
+     * Registers a new UniConn user and returns a JWT token
      */
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
         try {
-            User newUser = userService.registerUser(request);
-            return ResponseEntity.ok("User registered successfully: " + newUser.getUsername());
+            AuthResponse response = authService.register(request);
+            return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -46,14 +38,13 @@ public class AuthController {
 
     /**
      * POST /api/auth/login
-     * Logs in an existing user.
-     * Returns user info if credentials are valid.
+     * Logs in a user and returns a JWT token
      */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         try {
-            User user = userService.loginUser(request);
-            return ResponseEntity.ok("Login successful: " + user.getUsername());
+            AuthResponse response = authService.login(request);
+            return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -61,7 +52,7 @@ public class AuthController {
 
     /**
      * GET /api/auth/logout
-     * Logs out the current user.
+     * Logs out - frontend just needs to drop the token
      */
     @GetMapping("/logout")
     public ResponseEntity<?> logout() {
