@@ -1,6 +1,5 @@
+## 🔄 Clean Start Required — Read Before Doing Anything
 > [!CAUTION]
-> ## 🔄 Clean Start Required — Read Before Doing Anything
->
 > The repository has been reset. **Everyone must follow these steps before working on any code.** Do not skip or reorder steps.
 
 ---
