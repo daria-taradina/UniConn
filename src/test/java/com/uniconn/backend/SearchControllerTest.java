@@ -1,10 +1,11 @@
-package com.uniconn.backend.controllers;
+package com.uniconn.backend;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import com.uniconn.backend.controllers.SearchController;
 import com.uniconn.backend.dtos.SearchResultDTO;
 import com.uniconn.backend.services.SearchService;
 import org.springframework.http.ResponseEntity;
