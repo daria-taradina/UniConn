@@ -1,53 +1,176 @@
-HELP.md
-# Maven output
+# ============================================
+# UniConn Backend - Complete .gitignore
+# For: Spring Boot 3.3.5 + Java 17 + Maven
+# ============================================
+
+# ===== Compiled Output =====
 target/
+bin/
+out/
+build/
+
+# ===== Maven =====
 .mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+!.mvn/wrapper/maven-wrapper.properties
+.mvn/timing.properties
+dependency-reduced-pom.xml
+pom.xml.versionsBackup
+pom.xml.releaseBackup
+pom.xml.tag
 
-# Application properties (keep template, ignore real one)
+# ===== Application Secrets (CRITICAL!) =====
+# Never commit these!
 application.properties
-bin/src/main/resources/application.properties
-src/main/resources/application.properties
 **/src/main/resources/application.properties
+src/main/resources/application.properties
+**/application-secrets.properties
+*.secret
+*.key
+*.p12
+*.jks
+.env
+.env.local
+.env.*.local
 
-### STS (Eclipse) ###
-.settings/
-.apt_generated
+# Keep template files (these SHOULD be committed)
+!**/application.properties.template
+!**/application-example.properties
+
+# ===== IDE Files =====
+
+## Eclipse / STS
+.apt_generated/
 .classpath
 .factorypath
 .project
-.settings
+.settings/
 .springBeans
 .sts4-cache
-
-# Eclipse compiled files
-bin/
-bin/**
-/bin/
-
-### IntelliJ IDEA ###
+.factorypath
 .idea/
-*.iws
+
+## IntelliJ IDEA
+.idea/
 *.iml
+*.iws
 *.ipr
+compiler.xml
+encodings.xml
+jarRepositories.xml
+misc.xml
+vcs.xml
+modules.xml
+uiDesigner.xml
+.idea_modules/
+*.classpath
+*.project
+*.prefs
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
+## VS Code
 .vscode/
+*.code-workspace
+.settings/
+launch.json
+tasks.json
 
-### Cross-IDE safe files to keep ###
-# These SHOULD be committed (shared configs)
-# .gitignore
-# README.md
-# mvnw, mvnw.cmd
-# pom.xml - YES, commit this!
+## NetBeans
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+build/
+
+# ===== OS Generated Files =====
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.bak
+*.swp
+*.lock
+*.tmp
+*.temp
+
+# ===== Logs =====
+*.log
+logs/
+log/
+*.log.gz
+
+# ===== Test Output =====
+test-output/
+surefire-reports/
+target/surefire-reports/
+*.jar
+*.war
+*.ear
+
+# ===== Backup Files =====
+*.orig
+*.rej
+*~
+*.bak
+*.old
+
+# ===== Temporary Files =====
+*.tmp
+*.temp
+*.cache
+*.download
+*.download.*
+
+# ===== Spring Boot Specific =====
+spring-boot-devtools.pid
+spring-boot-devtools.log
+spring-shell.log
+
+# ===== Database =====
+*.db
+*.h2.db
+*.mv.db
+*.lock.mv.db
+hsqldb-db/
+derby.log
+
+# ===== Local Configuration =====
+*.local.properties
+local.properties
+*.local
+.secret
+.secrets
+
+# ===== Node / Frontend (if any) =====
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# ===== Docker =====
+.dockerignore
+docker-compose.override.yml
+*.pid
+
+# ===== Kubernetes =====
+*.secret.yaml
+*.secrets.yaml
+**/secrets/
+
+# ===== Maven Wrapper (Keep the scripts, ignore the jar) =====
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+.mvn/wrapper/MavenWrapperDownloader.java
+
+# ===== Keep these (they should be committed) =====
+# !.gitignore
+# !README.md
+# !mvnw
+# !mvnw.cmd
+# !pom.xml
+# !application.properties.template
+# !**/application.properties.template
