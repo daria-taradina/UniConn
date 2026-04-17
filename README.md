@@ -116,11 +116,18 @@ Restart the app and confirm it starts without errors. This prevents Hibernate fr
 
 ### Step 9 — Create your feature branch
 
-```bash
-git checkout -b feature/your-feature-name
-```
+> [!IMPORTANT]
+> Always branch off `dev`, not `main`
+> ```
+> git checkout dev
+> git pull origin dev
+> git checkout -b feature/your-feature-name
+> ```
+> Push to **your branch only** — never commit directly to `main` or `dev`
 
-Use [conventional commit messages](https://gist.github.com/qoomon/5dfcdf8eec66a051ecd85625518cfd13). Push to **your branch only** — never commit directly to `main` or `dev`.
+Pull from `dev` into your feature branch at least once before opening a PR, ideally daily if the project is active — the longer you wait, the worse the merge conflicts
+
+Use [conventional commit messages](https://gist.github.com/qoomon/5dfcdf8eec66a051ecd85625518cfd13).
 
 ---
 
