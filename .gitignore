@@ -1,12 +1,18 @@
 HELP.md
+# Maven output
 target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+# Application properties (keep template, ignore real one)
+application.properties
+bin/src/main/resources/application.properties
 src/main/resources/application.properties
+**/src/main/resources/application.properties
 
-### STS ###
+### STS (Eclipse) ###
+.settings/
 .apt_generated
 .classpath
 .factorypath
@@ -15,8 +21,13 @@ src/main/resources/application.properties
 .springBeans
 .sts4-cache
 
+# Eclipse compiled files
+bin/
+bin/**
+/bin/
+
 ### IntelliJ IDEA ###
-.idea
+.idea/
 *.iws
 *.iml
 *.ipr
@@ -33,3 +44,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Cross-IDE safe files to keep ###
+# These SHOULD be committed (shared configs)
+# .gitignore
+# README.md
+# mvnw, mvnw.cmd
+# pom.xml - YES, commit this!

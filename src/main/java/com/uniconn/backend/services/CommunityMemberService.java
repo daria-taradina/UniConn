@@ -22,50 +22,54 @@ public class CommunityMemberService extends BaseService {
 	
 	@Transactional
 	public String joinCommunity(Integer communityId) {
-		User currentUser = getAuthenticatedUser();
-		
-		Community community = communityRepository.findById(communityId)
-				.orElseThrow(() -> new RuntimeException("Community not found"));
-		
-		CommunityMemberId memberId = new CommunityMemberId(communityId, currentUser.getUserId());
-	
-		if (communityMemberRepository.existsById(memberId)) {
-            throw new RuntimeException("Already a member of this community");
-        }
-		
-		
-		CommunityMember member = new CommunityMember(community, currentUser, CommunityMemberRole.REGULAR_MEMBER);
-		communityMemberRepository.save(member);
-		
-		community.setMemberCount(community.getMemberCount() + 1);
-		communityRepository.save(community);
-		
-		currentUser.setCommunityCount(currentUser.getCommunityCount() + 1);
-		userRepository.save(currentUser);
-				
-		return "Joined community successfully!";
+	    User currentUser = getAuthenticatedUser();
+
+	    Community community = communityRepository.findById(communityId)
+	            .orElseThrow(() -> new RuntimeException("Community not found"));
+
+	    CommunityMemberId memberId = new CommunityMemberId(communityId, currentUser.getUserId());
+
+	    if (communityMemberRepository.existsById(memberId)) {
+	        throw new RuntimeException("Already a member of this community");
+	    }
+
+	    CommunityMember member = new CommunityMember();
+	    member.setId(memberId);
+	    member.setCommunity(community);
+	    member.setUser(currentUser);
+	    communityMemberRepository.save(member);
+
+	    adjustMembershipCounts(community, currentUser, +1);
+
+	    return "Joined community successfully!";
 	}
-	
+
 	@Transactional
 	public String leaveCommunity(Integer communityId) {
-		User currentUser = getAuthenticatedUser();
-		
-		CommunityMemberId memberId = new CommunityMemberId(communityId, currentUser.getUserId());
-		
-		if(!communityMemberRepository.existsById(memberId)) {
-			throw new RuntimeException("You are not a member of this community");
-		}
-		
-		communityMemberRepository.deleteById(memberId);
-		
-		Community community = communityRepository.findById(communityId)
-				.orElseThrow(() -> new RuntimeException("Community not found"));
-		community.setMemberCount(Math.max(0, community.getMemberCount() - 1));
-		communityRepository.save(community);
-		
-		currentUser.setCommunityCount(Math.max(0, currentUser.getCommunityCount() - 1));
-		userRepository.save(currentUser);
-		
-		return "Left community successfully";
+	    User currentUser = getAuthenticatedUser();
+
+	    CommunityMemberId memberId = new CommunityMemberId(communityId, currentUser.getUserId());
+
+	    if (!communityMemberRepository.existsById(memberId)) {
+	        throw new RuntimeException("You are not a member of this community");
+	    }
+
+	    communityMemberRepository.deleteById(memberId);
+
+	    Community community = communityRepository.findById(communityId)
+	            .orElseThrow(() -> new RuntimeException("Community not found"));
+
+	    adjustMembershipCounts(community, currentUser, -1);
+
+	    return "Left community successfully";
+	}
+
+	// Extracted helper — single place to maintain count logic
+	private void adjustMembershipCounts(Community community, User user, int delta) {
+	    community.setMemberCount(Math.max(0, community.getMemberCount() + delta));
+	    communityRepository.save(community);
+
+	    user.setCommunityCount(Math.max(0, user.getCommunityCount() + delta));
+	    userRepository.save(user);
 	}
 }
