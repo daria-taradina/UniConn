@@ -95,9 +95,6 @@ Open `src/main/resources/db/users_test_data.sql` → execute.
 **Step 7b — Communities:**
 Open `src/main/resources/db/community_test_data.sql` → execute.
 
-**Step 7c — Posts:**
-Open `src/main/resources/db/post_test_data.sql` → execute.
-
 Verification queries are included at the bottom of each file and will run automatically.
 
 ---
