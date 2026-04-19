@@ -87,10 +87,13 @@ public class UserService extends BaseService {
      * Required for all UniConn accounts.
      */
     public boolean validateCsunEmail(String email) {
-        if (email == null) return false;
-        if (email.contains(" ")) return false;
-        return email.endsWith("@my.csun.edu");
+        // Email must exist, have no spaces, and end with @my.csun.edu
+        return email != null
+                && !email.contains(" ")
+                && email.endsWith("@my.csun.edu");
     }
+
+
 
     /**
      * Resets a user's password after verifying their secret question answer.
