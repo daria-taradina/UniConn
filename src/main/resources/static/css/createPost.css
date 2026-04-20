@@ -392,6 +392,14 @@ button:hover {
   color: #999;
   font-size: 0.9em;
 }
+.create-post-community-item {
+  padding: 10px 16px;
+  font-size: 0.9em;
+  cursor: pointer;
+}
+.create-post-community-item:hover {
+  background: #f0f0f0;
+}
 .create-post-field {
   display: flex;
   flex-direction: column;
@@ -455,4 +463,24 @@ button:hover {
   height: 38px;
   border-radius: 20px;
   font-size: 0.95em;
+}
+/* NOTIFICATIONS MODAL */
+.notification-list {
+  list-style: none;
+  margin: 12px 0 0 0;
+  padding: 0;
+  max-height: 600px;
+  overflow-y: auto;
+}
+.notification-empty {
+  padding: 16px;
+  color: #999;
+  font-size: 0.9em;
+  text-align: center;
+}
+.notification-item {
+  padding: 12px 8px;
+  border-bottom: 1px solid #eee;
+  font-size: 0.9em;
+  color: #333;
 }

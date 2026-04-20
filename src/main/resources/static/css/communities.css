@@ -76,7 +76,7 @@ body {
 
 .left-container {
   position: relative;
-  height: 1064px;
+  height: 850px;
   background-color: white;
   border-radius: 12px;
   border: 2px solid black;
@@ -91,18 +91,21 @@ body {
     flex: 0 0 calc(30% - 12px);
     gap: 12px;
 }
-.right-container {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.right-lower-container, .right-upper-container {
+.right-lower-container {
   position: relative;
   height: 410px;
   background-color: white;
   border-radius: 12px;
   border: 2px solid black;
-border-top: none;
+  border-top: none;
+}
+
+.right-upper-container {
+  position: relative;
+  height: 230px;
+  background-color: white;
+  border-radius: 12px;
+  border: 2px solid black;
 }
 
 .header-left, .header-right {
@@ -171,17 +174,17 @@ button {
   width: 100%;
   height: 40px;
   background: #83b5d6;
-  border: 1px solid #83b5d6;
+  border: 2px solid #83b5d6;
   outline: none;
   border-radius: 20px;
-  font-size: 1em;
+  font-size: 1.5em;
   color: #fff;
   font-weight: 500;
   cursor: pointer;
 }
 button:hover {
   background: #91c5e8;
-  border: 1px solid #91c5e8;
+  border: 2px solid #91c5e8;
 }
 
 /* search bar */
@@ -419,14 +422,7 @@ button:hover {
   color: #333;
 }
 
-/* ACTIONS PANEL */
-.actions-panel {
-  position: relative;
-  height: 220px;
-  background-color: white;
-  border-radius: 12px;
-  border: 2px solid black;
-}
+/* COMMUNITIES PAGE */
 .explore-actions {
   display: flex;
   flex-direction: column;
@@ -449,6 +445,7 @@ button:hover {
   justify-content: center;
   padding: 0 16px;
   gap: 10px;
+  text-align: left;
 }
 .explore-btn:hover {
   background: #d6ecf7;
@@ -477,4 +474,19 @@ button:hover {
   outline: none;
   border-color: #83b5d6;
 }
-
+.profile-message.success {
+  color: #2a7a2a;
+  background: #e6f4e6;
+  border: 1px solid #a3d4a3;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 0.85em;
+}
+.profile-message.error {
+  color: #c0392b;
+  background: #fdecea;
+  border: 1px solid #f0a8a0;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 0.85em;
+}
