@@ -1,1 +1,56 @@
+# Community Component
 
+| :sparkles:  Explore page | :heavy_plus_sign:  Create community |
+| --- | --- |
+| Separate page | Popup window (right sidebar stays on a side during that) |
+| All communities | Required fields |
+| Search by community name and tags | Tags (need to discuss) |
+| Filter by category |
+| My communities -> created by and member of list + search |
+| Create community -> popup window |
+
+## Frontend
+
+<img width="4477" height="596" alt="image" src="https://github.com/user-attachments/assets/b97e0867-63e1-4230-85cf-1a7883364edd" />
+
+## Icons
+
+### Sparkle for explore section: <img width="36" height="36" alt="image" src="https://github.com/user-attachments/assets/a897a877-348e-4a2f-bdd0-0ba4eba7812c" />
+
+
+```svg
+<svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Main sparkle -->
+  <path d="M12 2 
+           C12.5 6 14 7.5 18 8 
+           C14 8.5 12.5 10 12 14 
+           C11.5 10 10 8.5 6 8 
+           C10 7.5 11.5 6 12 2Z"
+        fill="white"
+        stroke="black"
+        stroke-width="1.5"
+        stroke-linejoin="round"/>
+
+  <!-- Small sparkle -->
+  <path d="M6 14 
+           C6.3 16 7 16.7 9 17 
+           C7 17.3 6.3 18 6 20 
+           C5.7 18 5 17.3 3 17 
+           C5 16.7 5.7 16 6 14Z"
+        fill="white"
+        stroke="black"
+        stroke-width="1"
+        stroke-linejoin="round"/>
+
+  <!-- Tiny sparkle -->
+  <path d="M17 13 
+           C17.2 14.2 17.8 14.8 19 15 
+           C17.8 15.2 17.2 15.8 17 17 
+           C16.8 15.8 16.2 15.2 15 15 
+           C16.2 14.8 16.8 14.2 17 13Z"
+        fill="white"
+        stroke="black"
+        stroke-width="0.9"
+        stroke-linejoin="round"/>
+</svg>
+````
