@@ -11,7 +11,25 @@
 
 ## Frontend
 
-<img width="4477" height="596" alt="image" src="https://github.com/user-attachments/assets/b97e0867-63e1-4230-85cf-1a7883364edd" />
+### Communities button -> explore page -> create community workflow:
+
+<img width="4477" height="1396" alt="image" src="https://github.com/user-attachments/assets/b97e0867-63e1-4230-85cf-1a7883364edd" />
+
+### Tags (community&post)
+
+<img width="7588" height="823" alt="image" src="https://github.com/user-attachments/assets/f96a7e03-bba3-44e4-a4da-7db219ba3de1" />
+
+### Input values for `Create Community`
+
+| Variable | Required? | Min-Max chars | Notes |
+| --- | --- | --- | --- |
+| `communityName` | yes | 3-30 | NO special chars/spaces(nums, ".", "_" are allowed), lowercase only(regardless `toLowerCase()` in backend, but in frontend could also auotomatically make to lowercase, not throw error) |
+| `description` | yes | 3-300 | on explore page (and maybe in search? :thinking: ) description shortened to 112 chars + "..." |
+| `category` | yes | chose from 5 options(drop down box) |
+| `tags` | no(optional) | 1-20 | *__MAX 5 TAGS__* per community/post, no special chars(nums allowed), separated by space(make sure not creating empty tags when just pressing space in that field), lowercase only(regardless `toLowerCase()` in backend, but in frontend could also auotomatically make to lowercase, not throw error) |
+| `communityPicture` | no(optional) | dims(idk yet) | haven't created this feature yet(and idk if I even will), but would be available in community profile update, NOT during create |
+
+> Still need to fix those values' checks for backend, but that's, I think, is final version
 
 ## Icons
 
