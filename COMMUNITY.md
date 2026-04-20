@@ -1,10 +1,10 @@
 # Community Component
 
-| :sparkles:  Explore page | :heavy_plus_sign:  Create community |
-| --- | --- |
-| Separate page | Popup window (right sidebar stays on a side during that) |
-| All communities | Required fields |
-| Search by community name and tags | Tags (need to discuss) |
+| :sparkles:  Explore page | :heavy_plus_sign:  Create community | :mag: Search&Filter |
+| --- | --- | --- |
+| Separate page | Popup window (right sidebar stays on a side during that) | serach bar on explore communities page |
+| All communities | Required fields | serach by community name and tags |
+| Search by community name and tags | Tags (need to discuss) | Filter by categories ("All" and 5 categories we have) |
 | Filter by category |
 | My communities -> created by and member of list + search |
 | Create community -> popup window |
