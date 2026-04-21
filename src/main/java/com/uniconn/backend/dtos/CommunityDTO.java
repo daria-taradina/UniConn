@@ -2,14 +2,13 @@ package com.uniconn.backend.dtos;
 
 import java.util.List;
 import com.uniconn.backend.entities.*;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 
 public class CommunityDTO {
 	
 	@NotBlank(message = "Community name is required")
-	@Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
+	@Size(max = 30, message = "Name must not exceed 30 characters")
 	@Pattern(
 		    regexp = "^(?=[a-z0-9._]{3,50}$)(?=.*[a-z0-9]).*$",
 		    message = "Only lowercase letters, digits, dots, and underscores are allowed — must contain at least one letter or digit"
@@ -17,7 +16,7 @@ public class CommunityDTO {
 	private String communityName;
 	
 	@NotBlank(message = "Description is required")
-	@Size(max = 500, message = "Description cannot exceed 500 characters")
+	@Size(max = 300, message = "Description must not exceed 300 characters")
     private String description;
 	
 	@NotNull(message = "Category is required")
@@ -28,7 +27,7 @@ public class CommunityDTO {
     @Size(max = 5, message = "Maximum 5 tags allowed")
     @Valid
     private List<@NotBlank(message = "Tag cannot be blank")
-    			@Size(max = 30, message = "Tag cannot exceed 30 characters") String> tags;
+    			@Size(max = 20, message = "Tag must not exceed 20 characters") String> tags;
     
 	public String getCommunityName() {
 		return communityName;
