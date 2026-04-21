@@ -22,15 +22,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(errors);
         // returns: { "communityName": "must not be blank", "email": "must be a valid email" }
     }
-    
-    // You throw this — single specific error, returns one message
-    @ExceptionHandler(InvalidInputException.class)
-    public ResponseEntity<Map<String, String>> handleInvalidInput(
-            InvalidInputException ex) {
-        return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
-        // returns: { "error": "Invalid tag name: @@@" }
-    }
-    
+        
     // You throw this — single specific error, returns one message
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleNotFound(
@@ -61,6 +53,14 @@ public class GlobalExceptionHandler {
             DataIntegrityViolationException ex) {
         return ResponseEntity.badRequest()
             .body(Map.of("error", "A database constraint was violated"));
+    }
+    
+    // You throw this — single specific error, returns one message
+    @ExceptionHandler(InvalidInputException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidInput(
+            InvalidInputException ex) {
+        return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
+        // returns: { "error": "Invalid tag name: @@@" }
     }
 
     @ExceptionHandler(Exception.class) // catch-all — always put this last
