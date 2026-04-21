@@ -21,12 +21,12 @@
 
 ### Input values for `Create Community`
 
-| Variable | Required? | Min-Max chars | Notes |
+| Variable | Required? | Max chars | Notes |
 | --- | --- | --- | --- |
-| `communityName` | yes | 3-30 | NO special chars/spaces(nums, ".", "_" are allowed), lowercase only(regardless `toLowerCase()` in backend, but in frontend could also auotomatically make to lowercase, not throw error) |
-| `description` | yes | 3-300 | on explore page (and maybe in search? :thinking: ) description shortened to 112 chars + "..." |
+| `communityName` | yes | 30 | NO special chars/spaces(nums, ".", "_" are allowed), lowercase only(regardless `toLowerCase()` in backend, but in frontend could also auotomatically make to lowercase, not throw error) |
+| `description` | yes | 300 | on explore page (and maybe in search? :thinking: ) description shortened to 112 chars + "..." |
 | `category` | yes | chose from 5 options(drop down box) |
-| `tags` | no(optional) | 3-20 | *__MAX 5 TAGS__* per community/post, no special chars(nums allowed), separated by space(make sure not creating empty tags when just pressing space in that field), lowercase only(regardless `toLowerCase()` in backend, but in frontend could also auotomatically make to lowercase, not throw error) |
+| `tags` | no(optional) | 20 | *__MAX 5 TAGS__* per community/post, no special chars(nums allowed), separated by space(make sure not creating empty tags when just pressing space in that field), lowercase only(regardless `toLowerCase()` in backend, but in frontend could also auotomatically make to lowercase, not throw error) |
 | `communityPicture` | no(optional) | dims(idk yet) | haven't created this feature yet(and idk if I even will), but would be available in community profile update, NOT during create |
 
 > Still need to fix those values' checks for backend, but that's, I think, is final version
