@@ -153,8 +153,11 @@
         <!-- RIGHT UPPER: explore panel -->
         <div class="right-upper-container">
           <div class="explore-actions">
-            <button type="button" class="explore-btn" id="explore-btn" onclick="window.location.href='/feed'">
-              <span class="explore-btn-inner"><img th:src="@{/vector-logos/sparkleLogo.svg}" alt="" class="explore-btn-icon"> Explore</span>
+            <button type="button" class="explore-btn" onclick="window.location.href='/feed'">
+              <span class="explore-btn-inner"><img th:src="@{/vector-logos/feedLogo.svg}" alt="" class="explore-btn-icon"> Feed</span>
+            </button>
+            <button type="button" class="explore-btn" onclick="window.location.href='/communities'">
+              <span class="explore-btn-inner"><img th:src="@{/vector-logos/sparkleLogo.svg}" alt="" class="explore-btn-icon"> Explore Communities</span>
             </button>
             <button type="button" class="explore-btn" id="my-communities-btn">
               <span class="explore-btn-inner"><img th:src="@{/vector-logos/clubLogo.svg}" alt="" class="explore-btn-icon"> My Communities</span>
@@ -167,6 +170,11 @@
             </button>
           </div>
         </div>
+
+      <!-- RIGHT LOWER: trending topics -->
+      <div class="right-lower-container">
+        <div class="header-right"><h3>Trending Topics</h3></div>
+      </div>
 
       </div>
     </div>
