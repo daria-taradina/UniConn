@@ -38,7 +38,32 @@ document.getElementById('edit-profile-submit').addEventListener('click', async (
       editMsg.textContent = 'Profile updated successfully.';
       editMsg.classList.add('success');
       editMsg.style.display = 'block';
-      setTimeout(() => window.location.reload(), 1000); // reload to reflect changes
+
+      // update DOM directly — page reload loses JWT context so Thymeleaf renders empty
+      const bioSection = document.querySelector('.profile-bio-section');
+      const newName = body.name;
+      const newBio  = body.userBio;
+
+      // rebuild bio section content in place
+      bioSection.innerHTML = '';
+      if (newName) {
+        const nameEl = document.createElement('span');
+        nameEl.className = 'profile-name';
+        nameEl.textContent = newName;
+        bioSection.appendChild(nameEl);
+      }
+      if (newBio) {
+        const bioEl = document.createElement('p');
+        bioEl.className = 'profile-bio';
+        bioEl.textContent = newBio;
+        bioSection.appendChild(bioEl);
+      }
+      if (!newName && !newBio) {
+        const emptyEl = document.createElement('p');
+        emptyEl.className = 'profile-bio-empty';
+        emptyEl.textContent = 'No bio yet.';
+        bioSection.appendChild(emptyEl);
+      }
     } else {
       editMsg.textContent = 'Failed to update profile. Please try again.';
       editMsg.classList.add('error');

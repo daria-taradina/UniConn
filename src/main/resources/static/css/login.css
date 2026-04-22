@@ -9,6 +9,10 @@
 * {
   box-sizing: border-box;
 }
+::selection {
+  background: #24283b;
+  color: #ffffff;
+}
 
 html {
   align-items: center;

@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" th:href="@{/css/communities.css}">
-  <title>Communities - UniConn</title>
+  <title>My Communities - UniConn</title>
 </head>
 
 <body>
@@ -137,9 +137,9 @@
 
   <div class="wrap">
 
-    <!-- LEFT CONTAINER: community list -->
+    <!-- LEFT CONTAINER: my community list -->
     <div class="left-container">
-      <div class="header-left"><h3>Communities</h3></div>
+      <div class="header-left"><h3>My Communities</h3></div>
     </div>
 
     <!-- RIGHT CONTAINER -->
@@ -149,13 +149,13 @@
         <!-- RIGHT UPPER: explore panel -->
         <div class="right-upper-container">
           <div class="explore-actions">
-            <button type="button" class="explore-btn" id="for-you-btn" onclick="window.location.href='/feed'">
+            <button type="button" class="explore-btn" onclick="window.location.href='/feed'">
               <span class="explore-btn-inner"><img th:src="@{/vector-logos/feedLogo.svg}" alt="" class="explore-btn-icon"> Feed</span>
             </button>
-            <button type="button" class="explore-btn" id="explore-btn" onclick="window.location.href='/communities'">
+            <button type="button" class="explore-btn" onclick="window.location.href='/communities'">
               <span class="explore-btn-inner"><img th:src="@{/vector-logos/sparkleLogo.svg}" alt="" class="explore-btn-icon"> Explore Communities</span>
             </button>
-            <button type="button" class="explore-btn" id="my-communities-btn" onclick="window.location.href='/my-communities'">
+            <button type="button" class="explore-btn" onclick="window.location.href='/my-communities'">
               <span class="explore-btn-inner"><img th:src="@{/vector-logos/clubLogo.svg}" alt="" class="explore-btn-icon"> My Communities</span>
             </button>
             <button type="button" class="explore-btn" id="create-community-toggle">
