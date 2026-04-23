@@ -12,13 +12,17 @@ import com.uniconn.backend.exception.ResourceAlreadyExistsException;
 import com.uniconn.backend.exception.ResourceNotFoundException;
 import com.uniconn.backend.exception.UnauthorizedException;
 import jakarta.transaction.Transactional;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService extends BaseService {
 
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final PasswordEncoder passwordEncoder;
+
+    public UserService(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     // registers a new user after validating email, checking for duplicates,
     // and hashing the password before saving
@@ -133,7 +137,6 @@ public class UserService extends BaseService {
     }
 
     // resets password after verifying security question answer
-    // called by PasswordResetService
     @Transactional
     public void resetPasswordBySecretQuestion(String csunEmail, String answer, String newPassword) {
 
