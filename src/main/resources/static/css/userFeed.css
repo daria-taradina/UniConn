@@ -474,6 +474,11 @@ button:hover {
 }
 
 /* CREATE COMMUNITY MODAL */
+.community-name-hint {
+  font-size: 0.78em;
+  color: #999;
+  margin-top: 2px;
+}
 .community-category-select {
   color: #555;
   cursor: pointer;

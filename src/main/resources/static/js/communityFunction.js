@@ -59,10 +59,23 @@ document.getElementById('create-community-submit').addEventListener('click', asy
     });
 
     if (response.ok) {
-      window.location.reload(); // refresh page to show new community
+      const community = await response.json();
+      sessionStorage.setItem('communityDetail', JSON.stringify(community));
+
+      const existing = JSON.parse(localStorage.getItem('myCommunities') || '[]');
+      if (!existing.some(c => c.communityId === community.communityId)) {
+        existing.push(community);
+        localStorage.setItem('myCommunities', JSON.stringify(existing));
+      }
+
+      window.location.href = '/community/' + community.communityId;
     } else {
-      const msg = await response.text();
-      alert(msg || 'Failed to create community.');
+      let msg = 'Failed to create community.';
+      try {
+        const data = await response.json();
+        msg = data.error || msg;
+      } catch {}
+      alert(`${response.status}: ${msg}`);
     }
   } catch {
     alert('Something went wrong. Please try again.');

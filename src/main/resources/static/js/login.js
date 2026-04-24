@@ -20,7 +20,17 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
 
     if (response.ok) {
       const data = await response.json();
-      localStorage.setItem('jwt', data.token); // save JWT for future API calls
+      localStorage.setItem('jwt', data.token);
+      // fetch username immediately so it's available across all pages
+      try {
+        const profileRes = await fetch('/api/profile/me', {
+          headers: { 'Authorization': 'Bearer ' + data.token }
+        });
+        if (profileRes.ok) {
+          const profile = await profileRes.json();
+          if (profile.username) localStorage.setItem('currentUsername', profile.username);
+        }
+      } catch {}
       window.location.href = '/feed';
     } else {
       errorEl.style.display = 'block'; 

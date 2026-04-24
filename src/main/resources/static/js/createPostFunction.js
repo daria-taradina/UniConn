@@ -11,12 +11,11 @@ let postDestination    = null;
 // tracks selected communitys ID (null if posting to profile)
 let selectedCommunityId = null;
 
-// fetches all communities from the backend and populates community dropdown
+// fetches user's communities and populates community dropdown
 async function loadCommunities() {
   communityList.innerHTML = '<li class="create-post-community-empty">Loading...</li>';
   try {
-    const res = await fetch('/api/community/all', {
-      // JWT required — stored in localStorage after login
+    const res = await fetch('/api/community/my-communities', {
       headers: { 'Authorization': 'Bearer ' + localStorage.getItem('jwt') }
     });
     if (!res.ok) throw new Error();
@@ -27,22 +26,38 @@ async function loadCommunities() {
       return;
     }
 
-    // build a list item for each community
     communityList.innerHTML = '';
     communities.forEach(c => {
       const li = document.createElement('li');
       li.className = 'create-post-community-item';
-      li.textContent = c.communityName;
+      li.textContent = 'c/' + c.communityName;
       li.addEventListener('click', () => {
-        selectedCommunityId = c.communityId; // store community ID
-        communityBtn.innerHTML = c.communityName + ' <span class="create-post-arrow">&#9662;</span>';
+        selectedCommunityId = c.communityId;
+        communityBtn.innerHTML = 'c/' + c.communityName + ' <span class="create-post-arrow">&#9662;</span>';
         communityBtn.classList.remove('input-error');
         communityList.classList.remove('open');
       });
       communityList.appendChild(li);
     });
   } catch {
-    communityList.innerHTML = '<li class="create-post-community-empty">Failed to load communities</li>';
+    const local = JSON.parse(localStorage.getItem('myCommunities') || '[]');
+    if (local.length === 0) {
+      communityList.innerHTML = '<li class="create-post-community-empty">No communities available</li>';
+    } else {
+      communityList.innerHTML = '';
+      local.forEach(c => {
+        const li = document.createElement('li');
+        li.className = 'create-post-community-item';
+        li.textContent = 'c/' + c.communityName;
+        li.addEventListener('click', () => {
+          selectedCommunityId = c.communityId;
+          communityBtn.innerHTML = 'c/' + c.communityName + ' <span class="create-post-arrow">&#9662;</span>';
+          communityBtn.classList.remove('input-error');
+          communityList.classList.remove('open');
+        });
+        communityList.appendChild(li);
+      });
+    }
   }
 }
 
@@ -104,15 +119,12 @@ document.getElementById('destination-community').addEventListener('click', () =>
 
 communityBtn.addEventListener('click', () => communityList.classList.toggle('open'));
 
-// validate all fields before submitting, then redirect to the create post page
 document.getElementById('create-post-submit').addEventListener('click', () => {
-  // title only required for community posts
   if (postDestination === 'community' && titleInput.value.trim() === '') {
     titleInput.classList.add('input-error');
     titleInput.focus();
     return;
   }
-  // body required
   if (bodyInput.value.trim() === '') {
     bodyInput.classList.add('input-error');
     bodyInput.focus();
@@ -126,6 +138,21 @@ document.getElementById('create-post-submit').addEventListener('click', () => {
     communityBtn.classList.add('input-error');
     return;
   }
+
+  if (postDestination === 'profile') {
+    const post = {
+      id: Date.now(),
+      username: localStorage.getItem('currentUsername') || '',
+      body: bodyInput.value.trim(),
+      createdAt: new Date().toISOString()
+    };
+    const existing = JSON.parse(localStorage.getItem('myProfilePosts') || '[]');
+    existing.unshift(post);
+    localStorage.setItem('myProfilePosts', JSON.stringify(existing));
+    window.location.href = '/profile';
+    return;
+  }
+
   window.location.href = '/post/createPost';
 });
 

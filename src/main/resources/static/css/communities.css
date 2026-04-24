@@ -476,6 +476,11 @@ button:hover {
 }
 
 /* CREATE COMMUNITY MODAL */
+.community-name-hint {
+  font-size: 0.78em;
+  color: #999;
+  margin-top: 2px;
+}
 .community-category-select {
   color: #555;
   cursor: pointer;
@@ -499,4 +504,160 @@ button:hover {
   border-radius: 6px;
   padding: 6px 10px;
   font-size: 0.85em;
+}
+
+/* MY COMMUNITIES LIST */
+.mc-list {
+  margin-top: 46px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  max-height: calc(1114px - 60px);
+}
+.my-communities-empty {
+  font-size: 0.9em;
+  color: #aaa;
+  font-style: italic;
+  padding: 20px 8px;
+}
+.mc-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border: 1.5px solid #ddd;
+  border-radius: 10px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.mc-card:hover {
+  background: #f0f7fc;
+  border-color: #91c5e8;
+}
+.mc-card-icon {
+  width: 38px !important;
+  height: 38px;
+  flex-shrink: 0;
+  margin: 0;
+  display: block;
+}
+.mc-card-left {
+  flex-shrink: 0;
+}
+.mc-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
+}
+.mc-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.mc-card-name {
+  font-weight: 700;
+  font-size: 1em;
+}
+.mc-card-category {
+  background: #91c5e8;
+  color: #fff;
+  border-radius: 10px;
+  padding: 1px 10px;
+  font-size: 0.78em;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.mc-card-members {
+  font-size: 0.82em;
+  color: #777;
+}
+.mc-card-desc {
+  font-size: 0.88em;
+  color: #444;
+  margin: 2px 0 0 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.mc-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 4px;
+}
+.mc-tag {
+  background: #f0f0f0;
+  border-radius: 10px;
+  padding: 1px 8px;
+  font-size: 0.78em;
+  color: #555;
+}
+
+/* COMMUNITY DETAIL PAGE */
+.community-detail-content {
+  margin-top: 40px;
+  padding: 10px 16px;
+}
+.community-detail-top {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.community-detail-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.community-detail-category {
+  background: #91c5e8;
+  color: #fff;
+  border-radius: 12px;
+  padding: 2px 12px;
+  font-size: 0.85em;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.community-detail-members {
+  font-size: 0.9em;
+  color: #555;
+}
+.community-detail-desc {
+  font-size: 0.95em;
+  color: #333;
+  margin: 4px 0 0 0;
+  line-height: 1.5;
+}
+.community-detail-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.community-tag {
+  background: #f0f0f0;
+  border-radius: 10px;
+  padding: 2px 10px;
+  font-size: 0.8em;
+  color: #444;
+}
+.community-detail-created {
+  font-size: 0.82em;
+  color: #999;
+  margin: 0;
+}
+.community-posts-section {
+  padding: 8px 0;
+}
+.community-posts-empty {
+  font-size: 0.9em;
+  color: #aaa;
+  font-style: italic;
+  margin: 16px 0 0 0;
 }

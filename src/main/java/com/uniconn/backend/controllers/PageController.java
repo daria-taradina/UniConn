@@ -8,7 +8,7 @@ public class PageController {
 
     @GetMapping("/")
     public String home() {
-        return "userFeed/userFeed";
+        return "login/login";
     }
 
     @GetMapping("/login")
@@ -44,6 +44,11 @@ public class PageController {
     @GetMapping("/post/createPost")
     public String createPostPage() {
         return "post/createPost";
+    }
+
+    @GetMapping("/community/{id}")
+    public String communityDetailPage() {
+        return "communities/communityDetail";
     }
 
     @GetMapping("/profile")

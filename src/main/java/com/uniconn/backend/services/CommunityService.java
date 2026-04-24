@@ -57,6 +57,21 @@ public class CommunityService extends BaseService {
 	    return mapToResponseDTO(saved, tagNames);
 	}
 	
+	@Transactional
+	public List<CommunityResponseDTO> getMyCommunities() {
+		User currentUser = getAuthenticatedUser();
+		return communityMemberRepository.findByUser_UserId(currentUser.getUserId())
+			.stream()
+			.map(member -> {
+				Community c = member.getCommunity();
+				List<String> tagNames = c.getTags().stream()
+					.map(ct -> ct.getTag().getName())
+					.collect(Collectors.toList());
+				return mapToResponseDTO(c, tagNames);
+			})
+			.collect(Collectors.toList());
+	}
+
 	private CommunityResponseDTO mapToResponseDTO(Community community, List<String> tagNames) {
 	    return new CommunityResponseDTO(
 	        community.getCommunityId(),

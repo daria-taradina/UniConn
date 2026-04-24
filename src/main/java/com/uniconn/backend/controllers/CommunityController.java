@@ -18,10 +18,16 @@ public class CommunityController {
 	public CommunityController(CommunityService communityService){
 		this.communityService = communityService;
 	}
-	
+
 	@PostMapping("/create")
     public ResponseEntity<CommunityResponseDTO> createCommunity(
             @Valid @RequestBody CommunityDTO communityDTO) {
         return ResponseEntity.status(201).body(communityService.createCommunity(communityDTO));
     }
+
+	@GetMapping("/my-communities")
+	public ResponseEntity<List<CommunityResponseDTO>> getMyCommunities() {
+		return ResponseEntity.ok(communityService.getMyCommunities());
+	}
+
 }

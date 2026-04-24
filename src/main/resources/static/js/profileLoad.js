@@ -12,7 +12,8 @@
     .then(data => {
       // username
       const usernameEl = document.getElementById('profile-username');
-      if (usernameEl) usernameEl.textContent = '@' + (data.username || '');
+      if (usernameEl) usernameEl.textContent = 'u/' + (data.username || '');
+      if (data.username) localStorage.setItem('currentUsername', data.username);
 
       // Avatar
       const avatarEl = document.getElementById('profile-picture-img');

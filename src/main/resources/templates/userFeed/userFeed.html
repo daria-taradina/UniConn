@@ -13,7 +13,7 @@
   <nav class="navbar">
     <div class="navbar-left">
       <img class="logo-icon" th:src="@{/vector-logos/unicornLogo.png}" alt="UniConn Logo" width="100" height="100">
-      <a href="/" class="main">UniConn</a><hr><br>
+      <a href="/feed" class="main">UniConn</a><hr><br>
     </div>
 
     <div class="navbar-right">
@@ -29,7 +29,7 @@
         <img th:src="@{/vector-logos/usernameSignIn.svg}" alt="Profile" width="26" height="36">
       </a>
       <span class="signout-divider">|</span>
-      <a href="#" class="signout-link" onclick="localStorage.removeItem('jwt'); window.location.href='/login'; return false;">Sign Out</a>
+      <a href="#" class="signout-link" onclick="['jwt','currentUsername','myProfilePosts','myCommunities'].forEach(k=>localStorage.removeItem(k)); window.location.href='/login'; return false;">Sign Out</a>
     </div>
   </nav><hr><br>
 
@@ -68,6 +68,7 @@
 
     <div class="create-post-title-wrap">
       <input type="text" id="community-name-input" class="create-post-title-input" placeholder="Community name*" required>
+      <span class="community-name-hint">Lowercase letters, numbers, dots, and underscores only (e.g. my_community)</span>
     </div>
 
     <div class="create-post-field">
