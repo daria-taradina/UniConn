@@ -44,27 +44,19 @@ public class PageController {
     
     
  // Explore page — all communities (category filter handled by same template)
-    @GetMapping("/explore-communities")
-    public String exploreCommunitiesPage() {
-        return "communities/exploreCommunities";
-    }
- 
-    // Category filter — same template, JS reads the path segment to pre-select filter
-    @GetMapping("/explore-communities/{category}")
-    public String exploreCommunitiesByCategoryPage() {
-        return "community/exploreCommunities";
-    }
- 
-    // My communities page — all/created by me/member of filter handled in same template
-    @GetMapping("/my-communities")
-    public String myCommunitiesPage() {
-        return "community/myCommunities";
+    @GetMapping("/communities")
+    public String communitiesPage() {
+        return "communities/communities";
     }
 
-    // Community profile page — identified by name, not numeric id
-    @GetMapping("/c/{communityName}")
+    @GetMapping("/my-communities")
+    public String myCommunitiesPage() {
+        return "communities/myCommunities";
+    }
+
+    @GetMapping("/community/{communityName}")
     public String communityDetailPage() {
-        return "community/communityDetail";
+        return "communities/communityDetail";
     }
 
 }

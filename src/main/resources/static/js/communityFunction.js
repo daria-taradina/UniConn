@@ -68,7 +68,7 @@ document.getElementById('create-community-submit').addEventListener('click', asy
         localStorage.setItem('myCommunities', JSON.stringify(existing));
       }
 
-      window.location.href = '/c/' + community.communityName;
+      window.location.href = '/community/' + community.communityName;
     } else {
       let msg = 'Failed to create community.';
       try {

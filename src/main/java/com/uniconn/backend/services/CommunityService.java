@@ -63,6 +63,7 @@ public class CommunityService extends BaseService {
 	// ---------------------------------------------------------------
     // EXPLORE — all communities (no auth required)
     // ---------------------------------------------------------------
+    @Transactional
     public List<CommunityResponseDTO> getAllCommunities() {
         return communityRepository.findAll()
                 .stream()
@@ -71,6 +72,7 @@ public class CommunityService extends BaseService {
     }
  
     // Explore filtered by category — e.g. /explore-communities/academics
+    @Transactional
     public List<CommunityResponseDTO> getCommunitiesByCategory(String categoryParam) {
         CommunityCategory category = parseCategoryOrThrow(categoryParam);
         return communityRepository.findByCategory(category)
@@ -84,6 +86,7 @@ public class CommunityService extends BaseService {
     // ---------------------------------------------------------------
  
     // All communities the user has any membership in
+    @Transactional
     public List<CommunityResponseDTO> getMyCommunities() {
         User currentUser = getAuthenticatedUser();
         return communityMemberRepository.findByUser_UserId(currentUser.getUserId())
@@ -93,6 +96,7 @@ public class CommunityService extends BaseService {
     }
  
     // Only communities the user created (createdBy field)
+    @Transactional
     public List<CommunityResponseDTO> getCommunitiesCreatedByMe() {
         User currentUser = getAuthenticatedUser();
         return communityRepository.findByCreatedBy_UserId(currentUser.getUserId())
@@ -103,6 +107,7 @@ public class CommunityService extends BaseService {
  
     // Communities where user is a member but NOT the creator
     // (REGULAR_MEMBER or MODERATOR role)
+    @Transactional
     public List<CommunityResponseDTO> getCommunitiesIJoined() {
         User currentUser = getAuthenticatedUser();
         return communityMemberRepository.findByUser_UserId(currentUser.getUserId())
@@ -149,6 +154,7 @@ public class CommunityService extends BaseService {
         return mapToResponseDTO(community, tagNames);
     }
     
+    @Transactional
     public CommunityResponseDTO getCommunityByName(String communityName) {
         Community community = communityRepository.findByCommunityName(communityName)
                 .orElseThrow(() -> new ResourceNotFoundException("Community not found: " + communityName));
