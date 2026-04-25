@@ -34,7 +34,7 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/", "/login", "/register", "/forgot-password", "/feed", "/profile", "/post/**", "/communities", "/my-communities", "/community/**").permitAll()
+                        .requestMatchers("/", "/login", "/register", "/forgot-password", "/feed", "/profile", "/post/**", "/explore-communities", "/my-communities", "/my-communities/**", "/explore-communities/**", "/community/**", "/c/**").permitAll()
                         .requestMatchers("/css/**", "/js/**", "/*.css", "/*.js", "/vector-logos/**").permitAll()
                         .anyRequest().authenticated()
                 )
