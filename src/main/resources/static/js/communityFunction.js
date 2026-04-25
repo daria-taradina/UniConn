@@ -47,7 +47,7 @@ document.getElementById('create-community-submit').addEventListener('click', asy
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('jwt') // JWT required
+        'Authorization': 'Bearer ' + localStorage.getItem('token') // JWT required
       },
       // send communityDTYO fields: name, description, category enum value, tags array
       body: JSON.stringify({

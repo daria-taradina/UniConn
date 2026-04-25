@@ -1,6 +1,6 @@
 (function () {
   const communityName = window.location.pathname.split('/').pop();
-  const token = localStorage.getItem('jwt');
+  const token = localStorage.getItem('token');
 
   const fmt = s => s ? s.toLowerCase().replace(/_/g, ' ') : '';
 

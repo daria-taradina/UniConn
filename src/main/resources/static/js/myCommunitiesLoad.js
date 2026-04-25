@@ -2,7 +2,7 @@
   const list = document.getElementById('my-communities-list');
   if (!list) return;
 
-  const token = localStorage.getItem('jwt');
+  const token = localStorage.getItem('token');
   const headers = token ? { 'Authorization': 'Bearer ' + token } : {};
 
   const fmt = s => s ? s.toLowerCase().replace(/_/g, ' ') : '';
