@@ -422,7 +422,7 @@ button:hover {
   align-items: center;
   gap: 12px;
   padding: 8px 4px;
-  border: 1px solid #000;
+  border-bottom: 1px solid #eee;
   cursor: pointer;
 }
 .search-result-card {
@@ -736,4 +736,24 @@ button:hover {
   color: #aaa;
   margin-top: 12px;
   display: block;
+}
+
+.src-card-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.src-card-icon {
+  width: 38px !important;
+  height: 38px;
+  flex-shrink: 0;
+  margin: 0;
+  display: block;
+}
+.src-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
 }

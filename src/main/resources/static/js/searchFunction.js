@@ -39,10 +39,15 @@ document.getElementById('search-input').addEventListener('keydown', async functi
       const li = document.createElement('li');
       li.className = 'search-result-card';
       li.innerHTML = `
-        <div class="src-card-header">
-          <span class="src-card-name">u/${u.username}</span>
+        <div class="src-card-row">
+          <img src="/vector-logos/usernameSignIn.svg" alt="" class="src-card-icon">
+          <div class="src-card-body">
+            <div class="src-card-header">
+              <span class="src-card-name">u/${u.username}</span>
+            </div>
+            ${u.userBio ? `<p class="src-card-desc">${u.userBio}</p>` : ''}
+          </div>
         </div>
-        ${u.userBio ? `<p class="src-card-desc">${u.userBio}</p>` : ''}
       `;
       li.addEventListener('click', () => window.location.href = '/profile?user=' + u.username);
       results.appendChild(li);
@@ -52,12 +57,17 @@ document.getElementById('search-input').addEventListener('keydown', async functi
       const li = document.createElement('li');
       li.className = 'search-result-card';
       li.innerHTML = `
-        <div class="src-card-header">
-          <span class="src-card-name">c/${c.communityName}</span>
-          ${c.category ? `<span class="mc-card-category">${fmt(c.category)}</span>` : ''}
+        <div class="src-card-row">
+          <img src="/vector-logos/clubLogo.svg" alt="" class="src-card-icon">
+          <div class="src-card-body">
+            <div class="src-card-header">
+              <span class="src-card-name">c/${c.communityName}</span>
+              ${c.category ? `<span class="mc-card-category">${fmt(c.category)}</span>` : ''}
+            </div>
+            <span class="src-card-members">${c.memberCount ?? 0} members</span>
+            ${c.description ? `<p class="src-card-desc">${c.description}</p>` : ''}
+          </div>
         </div>
-        <span class="src-card-members">${c.memberCount ?? 0} members</span>
-        ${c.description ? `<p class="src-card-desc">${c.description}</p>` : ''}
       `;
       li.addEventListener('click', () => window.location.href = '/community/' + c.communityName);
       results.appendChild(li);
