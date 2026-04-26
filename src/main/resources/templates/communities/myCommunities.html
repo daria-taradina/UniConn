@@ -146,6 +146,18 @@
     <!-- LEFT CONTAINER: my community list -->
     <div class="left-container">
       <div class="header-left"><h3>My Communities</h3></div>
+      <div class="mc-search-wrap">
+        <input type="text" id="communities-search" class="mc-search-input" placeholder="Search by community name or tag">
+        <img src="/vector-logos/magnifyGlass.svg" alt="Search" class="mc-search-icon">
+      </div>
+      <div class="mc-filter-bubbles">
+        <button class="mc-filter-btn active" data-category="all">All</button>
+        <button class="mc-filter-btn" data-category="academics">Academics</button>
+        <button class="mc-filter-btn" data-category="career">Career</button>
+        <button class="mc-filter-btn" data-category="social">Social</button>
+        <button class="mc-filter-btn" data-category="campus_and_events">Campus &amp; Events</button>
+        <button class="mc-filter-btn" data-category="other">Other</button>
+      </div>
       <div id="my-communities-list" class="mc-list"></div>
     </div>
 
@@ -156,13 +168,13 @@
         <!-- RIGHT UPPER: explore panel -->
         <div class="right-upper-container">
           <div class="explore-actions">
-            <button type="button" class="explore-btn" onclick="window.location.href='/feed'">
+            <button type="button" class="explore-btn" id="for-you-btn" onclick="window.location.href='/feed'">
               <span class="explore-btn-inner"><img th:src="@{/vector-logos/feedLogo.svg}" alt="" class="explore-btn-icon"> Feed</span>
             </button>
-            <button type="button" class="explore-btn" onclick="window.location.href='/communities'">
+            <button type="button" class="explore-btn" id="explore-btn" onclick="window.location.href='/communities'">
               <span class="explore-btn-inner"><img th:src="@{/vector-logos/sparkleLogo.svg}" alt="" class="explore-btn-icon"> Explore Communities</span>
             </button>
-            <button type="button" class="explore-btn" onclick="window.location.href='/my-communities'">
+            <button type="button" class="explore-btn" id="my-communities-btn" onclick="window.location.href='/my-communities'">
               <span class="explore-btn-inner"><img th:src="@{/vector-logos/clubLogo.svg}" alt="" class="explore-btn-icon"> My Communities</span>
             </button>
             <button type="button" class="explore-btn" id="create-community-toggle">

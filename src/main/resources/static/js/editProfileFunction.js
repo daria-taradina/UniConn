@@ -53,17 +53,37 @@ document.getElementById('edit-profile-submit').addEventListener('click', async (
     formData.append('file', file);
 
     try {
-      const res = await fetch('/api/users/me/picture', {
+      // Step 1: upload to Cloudinary
+      const uploadRes = await fetch('/api/upload/user', {
         method: 'POST',
         headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') },
         body: formData
       });
 
-      if (res.ok) {
+      if (!uploadRes.ok) {
+        editMsg.textContent = 'Failed to upload picture. Please try again.';
+        editMsg.classList.add('error');
+        editMsg.style.display = 'block';
+        return;
+      }
+
+      const cloudinaryUrl = await uploadRes.text();
+
+      // Step 2: save the Cloudinary URL to the user account
+      const saveRes = await fetch('/api/users/me/picture', {
+        method: 'PATCH',
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(cloudinaryUrl)
+      });
+
+      if (saveRes.ok) {
         const avatarEl = document.getElementById('profile-picture-img');
         if (avatarEl && editAvatarPreview) avatarEl.src = editAvatarPreview.src;
       } else {
-        editMsg.textContent = 'Failed to upload picture. Please try again.';
+        editMsg.textContent = 'Failed to save picture. Please try again.';
         editMsg.classList.add('error');
         editMsg.style.display = 'block';
         return;

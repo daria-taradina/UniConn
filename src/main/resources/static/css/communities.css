@@ -540,6 +540,11 @@ button:hover {
   background: #d6ecf7;
   border: 2px solid #000;
 }
+.explore-btn.active {
+  background: #83b5d6;
+  border: 2px solid #000;
+  color: #000;
+}
 .explore-btn-icon {
   width: 28px !important;
   height: 28px;
@@ -587,8 +592,65 @@ button:hover {
 }
 
 /* MY COMMUNITIES LIST */
+.mc-search-wrap {
+  position: relative;
+  margin: 46px 12px 0 12px;
+}
+.mc-search-input {
+  width: 100%;
+  height: 42px;
+  padding: 0 44px 0 16px;
+  border: 2px solid #ccc;
+  border-radius: 24px;
+  font-size: 0.95em;
+  font-family: inherit;
+  outline: none;
+  box-sizing: border-box;
+}
+.mc-search-input:focus {
+  border-color: #83b5d6;
+}
+.mc-search-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px !important;
+  height: 20px;
+  margin: 0;
+  pointer-events: none;
+  display: block;
+}
+.mc-filter-bubbles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 12px 0 12px;
+}
+.mc-filter-btn {
+  height: 32px;
+  width: auto;
+  padding: 0 16px;
+  border-radius: 20px;
+  border: 2px solid #ccc;
+  background: #f5f5f5;
+  color: #555;
+  font-size: 0.85em;
+  font-weight: 600;
+  cursor: pointer;
+}
+.mc-filter-btn:hover {
+  border-color: #83b5d6;
+  background: #e8f4fb;
+  color: #333;
+}
+.mc-filter-btn.active {
+  background: #83b5d6;
+  border-color: #000;
+  color: #000;
+}
 .mc-list {
-  margin-top: 46px;
+  margin-top: 12px;
   padding: 12px;
   display: flex;
   flex-direction: column;

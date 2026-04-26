@@ -21,7 +21,7 @@ public class CloudinaryConfig {
 	private String apiSecret;
 	
 	@Bean
-	private Cloudinary cloudinary() {
+	public Cloudinary cloudinary() {
 		return new Cloudinary(Map.of(
 				"cloud_name", cloudName,
 				"api_key", apiKey,

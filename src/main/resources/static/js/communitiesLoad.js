@@ -2,6 +2,34 @@
   const list = document.getElementById('communities-list');
   if (!list) return;
 
+  let activeCategory = 'all';
+
+  function applyFilters() {
+    const q = (document.getElementById('communities-search')?.value || '').trim().toLowerCase();
+    list.querySelectorAll('.mc-card').forEach(card => {
+      const name = (card.querySelector('.mc-card-name')?.textContent || '').toLowerCase();
+      const tags = (card.querySelector('.mc-card-tags')?.textContent || '').toLowerCase();
+      const cat  = (card.dataset.category || '').toLowerCase();
+      const matchesSearch   = !q || name.includes(q) || tags.includes(q);
+      const matchesCategory = activeCategory === 'all' || cat === activeCategory;
+      card.style.display = (matchesSearch && matchesCategory) ? '' : 'none';
+    });
+  }
+
+  const searchInput = document.getElementById('communities-search');
+  if (searchInput) searchInput.addEventListener('input', applyFilters);
+
+  document.querySelectorAll('.mc-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.mc-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeCategory = btn.dataset.category;
+      applyFilters();
+    });
+  });
+
+  document.getElementById('explore-btn')?.classList.add('active');
+
   const token = localStorage.getItem('token');
   const authHeaders = token ? { 'Authorization': 'Bearer ' + token } : {};
   const currentUsername = localStorage.getItem('currentUsername') || '';
@@ -35,6 +63,7 @@
       const isAdmin = c.createdByUsername === currentUsername;
       const card = document.createElement('div');
       card.className = 'mc-card';
+      card.dataset.category = (c.category || '').toLowerCase();
 
       const tags = Array.isArray(c.tags) && c.tags.length > 0
         ? c.tags.map(t => `<span class="mc-tag">#${t}</span>`).join('')

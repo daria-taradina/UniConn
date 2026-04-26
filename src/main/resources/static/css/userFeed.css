@@ -500,6 +500,11 @@ button:hover {
   background: #d6ecf7;
   border: 2px solid #000;
 }
+.explore-btn.active {
+  background: #83b5d6;
+  border: 2px solid #000;
+  color: #000;
+}
 .explore-btn-icon {
   width: 28px !important;
   height: 28px;

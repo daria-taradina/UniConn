@@ -146,6 +146,18 @@
     <!-- LEFT CONTAINER: community list -->
     <div class="left-container">
       <div class="header-left"><h3>Communities</h3></div>
+      <div class="mc-search-wrap">
+        <input type="text" id="communities-search" class="mc-search-input" placeholder="Search by community name or tag">
+        <img src="/vector-logos/magnifyGlass.svg" alt="Search" class="mc-search-icon">
+      </div>
+      <div class="mc-filter-bubbles">
+        <button class="mc-filter-btn active" data-category="all">All</button>
+        <button class="mc-filter-btn" data-category="academics">Academics</button>
+        <button class="mc-filter-btn" data-category="career">Career</button>
+        <button class="mc-filter-btn" data-category="social">Social</button>
+        <button class="mc-filter-btn" data-category="campus_and_events">Campus &amp; Events</button>
+        <button class="mc-filter-btn" data-category="other">Other</button>
+      </div>
       <div id="communities-list" class="mc-list"></div>
     </div>
 
