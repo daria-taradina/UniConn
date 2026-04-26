@@ -5,12 +5,10 @@ import com.uniconn.backend.entities.*;
 import com.uniconn.backend.exception.*;
 import com.uniconn.backend.repositories.*;
 import jakarta.transaction.Transactional;
-import com.uniconn.backend.composite_keys.CommunityMemberId;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -161,6 +159,32 @@ public class CommunityService extends BaseService {
                 .collect(Collectors.toList());
     }
  
+    // ---------------------------------------------------------------
+    // TRENDING TAGS
+    // ---------------------------------------------------------------
+    public List<String> getTrendingTags() {
+        return communityTagService.getTrendingTags();
+    }
+
+    // ---------------------------------------------------------------
+    // UPDATE
+    // ---------------------------------------------------------------
+    @Transactional
+    public CommunityResponseDTO updateCommunity(Integer communityId, CommunityUpdateRequest request) {
+        User currentUser = getAuthenticatedUser();
+        Community community = communityRepository.findById(communityId)
+                .orElseThrow(() -> new ResourceNotFoundException("Community not found"));
+        if (!community.getCreatedBy().getUserId().equals(currentUser.getUserId())) {
+            throw new UnauthorizedException("Only the community creator can update it");
+        }
+        if (request.getDescription() != null && !request.getDescription().isBlank()) {
+            community.setDescription(request.getDescription());
+        }
+        communityRepository.save(community);
+        List<String> tagNames = communityTagService.updateTags(community, request.getTags());
+        return mapToResponseDTO(community, tagNames);
+    }
+
     // ---------------------------------------------------------------
     // HELPERS
     // ---------------------------------------------------------------
