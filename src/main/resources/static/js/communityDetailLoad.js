@@ -74,7 +74,7 @@
 
           try {
             const res = await fetch(`/api/community/${community.communityId}/update`, {
-              method: 'PUT',
+              method: 'PATCH',
               headers: { 'Content-Type': 'application/json', ...headers },
               body: JSON.stringify({ description, tags })
             });
