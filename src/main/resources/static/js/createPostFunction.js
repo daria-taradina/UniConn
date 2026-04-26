@@ -119,7 +119,7 @@ document.getElementById('destination-community').addEventListener('click', () =>
 
 communityBtn.addEventListener('click', () => communityList.classList.toggle('open'));
 
-document.getElementById('create-post-submit').addEventListener('click', () => {
+document.getElementById('create-post-submit').addEventListener('click', async () => {
   if (postDestination === 'community' && titleInput.value.trim() === '') {
     titleInput.classList.add('input-error');
     titleInput.focus();
@@ -139,21 +139,35 @@ document.getElementById('create-post-submit').addEventListener('click', () => {
     return;
   }
 
-  if (postDestination === 'profile') {
-    const post = {
-      id: Date.now(),
-      username: localStorage.getItem('currentUsername') || '',
-      body: bodyInput.value.trim(),
-      createdAt: new Date().toISOString()
-    };
-    const existing = JSON.parse(localStorage.getItem('myProfilePosts') || '[]');
-    existing.unshift(post);
-    localStorage.setItem('myProfilePosts', JSON.stringify(existing));
-    window.location.href = '/profile';
-    return;
-  }
+  const body = {
+    contentText: bodyInput.value.trim(),
+    title:       postDestination === 'community' ? titleInput.value.trim() : null,
+    communityId: postDestination === 'community' ? selectedCommunityId   : null
+  };
 
-  window.location.href = '/post/createPost';
+  try {
+    const res = await fetch('/api/posts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
+      },
+      body: JSON.stringify(body)
+    });
+
+    if (res.ok) {
+      const post = await res.json();
+      if (postDestination === 'profile') {
+        window.location.href = '/profile';
+      } else {
+        window.location.href = '/community/' + post.communityName;
+      }
+    } else {
+      alert('Failed to create post. Please try again.');
+    }
+  } catch {
+    alert('Something went wrong. Please try again.');
+  }
 });
 
 

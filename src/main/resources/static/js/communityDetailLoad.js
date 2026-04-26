@@ -124,6 +124,40 @@
     }
   }
 
+  function formatDate(iso) {
+    const d = new Date(iso);
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+      + ' · '
+      + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+  }
+
+  function renderCommunityPosts(posts) {
+    const section = document.querySelector('.community-posts-section');
+    const placeholder = document.getElementById('community-posts-placeholder');
+    if (!section) return;
+
+    if (!posts || posts.length === 0) {
+      if (placeholder) placeholder.style.display = 'block';
+      return;
+    }
+
+    if (placeholder) placeholder.style.display = 'none';
+
+    posts.forEach(post => {
+      const card = document.createElement('div');
+      card.className = 'community-post-card';
+      card.innerHTML = `
+        <div class="community-post-header">
+          <span class="community-post-username">u/${post.authorUsername}</span>
+          <span class="community-post-date">${formatDate(post.createdAt)}</span>
+        </div>
+        ${post.title ? `<p class="community-post-title">${post.title}</p>` : ''}
+        <p class="community-post-body">${post.contentText}</p>
+      `;
+      section.appendChild(card);
+    });
+  }
+
   // fetch community + membership in parallel
   Promise.all([
     fetch('/api/community/' + communityName, { headers })
@@ -136,10 +170,14 @@
     sessionStorage.removeItem('communityDetail');
     const isMember = myCommunities.some(c => c.communityId === community.communityId);
     render(community, isMember);
-  }).catch(() => {
-    const raw = sessionStorage.getItem('communityDetail');
-    if (!raw) return;
-    sessionStorage.removeItem('communityDetail');
-    try { render(JSON.parse(raw), false); } catch {}
-  });
+
+    return fetch(`/api/posts/community/${community.communityId}`, { headers });
+  }).then(res => res.ok ? res.json() : [])
+    .then(renderCommunityPosts)
+    .catch(() => {
+      const raw = sessionStorage.getItem('communityDetail');
+      if (!raw) return;
+      sessionStorage.removeItem('communityDetail');
+      try { render(JSON.parse(raw), false); } catch {}
+    });
 })();

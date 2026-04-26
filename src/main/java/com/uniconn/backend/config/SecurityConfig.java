@@ -36,7 +36,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/community/all", "/api/community/category/**", "/api/community/trending-tags").permitAll()
                         .requestMatchers("/", "/login", "/register", "/forgot-password", "/feed", "/profile", "/post/**", "/communities", "/my-communities", "/community/**").permitAll()
-                        .requestMatchers("/css/**", "/js/**", "/*.css", "/*.js", "/vector-logos/**").permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/*.css", "/*.js", "/vector-logos/**", "/uploads/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

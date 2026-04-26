@@ -6,7 +6,8 @@
   const modalClose = document.getElementById('post-view-close');
   if (!container) return;
 
-  const fallbackUsername = localStorage.getItem('currentUsername') || '';
+  const token   = localStorage.getItem('token');
+  const userId  = localStorage.getItem('currentUserId');
 
   function formatDate(iso) {
     const d = new Date(iso);
@@ -15,30 +16,43 @@
       + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
   }
 
-  const posts = JSON.parse(localStorage.getItem('myProfilePosts') || '[]');
+  function renderPosts(posts) {
+    if (!posts || posts.length === 0) {
+      container.innerHTML = '<p class="profile-posts-empty">No posts yet.</p>';
+      return;
+    }
 
-  if (posts.length === 0) {
+    posts.forEach(post => {
+      const card = document.createElement('div');
+      card.className = 'profile-post-card';
+      card.innerHTML = `
+        <span class="profile-post-username">u/${post.authorUsername}</span>
+        <p class="profile-post-body">${post.contentText}</p>
+        <span class="profile-post-date">${formatDate(post.createdAt)}</span>
+      `;
+      card.addEventListener('click', () => {
+        modalBody.textContent = post.contentText;
+        modalDate.textContent = 'u/' + post.authorUsername + ' · ' + formatDate(post.createdAt);
+        modal.classList.add('active');
+      });
+      container.appendChild(card);
+    });
+  }
+
+  if (modalClose) modalClose.addEventListener('click', () => modal.classList.remove('active'));
+  if (modal) modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('active'); });
+
+  if (!token || !userId) {
     container.innerHTML = '<p class="profile-posts-empty">No posts yet.</p>';
     return;
   }
 
-  posts.forEach(post => {
-    if (!post.username) post.username = fallbackUsername;
-    const card = document.createElement('div');
-    card.className = 'profile-post-card';
-    card.innerHTML = `
-      <span class="profile-post-username">u/${post.username}</span>
-      <p class="profile-post-body">${post.body}</p>
-      <span class="profile-post-date">${formatDate(post.createdAt)}</span>
-    `;
-    card.addEventListener('click', () => {
-      modalBody.textContent = post.body;
-      modalDate.textContent = 'u/' + post.username + ' · ' + formatDate(post.createdAt);
-      modal.classList.add('active');
+  fetch(`/api/posts/profile/${userId}`, {
+    headers: { 'Authorization': 'Bearer ' + token }
+  })
+    .then(res => { if (!res.ok) throw new Error(); return res.json(); })
+    .then(renderPosts)
+    .catch(() => {
+      container.innerHTML = '<p class="profile-posts-empty">Could not load posts.</p>';
     });
-    container.appendChild(card);
-  });
-
-  if (modalClose) modalClose.addEventListener('click', () => modal.classList.remove('active'));
-  if (modal) modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('active'); });
 })();

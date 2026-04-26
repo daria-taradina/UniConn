@@ -18,6 +18,15 @@ public class PostController {
     }
 
     // ---------------------------------------------------------------
+    // POST /api/posts
+    // Create a profile post (no communityId) or community post
+    // ---------------------------------------------------------------
+    @PostMapping
+    public ResponseEntity<PostSummaryDTO> createPost(@RequestBody CreatePostRequest request) {
+        return ResponseEntity.status(201).body(postService.createPost(request));
+    }
+
+    // ---------------------------------------------------------------
     // GET /api/posts/feed/{userId}
     // User feed: posts from followed users + member communities
     // ---------------------------------------------------------------

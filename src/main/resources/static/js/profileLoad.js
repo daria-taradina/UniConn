@@ -14,6 +14,7 @@
       const usernameEl = document.getElementById('profile-username');
       if (usernameEl) usernameEl.textContent = 'u/' + (data.username || '');
       if (data.username) localStorage.setItem('currentUsername', data.username);
+      if (data.userId)   localStorage.setItem('currentUserId', data.userId);
 
       // Avatar
       const avatarEl = document.getElementById('profile-picture-img');

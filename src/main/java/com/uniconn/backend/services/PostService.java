@@ -1,8 +1,9 @@
 package com.uniconn.backend.services;
 
 import com.uniconn.backend.dtos.*;
-import com.uniconn.backend.entities.Post;
-import com.uniconn.backend.repositories.PostRepository;
+import com.uniconn.backend.entities.*;
+import com.uniconn.backend.exception.ResourceNotFoundException;
+import com.uniconn.backend.repositories.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,12 +13,41 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
-public class PostService {
+public class PostService extends BaseService {
 
     private final PostRepository postRepository;
+    private final CommunityRepository communityRepository;
+    private final TagService tagService;
 
-    public PostService(PostRepository postRepository) {
+    public PostService(PostRepository postRepository,
+                       CommunityRepository communityRepository,
+                       TagService tagService) {
         this.postRepository = postRepository;
+        this.communityRepository = communityRepository;
+        this.tagService = tagService;
+    }
+
+    // ---------------------------------------------------------------
+    // CREATE POST
+    // ---------------------------------------------------------------
+    @Transactional
+    public PostSummaryDTO createPost(CreatePostRequest request) {
+        User author = getAuthenticatedUser();
+
+        Post post = new Post();
+        post.setAuthor(author);
+        post.setContentText(request.getContentText());
+
+        if (request.getCommunityId() != null) {
+            Community community = communityRepository.findById(request.getCommunityId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Community not found"));
+            post.setCommunity(community);
+            post.setTitle(request.getTitle());
+        }
+
+        Post saved = postRepository.save(post);
+
+        return toDTO(saved);
     }
 
     // ---------------------------------------------------------------

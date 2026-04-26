@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" th:href="@{/vector-logos/unicornLogo.png}" type="image/png">
   <link rel="stylesheet" th:href="@{/css/profile.css}">
   <link rel="stylesheet" th:href="@{/css/followButton.css}">
   <link rel="stylesheet" th:href="@{/css/tagInput.css}">
@@ -149,6 +150,15 @@
       <h3 class="search-modal-title">Edit Profile</h3>
     </div>
     <button class="search-modal-close" id="edit-profile-close" aria-label="Close">&times;</button>
+
+    <div class="edit-profile-picture-wrap">
+      <img id="edit-avatar-preview" src="/vector-logos/usernameSignIn.svg" alt="Preview" class="edit-avatar-preview">
+      <div class="edit-picture-right">
+        <label for="edit-picture-input" class="edit-picture-label">Choose photo</label>
+        <span class="edit-picture-hint">JPG, PNG or WebP · max 2MB</span>
+      </div>
+      <input type="file" id="edit-picture-input" accept="image/jpeg,image/png,image/webp" class="edit-picture-input">
+    </div>
 
     <div class="create-post-title-wrap">
       <input type="text" id="edit-name-input" class="create-post-title-input" placeholder="Display name">

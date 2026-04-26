@@ -1,7 +1,4 @@
-@font-face {
-  font-family: "opensans";
-  src: url(fonts/opensans-variablefont.ttf);
-}
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..900;1,300..900&display=swap');
 :root {
   --clr-bg: #ffffff;
   --clr-fg: #24283b;
@@ -40,7 +37,7 @@ body {
 
   background-size: cover;
   background-color: #fff;
-  font-family: "opensans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   line-height: 30px;
   cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'%3E%3Cpath fill='%2391C5E8' stroke='%23000000' stroke-width='2' d='M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87a.5.5 0 0 0 .35-.85L6.35 2.85a.5.5 0 0 0-.85.35Z'%3E%3C/path%3E%3C/svg%3E") 0 0, auto;
 }
@@ -751,6 +748,45 @@ button:hover {
   color: #aaa;
   font-style: italic;
   margin: 16px 0 0 0;
+}
+.community-post-card {
+  border: 1.5px solid #ddd;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  cursor: default;
+  background: #fff;
+}
+.community-post-card:hover {
+  background: #f7fbfd;
+  border-color: #91c5e8;
+}
+.community-post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.community-post-username {
+  font-weight: 700;
+  font-size: 0.88em;
+  color: #444;
+}
+.community-post-date {
+  font-size: 0.78em;
+  color: #999;
+}
+.community-post-title {
+  font-weight: 700;
+  font-size: 0.95em;
+  margin: 4px 0 2px 0;
+  color: #222;
+}
+.community-post-body {
+  font-size: 0.88em;
+  color: #444;
+  margin: 4px 0 0 0;
+  line-height: 1.4;
 }
 
 .src-card-row {
