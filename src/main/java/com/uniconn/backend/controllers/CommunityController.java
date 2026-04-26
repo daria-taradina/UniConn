@@ -1,8 +1,6 @@
 package com.uniconn.backend.controllers;
 
-import com.uniconn.backend.dtos.CommunityDTO;
-import com.uniconn.backend.dtos.CommunityResponseDTO;
-import com.uniconn.backend.dtos.CommunityUpdateRequest;
+import com.uniconn.backend.dtos.*;
 import com.uniconn.backend.services.CommunityService;
 
 import jakarta.validation.Valid;
@@ -61,6 +59,11 @@ public class CommunityController {
     @GetMapping("/my-communities/joined")
     public ResponseEntity<List<CommunityResponseDTO>> getCommunitiesIJoined() {
         return ResponseEntity.ok(communityService.getCommunitiesIJoined());
+    }    
+    
+    @GetMapping("/trending-tags")
+    public ResponseEntity<List<String>> getTrendingTags() {
+        return ResponseEntity.ok(communityService.getTrendingTags());
     }
     
     @GetMapping("/{communityName}")
@@ -68,15 +71,10 @@ public class CommunityController {
         return ResponseEntity.ok(communityService.getCommunityByName(communityName));
     }
 
-    @GetMapping("/trending-tags")
-    public ResponseEntity<List<String>> getTrendingTags() {
-        return ResponseEntity.ok(communityService.getTrendingTags());
-    }
-
-    @PutMapping("/{communityId}/update")
+    @PatchMapping("/{communityId}/update")
     public ResponseEntity<CommunityResponseDTO> updateCommunity(
             @PathVariable Integer communityId,
-            @RequestBody CommunityUpdateRequest request) {
+            @RequestBody CommunityUpdateDTO request) {
         return ResponseEntity.ok(communityService.updateCommunity(communityId, request));
     }
 }

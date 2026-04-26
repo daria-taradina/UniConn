@@ -8,7 +8,7 @@ package com.uniconn.backend.services;
 import com.uniconn.backend.dtos.ProfileData;
 import com.uniconn.backend.dtos.ProfileUpdateRequest;
 import com.uniconn.backend.entities.User;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service

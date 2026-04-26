@@ -6,7 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import com.uniconn.backend.entities.*;
 import com.uniconn.backend.repositories.CommunityTagRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CommunityTagService {
@@ -39,7 +39,8 @@ public class CommunityTagService {
 		communityTagRepository.deleteByCommunity_CommunityId(community.getCommunityId());
 		return saveTags(community, newRawTags);
 	}
-
+	
+	@Transactional(readOnly = true)
 	public List<String> getTrendingTags() {
 		return communityTagRepository.findTopTagNames(PageRequest.of(0, 5));
 	}

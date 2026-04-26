@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import com.uniconn.backend.composite_keys.UserFollowId;
 import com.uniconn.backend.entities.*;
 import com.uniconn.backend.repositories.*;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserFollowService extends BaseService {

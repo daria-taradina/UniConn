@@ -11,7 +11,7 @@ import com.uniconn.backend.exception.InvalidInputException;
 import com.uniconn.backend.exception.ResourceAlreadyExistsException;
 import com.uniconn.backend.exception.ResourceNotFoundException;
 import com.uniconn.backend.exception.UnauthorizedException;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

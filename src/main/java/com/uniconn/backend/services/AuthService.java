@@ -11,7 +11,7 @@ import com.uniconn.backend.entities.User;
 import com.uniconn.backend.exception.InvalidInputException;
 import com.uniconn.backend.exception.UnauthorizedException;
 import com.uniconn.backend.utils.JwtUtil;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
