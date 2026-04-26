@@ -88,6 +88,10 @@ public class CommunityService extends BaseService {
 	    if (dto.getDescription() != null) {
 	        community.setDescription(dto.getDescription());
 	    }
+	    
+	    if (dto.getCategory() != null) {
+	        community.setCategory(dto.getCategory());
+	    }
 
 	    if (dto.getCommunityPicture() != null) {
 	        community.setCommunityPicture(dto.getCommunityPicture());
@@ -95,11 +99,16 @@ public class CommunityService extends BaseService {
 
 	    Community saved = communityRepository.save(community);
 
+	    List<String> tagNames;
 	    if (dto.getTags() != null) {
-	        communityTagService.updateTags(saved, dto.getTags());
+	        tagNames = communityTagService.updateTags(saved, dto.getTags());
+	    } else {
+	        tagNames = saved.getTags().stream()
+	            .map(ct -> ct.getTag().getName())
+	            .collect(Collectors.toList());
 	    }
 
-	    return mapToResponseDTO(saved);
+	    return mapToResponseDTO(saved, tagNames);
 	}
 	
 	// ---------------------------------------------------------------
@@ -113,7 +122,7 @@ public class CommunityService extends BaseService {
                 .collect(Collectors.toList());
     }
  
-    // Explore filtered by category — e.g. /explore-communities/academics
+    // Explore filtered by category - e.g. /explore-communities/academics
     @Transactional
     public List<CommunityResponseDTO> getCommunitiesByCategory(String categoryParam) {
         CommunityCategory category = parseCategoryOrThrow(categoryParam);
