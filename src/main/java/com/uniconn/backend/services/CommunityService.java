@@ -41,7 +41,6 @@ public class CommunityService extends BaseService {
 	    community.setDescription(communityDTO.getDescription());
 	    community.setCreatedBy(currentUser);
 	    community.setCategory(communityDTO.getCategory());
-	    community.setCommunityPicture(communityDTO.getCommunityPicture());
 	    community.setMemberCount(1);
 
 	    Community saved = communityRepository.save(community);
@@ -57,6 +56,7 @@ public class CommunityService extends BaseService {
 
 	    return mapToResponseDTO(saved, tagNames);
 	}
+	
 	
 	// ---------------------------------------------------------------
     // UPDATE COMMUNITY - admin only
@@ -93,10 +93,6 @@ public class CommunityService extends BaseService {
 	        community.setCategory(dto.getCategory());
 	    }
 
-	    if (dto.getCommunityPicture() != null) {
-	        community.setCommunityPicture(dto.getCommunityPicture());
-	    }
-
 	    Community saved = communityRepository.save(community);
 
 	    List<String> tagNames;
@@ -110,6 +106,34 @@ public class CommunityService extends BaseService {
 
 	    return mapToResponseDTO(saved, tagNames);
 	}
+	
+	
+	// ---------------------------------------------------------------
+    // UPDATE COMMUNITY PICTURE - admin only
+    // ---------------------------------------------------------------
+	@Transactional
+	public void updateCommunityPicture(Integer communityId, String url) {
+		if(url == null || url.isBlank()) {
+			throw new InvalidInputException("Image URL is required");
+		}
+		
+		User currentUser = getAuthenticatedUser();
+		
+		Community community = communityRepository.findById(communityId)
+		        .orElseThrow(() -> new ResourceNotFoundException("Community not found: " + communityId));
+
+		    boolean isAdmin = communityMemberRepository
+		        .existsById_CommunityIdAndId_UserIdAndRole(
+		            communityId, currentUser.getUserId(), CommunityMemberRole.ADMIN);
+
+		    if (!isAdmin) {
+		        throw new UnauthorizedException("Only the community admin can update this community");
+		    }
+		    
+		    community.setCommunityPicture(url);
+		    communityRepository.save(community);
+	}
+	
 	
 	// ---------------------------------------------------------------
     // EXPLORE - all communities (no auth required)
@@ -131,6 +155,7 @@ public class CommunityService extends BaseService {
                 .map(this::mapToResponseDTO)
                 .collect(Collectors.toList());
     }
+	
  
     // ---------------------------------------------------------------
     // MY COMMUNITIES - requires auth
@@ -167,6 +192,7 @@ public class CommunityService extends BaseService {
                 .map(member -> mapToResponseDTO(member.getCommunity()))
                 .collect(Collectors.toList());
     }
+	
  
     // ---------------------------------------------------------------
     // TRENDING TAGS
@@ -175,6 +201,7 @@ public class CommunityService extends BaseService {
 	public List<String> getTrendingTags() {
         return communityTagService.getTrendingTags();
     }
+	
 
     // ---------------------------------------------------------------
     // HELPERS
@@ -212,6 +239,7 @@ public class CommunityService extends BaseService {
             .collect(Collectors.toList());
         return mapToResponseDTO(community, tagNames);
     }
+    
     
     @Transactional(readOnly = true)
     public CommunityResponseDTO getCommunityByName(String communityName) {

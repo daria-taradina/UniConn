@@ -6,6 +6,8 @@ import com.uniconn.backend.services.CommunityService;
 import jakarta.validation.Valid;
 
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,9 +44,9 @@ public class CommunityController {
  
     // ---------------------------------------------------------------
     // MY COMMUNITIES — auth required
-    // GET /api/community/my-communities          → all joined
-    // GET /api/community/my-communities/created  → created by me
-    // GET /api/community/my-communities/joined   → member of (not creator)
+    // GET /api/community/my-communities          -> all joined
+    // GET /api/community/my-communities/created  -> created by me
+    // GET /api/community/my-communities/joined   -> member of (not creator)
     // ---------------------------------------------------------------
     @GetMapping("/my-communities")
     public ResponseEntity<List<CommunityResponseDTO>> getMyCommunities() {
@@ -76,5 +78,17 @@ public class CommunityController {
             @PathVariable Integer communityId,
             @RequestBody CommunityUpdateDTO request) {
         return ResponseEntity.ok(communityService.updateCommunity(communityId, request));
+    }
+    
+    // ---------------------------------------------------------------
+    // COMMUNITY PICTURE UPDATE - admin only
+    // PATCH /api/community/{communityId}/picture
+    // ---------------------------------------------------------------
+    @PatchMapping("/{communityId}/picture")
+    public ResponseEntity<CommunityResponseDTO> updateCommunityPicture(
+            @PathVariable Integer communityId,
+            @RequestBody Map<String, String> body) {
+    	communityService.updateCommunityPicture(communityId, body.get("url"));
+        return ResponseEntity.noContent().build();
     }
 }

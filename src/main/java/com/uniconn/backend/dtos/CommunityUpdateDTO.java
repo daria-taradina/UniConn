@@ -8,20 +8,19 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 
 public class CommunityUpdateDTO {
+	
 	@Size(max = 30, message = "Name must not exceed 30 characters")
     @Pattern(
         regexp = "^[a-z0-9._]+$",
         message = "Only lowercase letters, digits, dots, and underscores are allowed"
     )
+	
     @NotBlank(message = "Community name cannot be blank")
     private String communityName;
 
     @NotBlank(message = "Description cannot be blank")
     @Size(max = 300, message = "Description must not exceed 300 characters")
     private String description;
-
-    @NotBlank(message = "Community picture cannot be blank")
-    private String communityPicture;
     
     @NotNull(message = "Category is required")
     private CommunityCategory category;
@@ -47,14 +46,6 @@ public class CommunityUpdateDTO {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public String getCommunityPicture() {
-		return communityPicture;
-	}
-
-	public void setCommunityPicture(String communityPicture) {
-		this.communityPicture = communityPicture;
 	}
 
 	public CommunityCategory getCategory() {
