@@ -1,7 +1,11 @@
 package com.uniconn.backend.controllers;
 
 import com.uniconn.backend.dtos.*;
+import com.uniconn.backend.services.PostManagementService;
 import com.uniconn.backend.services.PostService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,21 +13,32 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/posts")
-public class PostController {
-
+public class PostManagementController {
     private final PostService postService;
+    private final PostManagementService postManagementService;
 
-    public PostController(PostService postService) {
+    public PostManagementController(PostService postService, PostManagementService postManagementService) {
         this.postService = postService;
+        this.postManagementService = postManagementService;
     }
 
     // ---------------------------------------------------------------
     // POST /api/posts
-    // Create a profile post (no communityId) or community post
+    // Create a post (community or profile)
     // ---------------------------------------------------------------
     @PostMapping
-    public ResponseEntity<PostSummaryDTO> createPost(@RequestBody CreatePostRequest request) {
-        return ResponseEntity.status(201).body(postService.createPost(request));
+    public ResponseEntity<PostSummaryDTO> createPost(@RequestBody @Valid PostCreateDTO dto) {
+        return ResponseEntity.status(201).body(postManagementService.createPost(dto));
+    }
+
+    // ---------------------------------------------------------------
+    // DELETE /api/posts/{postId}
+    // Soft delete - author always, community admin if community post
+    // ---------------------------------------------------------------
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<Void> deletePost(@PathVariable Integer postId) {
+        postManagementService.deletePost(postId);
+        return ResponseEntity.noContent().build();
     }
 
     // ---------------------------------------------------------------
@@ -46,7 +61,7 @@ public class PostController {
 
     // ---------------------------------------------------------------
     // GET /api/posts/tag/{tagName}
-    // All posts for an exact tag — for tag-click from trending or tag page
+    // All posts for an exact tag - for tag-click from trending or tag page
     // ---------------------------------------------------------------
     @GetMapping("/tag/{tagName}")
     public ResponseEntity<List<PostSummaryDTO>> getPostsByTag(@PathVariable String tagName) {
