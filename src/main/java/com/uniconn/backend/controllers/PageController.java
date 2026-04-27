@@ -48,7 +48,7 @@ public class PageController {
     
     
     
- // Explore page — all communities (category filter handled by same template)
+    // Explore page — all communities (category filter handled by same template)
     @GetMapping("/communities")
     public String communitiesPage() {
         return "communities/communities";

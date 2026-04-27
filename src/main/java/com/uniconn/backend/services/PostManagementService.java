@@ -5,9 +5,10 @@ import com.uniconn.backend.dtos.*;
 import com.uniconn.backend.entities.*;
 import com.uniconn.backend.exception.*;
 import com.uniconn.backend.repositories.*;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,7 +42,6 @@ public class PostManagementService extends BaseService {
         post.setContentText(dto.getContentText());
 
         if (dto.getCommunityId() != null) {
-            // community post
             Community community = communityRepository.findById(dto.getCommunityId())
                 .orElseThrow(() -> new ResourceNotFoundException(
                     "Community not found: " + dto.getCommunityId()));
@@ -59,7 +59,6 @@ public class PostManagementService extends BaseService {
             post.setCommunity(community);
             post.setTitle(dto.getTitle());
         }
-        // else: profile post - no community, no title required
 
         Post saved = postRepository.save(post);
         List<String> tagNames = postTagService.saveTags(saved, dto.getTags());
@@ -84,9 +83,7 @@ public class PostManagementService extends BaseService {
         boolean isAuthor = post.getAuthor().getUserId().equals(currentUser.getUserId());
 
         if (!isAuthor) {
-            // not the author - check if they're admin of the post's community
             if (post.getCommunity() == null) {
-                // profile post - only author can delete
                 throw new UnauthorizedException("You are not allowed to delete this post");
             }
 
@@ -106,8 +103,101 @@ public class PostManagementService extends BaseService {
     }
 
     // ---------------------------------------------------------------
-    // HELPER
+    // FEED
     // ---------------------------------------------------------------
+    @Transactional(readOnly = true)
+    public List<PostSummaryDTO> getFeedForUser(Integer userId) {
+        return postRepository.findFeedPostsForUser(userId)
+                .stream()
+                .map(this::mapToSummaryDTO)
+                .collect(Collectors.toList());
+    }
+
+    // ---------------------------------------------------------------
+    // TRENDING TAGS (last 30 days)
+    // ---------------------------------------------------------------
+    @Transactional(readOnly = true)
+    public List<TrendingTagDTO> getTrendingTags() {
+        LocalDateTime since = LocalDateTime.now().minusDays(30);
+        return postRepository.findTrendingTagsRaw(since)
+                .stream()
+                .map(row -> new TrendingTagDTO((String) row[0], (Long) row[1]))
+                .collect(Collectors.toList());
+    }
+
+    // ---------------------------------------------------------------
+    // POSTS BY EXACT TAG
+    // ---------------------------------------------------------------
+    @Transactional(readOnly = true)
+    public List<PostSummaryDTO> getPostsByTag(String tagName) {
+        return postRepository.findPostsByExactTag(tagName)
+                .stream()
+                .map(this::mapToSummaryDTO)
+                .collect(Collectors.toList());
+    }
+
+    // ---------------------------------------------------------------
+    // SEARCH BY TAG (contains match)
+    // ---------------------------------------------------------------
+    @Transactional(readOnly = true)
+    public List<PostSummaryDTO> searchPostsByTag(String query) {
+        return postRepository.findPostsByTagContaining(query.trim())
+                .stream()
+                .map(this::mapToSummaryDTO)
+                .collect(Collectors.toList());
+    }
+
+    // ---------------------------------------------------------------
+    // PROFILE POSTS
+    // ---------------------------------------------------------------
+    @Transactional(readOnly = true)
+    public List<PostSummaryDTO> getProfilePosts(Integer userId) {
+        return postRepository.findProfilePostsByUser(userId)
+                .stream()
+                .map(this::mapToSummaryDTO)
+                .collect(Collectors.toList());
+    }
+    
+    @Transactional(readOnly = true)
+    public List<PostSummaryDTO> getProfilePostsByUsername(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found: " + username));
+        return getProfilePosts(user.getUserId());
+    }
+
+    // ---------------------------------------------------------------
+    // COMMUNITY POSTS BY USER
+    // ---------------------------------------------------------------
+    @Transactional(readOnly = true)
+    public List<PostSummaryDTO> getCommunityPostsByUser(Integer userId) {
+        return postRepository.findCommunityPostsByUser(userId)
+                .stream()
+                .map(this::mapToSummaryDTO)
+                .collect(Collectors.toList());
+    }
+
+    // ---------------------------------------------------------------
+    // ALL POSTS IN A COMMUNITY
+    // ---------------------------------------------------------------
+    @Transactional(readOnly = true)
+    public List<PostSummaryDTO> getPostsByCommunity(Integer communityId) {
+        return postRepository.findPostsByCommunity(communityId)
+                .stream()
+                .map(this::mapToSummaryDTO)
+                .collect(Collectors.toList());
+    }
+
+    // ---------------------------------------------------------------
+    // HELPERS
+    // ---------------------------------------------------------------
+    private PostSummaryDTO mapToSummaryDTO(Post post) {
+        List<String> tagNames = post.getTags()
+                .stream()
+                .map(pt -> pt.getTag().getName())
+                .collect(Collectors.toList());
+        return mapToSummaryDTO(post, tagNames);
+    }
+
     private PostSummaryDTO mapToSummaryDTO(Post post, List<String> tagNames) {
         return new PostSummaryDTO(
             post.getPostId(),

@@ -2,7 +2,6 @@ package com.uniconn.backend.controllers;
 
 import com.uniconn.backend.dtos.*;
 import com.uniconn.backend.services.PostManagementService;
-import com.uniconn.backend.services.PostService;
 
 import jakarta.validation.Valid;
 
@@ -14,11 +13,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/posts")
 public class PostManagementController {
-    private final PostService postService;
     private final PostManagementService postManagementService;
 
-    public PostManagementController(PostService postService, PostManagementService postManagementService) {
-        this.postService = postService;
+    public PostManagementController(PostManagementService postManagementService) {
         this.postManagementService = postManagementService;
     }
 
@@ -47,7 +44,7 @@ public class PostManagementController {
     // ---------------------------------------------------------------
     @GetMapping("/feed/{userId}")
     public ResponseEntity<List<PostSummaryDTO>> getFeed(@PathVariable Integer userId) {
-        return ResponseEntity.ok(postService.getFeedForUser(userId));
+        return ResponseEntity.ok(postManagementService.getFeedForUser(userId));
     }
 
     // ---------------------------------------------------------------
@@ -56,7 +53,7 @@ public class PostManagementController {
     // ---------------------------------------------------------------
     @GetMapping("/trending")
     public ResponseEntity<List<TrendingTagDTO>> getTrendingTags() {
-        return ResponseEntity.ok(postService.getTrendingTags());
+        return ResponseEntity.ok(postManagementService.getTrendingTags());
     }
 
     // ---------------------------------------------------------------
@@ -65,7 +62,7 @@ public class PostManagementController {
     // ---------------------------------------------------------------
     @GetMapping("/tag/{tagName}")
     public ResponseEntity<List<PostSummaryDTO>> getPostsByTag(@PathVariable String tagName) {
-        return ResponseEntity.ok(postService.getPostsByTag(tagName));
+        return ResponseEntity.ok(postManagementService.getPostsByTag(tagName));
     }
 
     // ---------------------------------------------------------------
@@ -77,7 +74,7 @@ public class PostManagementController {
         if (q == null || q.isBlank()) {
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(postService.searchPostsByTag(q));
+        return ResponseEntity.ok(postManagementService.searchPostsByTag(q));
     }
 
     // ---------------------------------------------------------------
@@ -86,7 +83,7 @@ public class PostManagementController {
     // ---------------------------------------------------------------
     @GetMapping("/profile/{userId}")
     public ResponseEntity<List<PostSummaryDTO>> getProfilePosts(@PathVariable Integer userId) {
-        return ResponseEntity.ok(postService.getProfilePosts(userId));
+        return ResponseEntity.ok(postManagementService.getProfilePosts(userId));
     }
 
     // ---------------------------------------------------------------
@@ -95,7 +92,7 @@ public class PostManagementController {
     // ---------------------------------------------------------------
     @GetMapping("/profile/by-username/{username}")
     public ResponseEntity<List<PostSummaryDTO>> getProfilePostsByUsername(@PathVariable String username) {
-        return ResponseEntity.ok(postService.getProfilePostsByUsername(username));
+        return ResponseEntity.ok(postManagementService.getProfilePostsByUsername(username));
     }
 
     // ---------------------------------------------------------------
@@ -104,7 +101,7 @@ public class PostManagementController {
     // ---------------------------------------------------------------
     @GetMapping("/user/{userId}/community")
     public ResponseEntity<List<PostSummaryDTO>> getCommunityPostsByUser(@PathVariable Integer userId) {
-        return ResponseEntity.ok(postService.getCommunityPostsByUser(userId));
+        return ResponseEntity.ok(postManagementService.getCommunityPostsByUser(userId));
     }
 
     // ---------------------------------------------------------------
@@ -113,6 +110,6 @@ public class PostManagementController {
     // ---------------------------------------------------------------
     @GetMapping("/community/{communityId}")
     public ResponseEntity<List<PostSummaryDTO>> getPostsByCommunity(@PathVariable Integer communityId) {
-        return ResponseEntity.ok(postService.getPostsByCommunity(communityId));
+        return ResponseEntity.ok(postManagementService.getPostsByCommunity(communityId));
     }
 }
