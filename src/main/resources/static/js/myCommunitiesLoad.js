@@ -2,17 +2,17 @@
   const list = document.getElementById('my-communities-list');
   if (!list) return;
 
-  let activeCategory = 'all';
+  let activeMembership = 'all';
 
   function applyFilters() {
     const q = (document.getElementById('communities-search')?.value || '').trim().toLowerCase();
     list.querySelectorAll('.mc-card').forEach(card => {
       const name = (card.querySelector('.mc-card-name')?.textContent || '').toLowerCase();
       const tags = (card.querySelector('.mc-card-tags')?.textContent || '').toLowerCase();
-      const cat  = (card.dataset.category || '').toLowerCase();
-      const matchesSearch   = !q || name.includes(q) || tags.includes(q);
-      const matchesCategory = activeCategory === 'all' || cat === activeCategory;
-      card.style.display = (matchesSearch && matchesCategory) ? '' : 'none';
+      const membership = card.dataset.membership || '';
+      const matchesSearch     = !q || name.includes(q) || tags.includes(q);
+      const matchesMembership = activeMembership === 'all' || membership === activeMembership;
+      card.style.display = (matchesSearch && matchesMembership) ? '' : 'none';
     });
   }
 
@@ -23,7 +23,7 @@
     btn.addEventListener('click', () => {
       document.querySelectorAll('.mc-filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      activeCategory = btn.dataset.category;
+      activeMembership = btn.dataset.membership;
       applyFilters();
     });
   });
@@ -36,6 +36,12 @@
 
   const fmt = s => s ? s.toLowerCase().replace(/_/g, ' ') : '';
 
+  // declared here so render() can access them; initialized inside .then()
+  const editModal     = document.getElementById('edit-community-modal');
+  const editDescInput = document.getElementById('edit-community-desc-input');
+  const editMsg       = document.getElementById('edit-community-message');
+  let editingCommunity = null;
+
   function render(communities) {
     if (communities.length === 0) {
       list.innerHTML = '<p class="my-communities-empty">You have not joined or created any communities yet.</p>';
@@ -46,7 +52,7 @@
       const isAdmin = c.createdByUsername === currentUsername;
       const card = document.createElement('div');
       card.className = 'mc-card';
-      card.dataset.category = (c.category || '').toLowerCase();
+      card.dataset.membership = isAdmin ? 'admin' : 'member';
 
       const tags = Array.isArray(c.tags) && c.tags.length > 0
         ? c.tags.map(t => `<span class="mc-tag">#${t}</span>`).join('')
@@ -54,13 +60,15 @@
 
       card.innerHTML = `
         <div class="mc-card-left">
-          <img src="/vector-logos/clubLogo.svg" alt="" class="mc-card-icon">
+          <img src="${c.communityPicture || '/vector-logos/clubLogo.svg'}" alt="" class="mc-card-icon">
         </div>
         <div class="mc-card-body">
           <div class="mc-card-header">
             <span class="mc-card-name">c/${c.communityName || ''}</span>
             <span class="mc-card-category">${fmt(c.category)}</span>
-            ${!isAdmin ? `<button class="join-leave-btn leave-btn" data-id="${c.communityId}">Leave</button>` : ''}
+            ${isAdmin
+              ? `<button class="join-leave-btn update-btn" data-id="${c.communityId}">Update</button>`
+              : `<button class="join-leave-btn leave-btn" data-id="${c.communityId}">Leave</button>`}
           </div>
           <span class="mc-card-members">${c.memberCount ?? 1} members</span>
           <p class="mc-card-desc">${c.description || ''}</p>
@@ -74,8 +82,21 @@
         window.location.href = '/community/' + c.communityName;
       });
 
-      if (!isAdmin) {
-        const btn = card.querySelector('.join-leave-btn');
+      const btn = card.querySelector('.join-leave-btn');
+      if (isAdmin && editModal) {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          editingCommunity = c;
+          editingCommunity._cardEl = card;
+          editDescInput.value = c.description || '';
+          populateTagBubbles('edit-community-tags-container', 'edit-community-tags-input', c.tags || []);
+          document.getElementById('edit-community-tags-input').value = '';
+          editMsg.style.display = 'none';
+          editMsg.className = 'profile-message';
+          editModal.classList.add('active');
+          editModal.setAttribute('aria-hidden', 'false');
+        });
+      } else if (!isAdmin) {
         btn.addEventListener('click', async (e) => {
           e.stopPropagation();
           const leaving = btn.classList.contains('leave-btn');
@@ -103,6 +124,46 @@
     fetch('/api/community/trending-tags')
       .then(res => res.ok ? res.json() : [])
   ]).then(([communities, trendingTags]) => {
+    if (editModal) {
+      initTagBubbles('edit-community-tags-container', 'edit-community-tags-input');
+
+      document.getElementById('edit-community-close')?.addEventListener('click', () => {
+        editModal.classList.remove('active');
+        editModal.setAttribute('aria-hidden', 'true');
+      });
+      editModal.addEventListener('click', e => {
+        if (e.target === editModal) {
+          editModal.classList.remove('active');
+          editModal.setAttribute('aria-hidden', 'true');
+        }
+      });
+      document.getElementById('edit-community-submit')?.addEventListener('click', async () => {
+        if (!editingCommunity) return;
+        editMsg.style.display = 'none';
+        editMsg.className = 'profile-message';
+
+        const description = editDescInput.value.trim();
+        const tags = getTagsFrom('edit-community-tags-container');
+        const res = await fetch(`/api/community/${editingCommunity.communityId}/update`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json', ...headers },
+          body: JSON.stringify({ description, tags })
+        });
+        if (res.ok) {
+          editMsg.textContent = 'Community updated.';
+          editMsg.classList.add('success');
+          editMsg.style.display = 'block';
+          const cardDesc = editingCommunity._cardEl?.querySelector('.mc-card-desc');
+          if (cardDesc) cardDesc.textContent = description;
+          editingCommunity.description = description;
+          editingCommunity.tags = tags;
+        } else {
+          editMsg.textContent = 'Failed to update. Please try again.';
+          editMsg.classList.add('error');
+          editMsg.style.display = 'block';
+        }
+      });
+    }
     render(communities);
     renderTrending(trendingTags);
   }).catch(() => {

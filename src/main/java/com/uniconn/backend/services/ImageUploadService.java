@@ -44,14 +44,7 @@ public class ImageUploadService {
 					ObjectUtils.asMap(
 						"public_id", publicId,
 						"overwrite", true,
-						"resource_type", "image",
-						// crop to square and resize to 256x256
-						"transformation", ObjectUtils.asMap(
-							"width", 256,
-							"height", 256,
-							"crop", "fill",
-							"gravity", "face" // centers on face if present, otherwise center									
-						)
+						"resource_type", "image"							
 					)
 			);
 			

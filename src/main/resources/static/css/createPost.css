@@ -196,6 +196,7 @@ button:hover {
   padding: 24px;
   padding-top: 55px;
   position: relative;
+  overflow: hidden;
 }
 .search-modal-title {
   margin: -1px auto 0 10px;
@@ -284,6 +285,7 @@ button:hover {
   padding: 24px;
   padding-top: 55px;
   position: relative;
+  overflow: hidden;
 }
 .search-modal-title {
   margin: -1px auto 0 10px;

@@ -35,6 +35,11 @@ public class PageController {
     public String profilePage() {
         return "profile/profile";
     }
+
+    @GetMapping("/profile/{username}")
+    public String userProfilePage() {
+        return "profile/userProfile";
+    }
     
     @GetMapping("/post/createPost")
     public String createPostPage() {

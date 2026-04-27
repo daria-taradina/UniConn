@@ -29,7 +29,7 @@ document.getElementById('search-input').addEventListener('keydown', async functi
     const [data, followingIds] = await Promise.all([
       fetch(`/api/search?q=${encodeURIComponent(query)}`, { headers: authHeaders }).then(r => r.json()),
       token
-        ? fetch('/api/user/following/ids', { headers: authHeaders }).then(r => r.ok ? r.json() : [])
+        ? fetch('/api/users/following/ids', { headers: authHeaders }).then(r => r.ok ? r.json() : [])
         : Promise.resolve([])
     ]);
 
@@ -52,7 +52,7 @@ document.getElementById('search-input').addEventListener('keydown', async functi
       li.className = 'search-result-card';
       li.innerHTML = `
         <div class="src-card-row">
-          <img src="/vector-logos/usernameSignIn.svg" alt="" class="src-card-icon">
+          <img src="${u.profilePicture || '/vector-logos/usernameSignIn.svg'}" alt="" class="src-card-icon">
           <div class="src-card-body">
             <div class="src-card-header">
               <span class="src-card-name">u/${u.username}</span>
@@ -68,7 +68,7 @@ document.getElementById('search-input').addEventListener('keydown', async functi
         btn.addEventListener('click', async (e) => {
           e.stopPropagation();
           const following = btn.classList.contains('unfollow-btn');
-          const res = await fetch(`/api/user/${u.userId}/${following ? 'unfollow' : 'follow'}`, {
+          const res = await fetch(`/api/users/${u.userId}/${following ? 'unfollow' : 'follow'}`, {
             method: following ? 'DELETE' : 'POST',
             headers: authHeaders
           });
@@ -81,7 +81,7 @@ document.getElementById('search-input').addEventListener('keydown', async functi
 
       li.addEventListener('click', (e) => {
         if (e.target.closest('.follow-btn')) return;
-        window.location.href = '/profile?user=' + u.username;
+        window.location.href = '/profile/' + u.username;
       });
       results.appendChild(li);
     });
@@ -91,7 +91,7 @@ document.getElementById('search-input').addEventListener('keydown', async functi
       li.className = 'search-result-card';
       li.innerHTML = `
         <div class="src-card-row">
-          <img src="/vector-logos/clubLogo.svg" alt="" class="src-card-icon">
+          <img src="${c.communityPicture || '/vector-logos/clubLogo.svg'}" alt="" class="src-card-icon">
           <div class="src-card-body">
             <div class="src-card-header">
               <span class="src-card-name">c/${c.communityName}</span>

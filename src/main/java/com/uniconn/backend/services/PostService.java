@@ -103,6 +103,12 @@ public class PostService extends BaseService {
                 .map(this::toDTO)
                 .collect(Collectors.toList());
     }
+    // Profile posts for any user by username
+    public List<PostSummaryDTO> getProfilePostsByUsername(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return getProfilePosts(user.getUserId());
+    }
 
     // ---------------------------------------------------------------
     // COMMUNITY POSTS BY USER

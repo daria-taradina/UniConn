@@ -75,6 +75,15 @@ public class PostController {
     }
 
     // ---------------------------------------------------------------
+    // GET /api/posts/profile/by-username/{username}
+    // Profile posts for any user by username (for viewing other profiles)
+    // ---------------------------------------------------------------
+    @GetMapping("/profile/by-username/{username}")
+    public ResponseEntity<List<PostSummaryDTO>> getProfilePostsByUsername(@PathVariable String username) {
+        return ResponseEntity.ok(postService.getProfilePostsByUsername(username));
+    }
+
+    // ---------------------------------------------------------------
     // GET /api/posts/user/{userId}/community
     // Posts a user authored inside communities
     // ---------------------------------------------------------------

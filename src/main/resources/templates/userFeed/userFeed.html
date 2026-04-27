@@ -141,6 +141,12 @@
       <textarea id="create-post-body-input" class="create-post-body" placeholder="Body text*" required></textarea>
     </div>
 
+    <div id="create-post-tags-section" class="create-post-title-wrap" style="display:none">
+      <div class="tag-input-container" id="create-post-tags-container">
+        <input type="text" id="create-post-tags-input" class="tag-text-input" placeholder="Press enter to add a tag">
+      </div>
+    </div>
+
     <!--post button-->
     <div class="create-post-action">
       <button type="button" class="create-post-btn-post" id="create-post-submit">Post</button>
@@ -179,19 +185,17 @@
       </div>
     </div>
 
-<!--right upper container: recommended communities -->
-    <div class="right-upper-container">
-        <div class="header-right"><h3>Recommended Communities</h3></div>
-    </div>
-<!--right lower container: recommended users -->
+<!-- Trending Topics -->
     <div class="right-lower-container">
-        <div class="header-right"><h3>Recommended Users</h3></div>
-      </div>
+      <div class="header-right"><h3>Trending Topics</h3></div>
+      <ul id="trending-tags-list" class="trending-tags-list"></ul>
+    </div>
     </div>
   </div> <!--end of right-container-->
 </div> <!--end of right wrap-->
 
 <script>document.addEventListener('DOMContentLoaded', () => document.getElementById('for-you-btn')?.classList.add('active'));</script>
+<script th:src="@{/js/userFeedLoad.js}" defer></script>
 <script th:src="@{/js/modalManager.js}" defer></script>
 <script th:src="@{/js/notificationFunction.js}" defer></script>
 <script th:src="@{/js/createPostFunction.js}" defer></script>

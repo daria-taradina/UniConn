@@ -33,13 +33,29 @@ public class ProfileService extends BaseService {
         userRepository.save(user);
     }
 
+    @Transactional
+    public void updateProfilePicture(String url) {
+        User user = getAuthenticatedUser();
+        user.setProfilePicture(url);
+        userRepository.save(user);
+    }
+
     // Helper method — copies fields from User entity into ProfileData DTO
     // We do this so we never accidentally expose sensitive fields
     // like the password hash to the frontend
-    private ProfileData mapToProfileData(User user) {
+    public ProfileData getProfileDataByUsername(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        ProfileData data = mapToProfileData(user);
+        data.setEmail(null);
+        return data;
+    }
+
+    ProfileData mapToProfileData(User user) {
 
         ProfileData data = new ProfileData();
 
+        data.setUserId(user.getUserId());
         data.setUsername(user.getUsername());
         data.setName(user.getName());
         data.setEmail(user.getEmail());

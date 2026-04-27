@@ -23,7 +23,7 @@ public interface SearchRepository extends JpaRepository<User, Integer> {
            "LOWER(c.description) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Community> searchCommunities(@Param("keyword") String keyword);
 
-    @Query("SELECT p FROM Post p WHERE p.isDeleted = false AND (" +
+    @Query("SELECT p FROM Post p JOIN FETCH p.author WHERE p.isDeleted = false AND (" +
            "LOWER(p.title) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
            "LOWER(p.contentText) LIKE LOWER(CONCAT('%', :keyword, '%')))")
     List<Post> searchPosts(@Param("keyword") String keyword);

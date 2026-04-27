@@ -60,6 +60,28 @@
     </div>
   </div>
 
+  <!-- EDIT COMMUNITY MODAL -->
+  <div id="edit-community-modal" class="search-modal-overlay" aria-hidden="true">
+    <div class="search-modal create-post-modal">
+      <div class="header-right">
+        <h3 class="search-modal-title">Edit Community</h3>
+      </div>
+      <button class="search-modal-close" id="edit-community-close" aria-label="Close">&times;</button>
+      <div class="create-post-field">
+        <textarea id="edit-community-desc-input" class="create-post-body" placeholder="Description"></textarea>
+      </div>
+      <div class="create-post-title-wrap">
+        <div class="tag-input-container" id="edit-community-tags-container">
+          <input type="text" id="edit-community-tags-input" class="tag-text-input" placeholder="Press enter to add a tag">
+        </div>
+      </div>
+      <p id="edit-community-message" class="profile-message" style="display:none"></p>
+      <div class="create-post-action">
+        <button type="button" class="create-post-btn-post" id="edit-community-submit">Save</button>
+      </div>
+    </div>
+  </div>
+
   <!-- CREATE COMMUNITY MODAL -->
   <div id="create-community-modal" class="search-modal-overlay" aria-hidden="true">
     <div class="search-modal create-post-modal">
@@ -133,6 +155,12 @@
 
       <div class="create-post-field">
         <textarea id="create-post-body-input" class="create-post-body" placeholder="Body text*" required></textarea>
+      </div>
+
+      <div id="create-post-tags-section" class="create-post-title-wrap" style="display:none">
+        <div class="tag-input-container" id="create-post-tags-container">
+          <input type="text" id="create-post-tags-input" class="tag-text-input" placeholder="Press enter to add a tag">
+        </div>
       </div>
 
       <div class="create-post-action">

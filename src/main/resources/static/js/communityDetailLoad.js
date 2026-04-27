@@ -8,8 +8,8 @@
   const currentUsername = localStorage.getItem('currentUsername') || '';
 
   function render(community, isMember) {
-    const headerName = document.getElementById('community-header-name');
-    if (headerName) headerName.textContent = community.communityName || 'Community';
+    const communityNameEl = document.getElementById('community-detail-name');
+    if (communityNameEl) communityNameEl.textContent = 'c/' + (community.communityName || '');
 
     const categoryEl = document.getElementById('community-category');
     if (categoryEl) categoryEl.textContent = fmt(community.category);
@@ -32,6 +32,54 @@
 
     // join/leave button
     const isAdmin = community.createdByUsername === currentUsername;
+
+    // community icon — show current picture, make clickable for admin
+    const iconWrap = document.getElementById('community-icon-wrap');
+    const iconImg  = document.getElementById('community-icon-img');
+    if (iconImg && community.communityPicture) iconImg.src = community.communityPicture;
+
+    if (isAdmin && iconWrap) {
+      iconWrap.classList.add('admin-clickable');
+      const picInput = document.getElementById('community-picture-input');
+      iconWrap.addEventListener('click', () => picInput.click());
+      picInput.addEventListener('change', async () => {
+        const file = picInput.files[0];
+        if (!file) return;
+        if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+          alert('Only JPG, PNG, or WebP images are allowed.');
+          return;
+        }
+        if (file.size > 2 * 1024 * 1024) {
+          alert('Image must be 2MB or smaller.');
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const uploadRes = await fetch('/api/upload/community', { method: 'POST', headers, body: formData });
+        if (!uploadRes.ok) {
+          const err = await uploadRes.json().catch(() => ({}));
+          alert('Upload failed: ' + (err.error || uploadRes.status));
+          return;
+        }
+        const { url } = await uploadRes.json();
+
+        const picRes = await fetch(`/api/community/${community.communityId}/picture`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json', ...headers },
+          body: JSON.stringify({ url })
+        });
+        if (picRes.ok) {
+          if (iconImg) iconImg.src = url;
+          community.communityPicture = url;
+        } else {
+          const err = await picRes.json().catch(() => ({}));
+          alert('Failed to save picture: ' + (err.error || picRes.status));
+        }
+      });
+    }
+
     const btn = document.getElementById('community-join-leave-btn');
     if (btn) {
       if (isAdmin) {
@@ -158,14 +206,33 @@
     });
   }
 
-  // fetch community + membership in parallel
+  function renderTrending(tags) {
+    const trendingList = document.getElementById('trending-tags-list');
+    if (!trendingList) return;
+    if (!tags || tags.length === 0) {
+      trendingList.innerHTML = '<li class="trending-tag-empty">No trending topics yet.</li>';
+      return;
+    }
+    trendingList.innerHTML = '';
+    tags.forEach((tag, i) => {
+      const li = document.createElement('li');
+      li.className = 'trending-tag-item';
+      li.innerHTML = `<span class="trending-tag-rank">#${i + 1}</span><span class="trending-tag-name">${tag}</span>`;
+      li.addEventListener('click', () => { window.location.href = '/communities?tag=' + encodeURIComponent(tag); });
+      trendingList.appendChild(li);
+    });
+  }
+
+  // fetch community, membership, and trending tags in parallel
   Promise.all([
     fetch('/api/community/' + communityName, { headers })
       .then(r => r.ok ? r.json() : null),
     token
       ? fetch('/api/community/my-communities', { headers }).then(r => r.ok ? r.json() : [])
-      : Promise.resolve([])
-  ]).then(([community, myCommunities]) => {
+      : Promise.resolve([]),
+    fetch('/api/community/trending-tags').then(r => r.ok ? r.json() : [])
+  ]).then(([community, myCommunities, trendingTags]) => {
+    renderTrending(trendingTags);
     if (!community) throw new Error();
     sessionStorage.removeItem('communityDetail');
     const isMember = myCommunities.some(c => c.communityId === community.communityId);

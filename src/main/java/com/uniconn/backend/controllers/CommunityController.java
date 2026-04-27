@@ -63,6 +63,11 @@ public class CommunityController {
         return ResponseEntity.ok(communityService.getCommunitiesIJoined());
     }    
     
+    @GetMapping("/user/{userId}/communities")
+    public ResponseEntity<List<CommunityResponseDTO>> getCommunitiesByUser(@PathVariable Integer userId) {
+        return ResponseEntity.ok(communityService.getCommunitiesByUserId(userId));
+    }
+
     @GetMapping("/trending-tags")
     public ResponseEntity<List<String>> getTrendingTags() {
         return ResponseEntity.ok(communityService.getTrendingTags());

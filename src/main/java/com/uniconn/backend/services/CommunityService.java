@@ -170,7 +170,15 @@ public class CommunityService extends BaseService {
                 .map(member -> mapToResponseDTO(member.getCommunity()))
                 .collect(Collectors.toList());
     }
- 
+
+    @Transactional(readOnly = true)
+    public List<CommunityResponseDTO> getCommunitiesByUserId(Integer userId) {
+        return communityMemberRepository.findByUser_UserId(userId)
+                .stream()
+                .map(member -> mapToResponseDTO(member.getCommunity()))
+                .collect(Collectors.toList());
+    }
+
     // Only communities the user created (createdBy field)
 	@Transactional(readOnly = true)
     public List<CommunityResponseDTO> getCommunitiesCreatedByMe() {

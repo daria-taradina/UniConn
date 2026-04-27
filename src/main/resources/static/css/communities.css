@@ -84,6 +84,7 @@ body {
   flex: 0 0 50%;
   border-top: none;
   padding: 20px;
+  overflow: hidden;
 }
 
 .right-wrap {
@@ -256,6 +257,7 @@ button:hover {
   padding: 24px;
   padding-top: 55px;
   position: relative;
+  overflow: hidden;
 }
 
 /*search heading*/
@@ -656,7 +658,7 @@ button:hover {
   flex-direction: column;
   gap: 12px;
   overflow-y: auto;
-  max-height: calc(1114px - 60px);
+  max-height: calc(1114px - 195px);
 }
 .my-communities-empty {
   font-size: 0.9em;
@@ -684,6 +686,8 @@ button:hover {
   flex-shrink: 0;
   margin: 0;
   display: block;
+  border-radius: 50%;
+  object-fit: cover;
 }
 .mc-card-left {
   flex-shrink: 0;
@@ -749,6 +753,19 @@ button:hover {
 .community-detail-content {
   margin-top: 40px;
   padding: 10px 16px;
+  max-height: calc(1114px - 60px);
+  overflow-y: auto;
+}
+.community-detail-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.community-detail-name {
+  font-size: 1.3em;
+  font-weight: 700;
+  color: #24283b;
+  margin: 0;
 }
 .community-detail-top {
   display: flex;
@@ -862,6 +879,8 @@ button:hover {
   flex-shrink: 0;
   margin: 0;
   display: block;
+  border-radius: 50%;
+  object-fit: cover;
 }
 .src-card-body {
   display: flex;
@@ -869,6 +888,46 @@ button:hover {
   gap: 3px;
   flex: 1;
   min-width: 0;
+}
+
+/* COMMUNITY ICON WITH UPLOAD OVERLAY */
+.community-icon-wrap {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  cursor: default;
+}
+.community-icon-wrap.admin-clickable {
+  cursor: pointer;
+}
+.community-icon-img {
+  width: 52px !important;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0;
+  display: block;
+}
+.community-icon-overlay {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 0.65em;
+  font-weight: 700;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;
+  padding: 4px;
+}
+.community-icon-wrap.admin-clickable:hover .community-icon-overlay {
+  display: flex;
 }
 
 /* JOIN / LEAVE BUTTONS */
