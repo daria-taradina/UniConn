@@ -36,17 +36,50 @@ public class PostSummaryDTO {
         this.createdAt = createdAt;
         this.tags = tags;
     }
+    
+    // getters
+	public Integer getPostId() {
+		return postId;
+	}
 
-    // Getters
-    public Integer getPostId()          { return postId; }
-    public String getAuthorUsername()   { return authorUsername; }
-    public Integer getAuthorId()        { return authorId; }
-    public String getCommunityName()    { return communityName; }
-    public Integer getCommunityId()     { return communityId; }
-    public String getTitle()            { return title; }
-    public String getContentText()      { return contentText; }
-    public int getLikeCount()           { return likeCount; }
-    public int getCommentCount()        { return commentCount; }
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public List<String> getTags()       { return tags; }
+	public String getAuthorUsername() {
+		return authorUsername;
+	}
+
+	public Integer getAuthorId() {
+		return authorId;
+	}
+
+	public String getCommunityName() {
+		return communityName;
+	}
+
+	public Integer getCommunityId() {
+		return communityId;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public String getContentText() {
+		return contentText;
+	}
+
+	public int getLikeCount() {
+		return likeCount;
+	}
+
+	public int getCommentCount() {
+		return commentCount;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public List<String> getTags() {
+		return tags;
+	}
+    
 }
