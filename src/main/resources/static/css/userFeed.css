@@ -1,4 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..900;1,300..900&display=swap');
+/* FEED POSTS LIST */
+.feed-posts-list {
+  margin-top: 40px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  height: calc(100% - 40px);
+}
+
+
+/*@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..900;1,300..900&display=swap');
 :root {
   --clr-bg: #ffffff;
   --clr-fg: #24283b;
@@ -16,7 +28,7 @@ html {
   overflow-y: scroll;
   scrollbar-color: #242424;
   scrollbar-width: thin; 
-}
+}*/
 
 /* REMOVED -> uses navbar.css */
 /* ------------------------- */
@@ -29,7 +41,7 @@ html {
 /* ------------------------- */
 
 
-body {
+/*body {
   min-height: 100vh;
   margin: 0;
   padding: 20px;
@@ -44,7 +56,7 @@ body {
   font-family: 'Open Sans', sans-serif;
   line-height: 30px;
   cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'%3E%3Cpath fill='%2391C5E8' stroke='%23000000' stroke-width='2' d='M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87a.5.5 0 0 0 .35-.85L6.35 2.85a.5.5 0 0 0-.85.35Z'%3E%3C/path%3E%3C/svg%3E") 0 0, auto;
-}
+}*/
 
 /* REMOVED -> navigation bar */
 /* ------------------------- */
@@ -71,7 +83,7 @@ body {
 
 
 /* containers */
-.wrap{
+/*.wrap{
   display:flex;
   justify-content:center;
   align-items:flex-start;
@@ -84,14 +96,14 @@ body {
 
 .left-container {
   position: relative;
-  height: calc(100vh - 140px); /* slight trim so bottom doesn't clip */
+  height: calc(100vh - 140px); 
   background-color: white;
   border-radius: 12px;
   border: 2px solid black;
   flex: 0 0 50%;
   border-top: none;
   padding: 20px;
-  overflow: hidden; /* let feed-posts-list handle scrolling internally */
+  overflow: hidden; 
 }
 
 .right-wrap {
@@ -107,7 +119,7 @@ body {
 }
 .right-lower-container {
   position: relative;
-  height: 340px; /* was 410px — tighter fit for 5 tags */
+  height: 340px; 
   background-color: white;
   border-radius: 12px;
   border: 2px solid black;
@@ -121,7 +133,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  overflow-y: hidden; /* no scroll needed for exactly 5 */
+  overflow-y: hidden; 
   max-height: calc(340px - 50px);
 }
 .trending-tag-item {
@@ -222,10 +234,10 @@ button {
 button:hover {
   background: #91c5e8;
   border: 1px solid #91c5e8;
-}
+}*/
 
 /* search bar */
-.search-modal-overlay {
+/*.search-modal-overlay {
   display: none;
   position: fixed;
   inset: 0;
@@ -250,10 +262,10 @@ button:hover {
   padding-top: 55px;
   position: relative;
   overflow: hidden;
-}
+}*/
 
 /*search heading*/
-.search-modal-title {
+/*.search-modal-title {
   margin: -1px auto 0 10px;
   font-size: 1.17em;
 }
@@ -275,10 +287,10 @@ button:hover {
   color: #fff;
   background: none;
   border: none;
-}
+}*/
 
 /* search input */
-.search-modal-input {
+/*.search-modal-input {
   width: 100%;
   height: 30px;
   padding: 0px 14px;
@@ -347,10 +359,10 @@ button:hover {
   color: #999;
   font-size: 0.9em;
   padding: 12px 4px;
-}
+}*/
 
 /* CREATE POST MODAL */
-.create-post-modal {
+/*.create-post-modal {
   height: auto;
   max-height: 85vh;
   overflow-y: auto;
@@ -423,10 +435,10 @@ button:hover {
   display: flex;
   flex-direction: column;
   gap: 4px;
-}
+}*/
 
 /* title input */
-.create-post-title-wrap {
+/*.create-post-title-wrap {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -446,10 +458,10 @@ button:hover {
   color: #999;
   text-align: right;
   padding-right: 4px;
-}
+}*/
 
 /* body input */
-.create-post-body {
+/*.create-post-body {
   width: 100%;
   min-height: 160px;
   padding: 10px 14px;
@@ -482,10 +494,10 @@ button:hover {
   height: 38px;
   border-radius: 20px;
   font-size: 0.95em;
-}
+}*/
 
 /* NOTIFICATIONS MODAL */
-.notification-list {
+/*.notification-list {
   list-style: none;
   margin: 12px 0 0 0;
   padding: 0;
@@ -503,10 +515,10 @@ button:hover {
   border-bottom: 1px solid #eee;
   font-size: 0.9em;
   color: #333;
-}
+}*/
 
 /* ACTIONS PANEL */
-.actions-panel {
+/*.actions-panel {
   position: relative;
   height: 270px;
   background-color: white;
@@ -558,10 +570,10 @@ button:hover {
   gap: 10px;
   width: 210px;
   white-space: nowrap;
-}
+}*/
 
 /* CREATE COMMUNITY MODAL */
-.community-name-hint {
+/*.community-name-hint {
   font-size: 0.78em;
   color: #999;
   margin-top: 2px;
@@ -594,12 +606,12 @@ button:hover {
   gap: 3px;
   flex: 1;
   min-width: 0;
-}
+}*/
 
 
 
 /* POST CARDS */
-.feed-posts-list {
+/*.feed-posts-list {
   margin-top: 40px;
   padding: 12px;
   display: flex;
@@ -712,10 +724,10 @@ button:hover {
   font-size: 0.78em;
   color: #aaa;
   margin-left: auto;
-}
+}*/
 
 /* POST VIEW MODAL */
-.post-view-overlay {
+/*.post-view-overlay {
   display: none;
   position: fixed;
   inset: 0;
@@ -817,9 +829,9 @@ button:hover {
   border-top: 1px solid #eee;
 }
 .post-view-date { font-size: 0.78em; color: #aaa; margin-left: auto; }
-
+*/
 /* COMMENTS SECTION */
-.comments-divider {
+/*.comments-divider {
   border: none;
   border-top: 1px solid #ddd;
   margin: 4px 0;
@@ -901,4 +913,4 @@ button:hover {
   opacity: 0.5;
 }
 .comment-delete-btn:hover { opacity: 1; background: none; }
-.comment-delete-btn img { width: 14px; height: 14px; margin: 0; }
+.comment-delete-btn img { width: 14px; height: 14px; margin: 0; }*/

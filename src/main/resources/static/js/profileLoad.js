@@ -30,7 +30,10 @@
     if (usernameEl) usernameEl.textContent = 'u/' + (data.username || '');
     if (data.username) localStorage.setItem('currentUsername', data.username);
     if (data.userId)   localStorage.setItem('currentUserId', data.userId);
-
+	
+	const fullnameEl = document.getElementById('profile-fullname');
+	if (fullnameEl) fullnameEl.textContent = data.name || '';
+	
     const avatarEl = document.getElementById('profile-picture-img');
     if (avatarEl && data.profilePicture) avatarEl.src = data.profilePicture;
 
@@ -41,28 +44,21 @@
     if (followingEl) followingEl.textContent = data.followingCount ?? 0;
     if (communityEl) communityEl.textContent = data.communityCount ?? 0;
 
-    const bioSection = document.getElementById('profile-bio-section');
-    if (bioSection) {
-      bioSection.innerHTML = '';
-      if (data.name) {
-        const nameEl = document.createElement('span');
-        nameEl.className = 'profile-name';
-        nameEl.textContent = data.name;
-        bioSection.appendChild(nameEl);
-      }
-      if (data.userBio) {
-        const bioEl = document.createElement('p');
-        bioEl.className = 'profile-bio';
-        bioEl.textContent = data.userBio;
-        bioSection.appendChild(bioEl);
-      }
-      if (!data.name && !data.userBio) {
-        const emptyEl = document.createElement('p');
-        emptyEl.className = 'profile-bio-empty';
-        emptyEl.textContent = 'No bio yet.';
-        bioSection.appendChild(emptyEl);
-      }
-    }
+	const bioSection = document.getElementById('profile-bio-section');
+	if (bioSection) {
+	  bioSection.innerHTML = '';
+	  if (data.userBio) {
+	    const bioEl = document.createElement('p');
+	    bioEl.className = 'profile-bio';
+	    bioEl.textContent = data.userBio;
+	    bioSection.appendChild(bioEl);
+	  } else {
+	    const emptyEl = document.createElement('p');
+	    emptyEl.className = 'profile-bio-empty';
+	    emptyEl.textContent = 'No bio yet.';
+	    bioSection.appendChild(emptyEl);
+	  }
+	}
 
     const nameInput = document.getElementById('edit-name-input');
     const bioInput  = document.getElementById('edit-bio-input');

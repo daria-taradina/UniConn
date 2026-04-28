@@ -1,58 +1,17 @@
 (function () {
-  const container  = document.getElementById('profile-posts-container');
-  const modal      = document.getElementById('post-view-modal');
-  const modalBody  = document.getElementById('post-view-body');
-  const modalDate  = document.getElementById('post-view-date');
-  const modalClose = document.getElementById('post-view-close');
-  if (!container) return;
+  const token  = localStorage.getItem('token');
+  const userId = localStorage.getItem('currentUserId');
+  if (!token || !userId) return;
 
-  const token   = localStorage.getItem('token');
-  const userId  = localStorage.getItem('currentUserId');
-
-  function formatDate(iso) {
-    const d = new Date(iso);
-    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-      + ' · '
-      + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-  }
-
-  function renderPosts(posts) {
-    if (!posts || posts.length === 0) {
-      container.innerHTML = '<p class="profile-posts-empty">No posts yet.</p>';
-      return;
-    }
-
-    posts.forEach(post => {
-      const card = document.createElement('div');
-      card.className = 'profile-post-card';
-      card.innerHTML = `
-        <span class="profile-post-username">u/${post.authorUsername}</span>
-        <p class="profile-post-body">${post.contentText}</p>
-        <span class="profile-post-date">${formatDate(post.createdAt)}</span>
-      `;
-      card.addEventListener('click', () => {
-        modalBody.textContent = post.contentText;
-        modalDate.textContent = 'u/' + post.authorUsername + ' · ' + formatDate(post.createdAt);
-        modal.classList.add('active');
-      });
-      container.appendChild(card);
-    });
-  }
-
-  if (modalClose) modalClose.addEventListener('click', () => modal.classList.remove('active'));
-  if (modal) modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('active'); });
-
-  if (!token || !userId) {
-    container.innerHTML = '<p class="profile-posts-empty">No posts yet.</p>';
-    return;
-  }
+  initPostViewModal();
 
   fetch(`/api/posts/profile/${userId}`, {
     headers: { 'Authorization': 'Bearer ' + token }
   })
-    .then(res => { if (!res.ok) throw new Error(); return res.json(); })
-    .then(renderPosts)
+    .then(res => res.ok ? res.json() : [])
+    .then(posts => renderPostList(posts, 'profile-posts-container'))
     .catch(() => {
-      container.innerHTML = '<p class="profile-posts-empty">Could not load posts.</p>';
+      const c = document.getElementById('profile-posts-container');
+      if (c) c.innerHTML = '<p style="color:#999;font-size:0.9em;padding:16px">Could not load posts.</p>';
     });
 })();

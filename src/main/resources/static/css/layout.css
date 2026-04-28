@@ -11,7 +11,7 @@
 
 .left-container {
   position: relative;
-  height: calc(100vh - 100px);
+  height: calc(100vh - 120px);
   background-color: white;
   border-radius: 12px;
   border: 2px solid black;
@@ -36,6 +36,7 @@
 
 .right-upper-container {
   position: relative;
+  height: 270px;
   background-color: white;
   border-radius: 12px;
   border: 2px solid black;
@@ -43,7 +44,7 @@
 
 .right-lower-container {
   position: relative;
-  height: 340px;
+  height: 320px;
   background-color: white;
   border-radius: 12px;
   border: 2px solid black;
@@ -74,10 +75,10 @@ h3 {
 /* ACTIONS PANEL */
 .actions-panel {
   position: relative;
+  height: 270px;
   background-color: white;
   border-radius: 12px;
   border: 2px solid black;
-  padding-bottom: 16px;
 }
 
 .explore-actions {

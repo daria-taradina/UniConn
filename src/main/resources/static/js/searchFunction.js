@@ -1,18 +1,18 @@
-initModal({
-  modalId:  'search-modal',
-  toggleId: 'search-toggle',
-  closeId:  'search-close',
-  onOpen() {
-    const input   = document.getElementById('search-input');
-    const results = document.getElementById('search-results');
-    input.value       = '';
-    results.innerHTML = '';
-    input.focus();
-  }
-});
-
+document.addEventListener('DOMContentLoaded', () => {
+  initModal({
+    modalId:  'search-modal',
+    toggleId: 'search-toggle',
+    closeId:  'search-close',
+    onOpen() {
+      const input   = document.getElementById('search-input');
+      const results = document.getElementById('search-results');
+      input.value       = '';
+      results.innerHTML = '';
+      input.focus();
+    }
+  });
+  
 const fmt = s => s ? s.toLowerCase().replace(/_/g, ' ') : '';
-
 const token = localStorage.getItem('token');
 const authHeaders = token ? { 'Authorization': 'Bearer ' + token } : {};
 const currentUsername = localStorage.getItem('currentUsername') || '';
@@ -122,4 +122,5 @@ document.getElementById('search-input').addEventListener('keydown', async functi
   } catch (err) {
     results.innerHTML = '<li class="search-result-empty">Could not connect to server.</li>';
   }
-});
+	});
+}); 
