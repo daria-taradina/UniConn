@@ -5,10 +5,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" th:href="@{/vector-logos/unicornLogo.png}" type="image/png">
+  <link rel="stylesheet" th:href="@{/css/base.css}">
+  <link rel="stylesheet" th:href="@{/css/navbar.css}">
+  <link rel="stylesheet" th:href="@{/css/layout.css}">
+  <link rel="stylesheet" th:href="@{/css/modals.css}">
+  <link rel="stylesheet" th:href="@{/css/postCards.css}">
   <link rel="stylesheet" th:href="@{/css/profile.css}">
   <link rel="stylesheet" th:href="@{/css/followButton.css}">
   <link rel="stylesheet" th:href="@{/css/tagInput.css}">
-  <title>Profile - UniConn</title>
+  <title>My Profile - UniConn</title>
 </head>
 
 <body>
@@ -33,7 +38,7 @@
       <span class="signout-divider">|</span>
       <a href="#" class="signout-link" onclick="['token','currentUsername','myProfilePosts','myCommunities'].forEach(k=>localStorage.removeItem(k)); window.location.href='/login'; return false;">Sign Out</a>
     </div>
-  </nav><hr><br>
+  </nav><hr class="navbar-divider">
 
 <!-- SEARCH MODAL -->
   <div id="search-modal" class="search-modal-overlay" aria-hidden="true">
@@ -158,15 +163,28 @@
   </div>
 </div>
 
-<!--POST VIEW MODAL-->
-<div id="post-view-modal" class="search-modal-overlay" aria-hidden="true">
-  <div class="search-modal create-post-modal">
-    <div class="header-right">
-      <h3 class="search-modal-title">Post</h3>
+<!-- POST VIEW MODAL -->
+<div id="post-view-overlay" class="post-view-overlay" aria-hidden="true">
+  <div class="post-view-modal">
+    <div class="post-view-header">
+      <h3>Post</h3>
     </div>
-    <button class="search-modal-close" id="post-view-close" aria-label="Close">&times;</button>
-    <p id="post-view-body" class="post-view-body"></p>
-    <span id="post-view-date" class="post-view-date"></span>
+    <button class="post-view-close" id="post-view-close" aria-label="Close">&times;</button>
+    <div class="post-view-body">
+      <div class="post-view-meta" id="post-view-meta"></div>
+      <p class="post-view-title" id="post-view-title" style="display:none"></p>
+      <p class="post-view-content" id="post-view-content"></p>
+      <div class="post-view-tags" id="post-view-tags"></div>
+      <div class="post-view-footer" id="post-view-footer"></div>
+      <hr class="comments-divider">
+      <div class="comment-input-wrap">
+        <textarea class="comment-input" id="post-view-comment-input" placeholder="Write a comment..." rows="1"></textarea>
+        <button class="comment-submit-btn" id="post-view-comment-submit">Post</button>
+      </div>
+      <div class="comments-list" id="post-view-comments-list">
+        <p class="comment-empty">Loading comments...</p>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -199,34 +217,34 @@
 
 <!-- LEFT CONTAINER: profile sidebar -->
     <div class="left-container">
-      <div class="header-left"><h3>Profile</h3></div>
+      <div class="header-left"><h3>My Profile</h3></div>
 
       <div class="profile-content">
 
         <!-- profile picture and username -->
-        <div class="profile-top">
-          <div class="profile-avatar-wrap" id="profile-avatar-wrap">
-            <img id="profile-picture-img" src="/vector-logos/usernameSignIn.svg" alt="User Avatar" class="avatar-img">
-            <div class="profile-avatar-overlay">Choose Photo</div>
-          </div>
-          <input type="file" id="profile-picture-input" accept="image/jpeg,image/png,image/webp" style="display:none">
-          <div class="profile-right">
-            <span class="profile-username" id="profile-username">u/</span>
-            <div class="profile-stats">
-              <div class="stat stat-clickable" id="stat-followers">
-                <span class="stat-num" id="follower-count">0</span>
-                <span class="stat-label">followers</span>
-              </div>
-              <div class="stat stat-clickable" id="stat-following">
-                <span class="stat-num" id="following-count">0</span>
-                <span class="stat-label">following</span>
-              </div>
-              <div class="stat stat-clickable" id="stat-communities">
-                <span class="stat-num" id="community-count">0</span>
-                <span class="stat-label">communities</span>
-              </div>
-            </div>
-          </div>
+		<div class="profile-top">
+		  <div class="profile-avatar-wrap" id="profile-avatar-wrap"> <!-- or profile-avatar-static for userProfile -->
+		    <img id="profile-picture-img" src="/vector-logos/usernameSignIn.svg" alt="User Avatar" class="avatar-img">
+		    <div class="profile-avatar-overlay">Choose Photo</div> <!-- only on profile.html -->
+		  </div>
+		  <div class="profile-right">
+		    <span class="profile-username" id="profile-username">u/</span>
+		    <span class="profile-fullname" id="profile-fullname"></span> <!-- new -->
+		    <div class="profile-stats">
+		      <div class="stat stat-clickable" id="stat-followers">
+		        <span class="stat-num" id="follower-count">0</span>
+		        <span class="stat-label">followers</span>
+		      </div>
+		      <div class="stat stat-clickable" id="stat-following">
+		        <span class="stat-num" id="following-count">0</span>
+		        <span class="stat-label">following</span>
+		      </div>
+		      <div class="stat stat-clickable" id="stat-communities">
+		        <span class="stat-num" id="community-count">0</span>
+		        <span class="stat-label">communities</span>
+		      </div>
+		    </div>
+		  </div>
           <button type="button" id="edit-profile-toggle" class="profile-action-btn edit-profile-btn">
             <img th:src="@{/vector-logos/addPost.svg}" alt="" class="action-btn-icon"> Edit Profile
           </button>
@@ -239,7 +257,7 @@
 
         <hr id="left-container-break">
 
-        <div id="profile-posts-container" class="profile-posts-container"></div>
+        <div id="profile-posts-container"></div>
 
       </div>
     </div> <!--end of left-container-->
@@ -279,15 +297,16 @@
 
   </div>
 
-<script th:src="@{/js/profileLoad.js}" defer></script>
-<script th:src="@{/js/profilePostsLoad.js}" defer></script>
-<script th:src="@{/js/modalManager.js}" defer></script>
-<script th:src="@{/js/notificationFunction.js}" defer></script>
-<script th:src="@{/js/searchFunction.js}" defer></script>
-<script th:src="@{/js/editProfileFunction.js}" defer></script>
-<script th:src="@{/js/tagInput.js}" defer></script>
-<script th:src="@{/js/communityFunction.js}" defer></script>
-<script th:src="@{/js/createPostFunction.js}" defer></script>
+  <script th:src="@{/js/modalManager.js}" defer></script>
+  <script th:src="@{/js/postCardRenderer.js}" defer></script>
+  <script th:src="@{/js/profileLoad.js}" defer></script>
+  <script th:src="@{/js/profilePostsLoad.js}" defer></script>
+  <script th:src="@{/js/notificationFunction.js}" defer></script>
+  <script th:src="@{/js/searchFunction.js}" defer></script>
+  <script th:src="@{/js/editProfileFunction.js}" defer></script>
+  <script th:src="@{/js/tagInput.js}" defer></script>
+  <script th:src="@{/js/communityFunction.js}" defer></script>
+  <script th:src="@{/js/createPostFunction.js}" defer></script>
 </body>
 
 </html>

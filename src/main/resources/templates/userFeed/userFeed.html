@@ -5,6 +5,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" th:href="@{/vector-logos/unicornLogo.png}" type="image/png">
+  <link rel="stylesheet" th:href="@{/css/base.css}">
+  <link rel="stylesheet" th:href="@{/css/navbar.css}">
+  <link rel="stylesheet" th:href="@{/css/layout.css}">
+  <link rel="stylesheet" th:href="@{/css/modals.css}">
+  <link rel="stylesheet" th:href="@{/css/postCards.css}">
   <link rel="stylesheet" th:href="@{/css/userFeed.css}">
   <link rel="stylesheet" th:href="@{/css/followButton.css}">
   <link rel="stylesheet" th:href="@{/css/tagInput.css}">
@@ -34,7 +39,7 @@
       <span class="signout-divider">|</span>
       <a href="#" class="signout-link" onclick="['token','currentUsername','myProfilePosts','myCommunities'].forEach(k=>localStorage.removeItem(k)); window.location.href='/login'; return false;">Sign Out</a>
     </div>
-  </nav><hr><br>
+  </nav><hr class="navbar-divider">
 
 <!-- search modal -->
 <div id="search-modal" class="search-modal-overlay" aria-hidden="true">
@@ -157,9 +162,10 @@
   <div class="wrap">
 
 <!-- left container: main user feed-->
-    <div class="left-container">
-        <div class="header-left"><h3>For You</h3></div>
-    </div>
+	<div class="left-container">
+  		<div class="header-left"><h3>For You</h3></div>
+  		<div class="feed-posts-list" id="feed-posts-list"></div>
+	</div>
 
   <div class="right-wrap">
     <div class="right-container">
@@ -193,6 +199,48 @@
     </div>
   </div> <!--end of right-container-->
 </div> <!--end of right wrap-->
+
+
+<!-- POST VIEW MODAL -->
+<div id="post-view-overlay" class="post-view-overlay" aria-hidden="true">
+  <div class="post-view-modal">
+    <div class="post-view-header">
+      <h3>Post</h3>
+    </div>
+    <button class="post-view-close" id="post-view-close" aria-label="Close">&times;</button>
+
+    <div class="post-view-body">
+      <!-- meta: author, community, date -->
+      <div class="post-view-meta" id="post-view-meta"></div>
+
+      <!-- title (community posts only) -->
+      <p class="post-view-title" id="post-view-title" style="display:none"></p>
+
+      <!-- full content -->
+      <p class="post-view-content" id="post-view-content"></p>
+
+      <!-- tags -->
+      <div class="post-view-tags" id="post-view-tags"></div>
+
+      <!-- like / comment count / delete -->
+      <div class="post-view-footer" id="post-view-footer"></div>
+
+      <hr class="comments-divider">
+
+      <!-- comment input -->
+      <div class="comment-input-wrap">
+        <textarea class="comment-input" id="post-view-comment-input" placeholder="Write a comment..." rows="1"></textarea>
+        <button class="comment-submit-btn" id="post-view-comment-submit">Post</button>
+      </div>
+
+      <!-- comments list -->
+      <div class="comments-list" id="post-view-comments-list">
+        <p class="comment-empty">Loading comments...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <script>document.addEventListener('DOMContentLoaded', () => document.getElementById('for-you-btn')?.classList.add('active'));</script>
 <script th:src="@{/js/userFeedLoad.js}" defer></script>

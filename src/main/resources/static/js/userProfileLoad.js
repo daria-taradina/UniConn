@@ -35,37 +35,7 @@
   }
 
   function renderPosts(posts) {
-    const container = document.getElementById('profile-posts-container');
-    const modal     = document.getElementById('post-view-modal');
-    const modalBody = document.getElementById('post-view-body');
-    const modalDate = document.getElementById('post-view-date');
-    const modalClose = document.getElementById('post-view-close');
-    if (!container) return;
-
-    if (modalClose) modalClose.addEventListener('click', () => modal.classList.remove('active'));
-    if (modal) modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('active'); });
-
-    if (!posts || posts.length === 0) {
-      container.innerHTML = '<p class="profile-posts-empty">No posts yet.</p>';
-      return;
-    }
-    posts.forEach(post => {
-      const card = document.createElement('div');
-      card.className = 'profile-post-card';
-      card.innerHTML = `
-        <span class="profile-post-username">u/${post.authorUsername}</span>
-        <p class="profile-post-body">${post.contentText}</p>
-        <span class="profile-post-date">${formatDate(post.createdAt)}</span>
-      `;
-      card.addEventListener('click', () => {
-        if (modal && modalBody && modalDate) {
-          modalBody.textContent = post.contentText;
-          modalDate.textContent = 'u/' + post.authorUsername + ' · ' + formatDate(post.createdAt);
-          modal.classList.add('active');
-        }
-      });
-      container.appendChild(card);
-    });
+    renderPostList(posts, 'profile-posts-container');
   }
 
   function setupFollowModal(profileUserId, initialFollowingIds) {
@@ -149,16 +119,21 @@
     fetch('/api/community/trending-tags').then(r => r.ok ? r.json() : []),
     token ? fetch('/api/users/following/ids', { headers: authHeaders }).then(r => r.ok ? r.json() : []) : Promise.resolve([])
   ]).then(([profile, posts, trendingTags, followingIds]) => {
+	initPostViewModal();
     if (!profile) return;
 
     // header
     const headerEl = document.getElementById('profile-header');
-    if (headerEl) headerEl.textContent = profile.username || 'Profile';
+    if (headerEl) headerEl.textContent = 'Profile';
 
     // username
     const usernameEl = document.getElementById('profile-username');
     if (usernameEl) usernameEl.textContent = 'u/' + (profile.username || '');
-
+	
+	// full name
+	const fullnameEl = document.getElementById('profile-fullname');
+	if (fullnameEl) fullnameEl.textContent = profile.name || '';
+	
     // avatar
     const avatarEl = document.getElementById('profile-picture-img');
     if (avatarEl && profile.profilePicture) avatarEl.src = profile.profilePicture;
@@ -172,28 +147,21 @@
     if (communityEl) communityEl.textContent = profile.communityCount ?? 0;
 
     // bio
-    const bioSection = document.getElementById('profile-bio-section');
-    if (bioSection) {
-      bioSection.innerHTML = '';
-      if (profile.name) {
-        const nameEl = document.createElement('span');
-        nameEl.className = 'profile-name';
-        nameEl.textContent = profile.name;
-        bioSection.appendChild(nameEl);
-      }
-      if (profile.userBio) {
-        const bioEl = document.createElement('p');
-        bioEl.className = 'profile-bio';
-        bioEl.textContent = profile.userBio;
-        bioSection.appendChild(bioEl);
-      }
-      if (!profile.name && !profile.userBio) {
-        const emptyEl = document.createElement('p');
-        emptyEl.className = 'profile-bio-empty';
-        emptyEl.textContent = 'No bio yet.';
-        bioSection.appendChild(emptyEl);
-      }
-    }
+	const bioSection = document.getElementById('profile-bio-section');
+	if (bioSection) {
+	  bioSection.innerHTML = '';
+	  if (profile.userBio) {
+	    const bioEl = document.createElement('p');
+	    bioEl.className = 'profile-bio';
+	    bioEl.textContent = profile.userBio;
+	    bioSection.appendChild(bioEl);
+	  } else {
+	    const emptyEl = document.createElement('p');
+	    emptyEl.className = 'profile-bio-empty';
+	    emptyEl.textContent = 'No bio yet.';
+	    bioSection.appendChild(emptyEl);
+	  }
+	}
 
     // follow / unfollow button
     const followBtn = document.getElementById('follow-profile-btn');

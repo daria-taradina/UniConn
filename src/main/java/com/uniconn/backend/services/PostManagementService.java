@@ -1,6 +1,7 @@
 package com.uniconn.backend.services;
 
 import com.uniconn.backend.composite_keys.CommunityMemberId;
+import com.uniconn.backend.composite_keys.PostLikeId;
 import com.uniconn.backend.dtos.*;
 import com.uniconn.backend.entities.*;
 import com.uniconn.backend.exception.*;
@@ -19,15 +20,18 @@ public class PostManagementService extends BaseService {
     private final CommunityRepository communityRepository;
     private final CommunityMemberRepository communityMemberRepository;
     private final PostTagService postTagService;
+    private final PostLikeRepository postLikeRepository;
 
     public PostManagementService(PostRepository postRepository,
                                  CommunityRepository communityRepository,
                                  CommunityMemberRepository communityMemberRepository,
-                                 PostTagService postTagService) {
+                                 PostTagService postTagService,
+                                 PostLikeRepository postLikeRepository) {
         this.postRepository = postRepository;
         this.communityRepository = communityRepository;
         this.communityMemberRepository = communityMemberRepository;
         this.postTagService = postTagService;
+        this.postLikeRepository = postLikeRepository;
     }
 
     // ---------------------------------------------------------------
@@ -63,7 +67,8 @@ public class PostManagementService extends BaseService {
         Post saved = postRepository.save(post);
         List<String> tagNames = postTagService.saveTags(saved, dto.getTags());
 
-        return mapToSummaryDTO(saved, tagNames);
+        // freshly created post: not liked yet, author can always delete own post
+        return mapToSummaryDTO(saved, tagNames, currentUser.getUserId());
     }
 
     // ---------------------------------------------------------------
@@ -86,13 +91,11 @@ public class PostManagementService extends BaseService {
             if (post.getCommunity() == null) {
                 throw new UnauthorizedException("You are not allowed to delete this post");
             }
-
             boolean isAdmin = communityMemberRepository
                 .existsById_CommunityIdAndId_UserIdAndRole(
                     post.getCommunity().getCommunityId(),
                     currentUser.getUserId(),
                     CommunityMemberRole.ADMIN);
-
             if (!isAdmin) {
                 throw new UnauthorizedException("You are not allowed to delete this post");
             }
@@ -107,9 +110,10 @@ public class PostManagementService extends BaseService {
     // ---------------------------------------------------------------
     @Transactional(readOnly = true)
     public List<PostSummaryDTO> getFeedForUser(Integer userId) {
+        User currentUser = getAuthenticatedUser();
         return postRepository.findFeedPostsForUser(userId)
                 .stream()
-                .map(this::mapToSummaryDTO)
+                .map(p -> mapToSummaryDTO(p, currentUser.getUserId()))
                 .collect(Collectors.toList());
     }
 
@@ -130,20 +134,22 @@ public class PostManagementService extends BaseService {
     // ---------------------------------------------------------------
     @Transactional(readOnly = true)
     public List<PostSummaryDTO> getPostsByTag(String tagName) {
+        User currentUser = getAuthenticatedUser();
         return postRepository.findPostsByExactTag(tagName)
                 .stream()
-                .map(this::mapToSummaryDTO)
+                .map(p -> mapToSummaryDTO(p, currentUser.getUserId()))
                 .collect(Collectors.toList());
     }
 
     // ---------------------------------------------------------------
-    // SEARCH BY TAG (contains match)
+    // SEARCH BY TAG
     // ---------------------------------------------------------------
     @Transactional(readOnly = true)
     public List<PostSummaryDTO> searchPostsByTag(String query) {
+        User currentUser = getAuthenticatedUser();
         return postRepository.findPostsByTagContaining(query.trim())
                 .stream()
-                .map(this::mapToSummaryDTO)
+                .map(p -> mapToSummaryDTO(p, currentUser.getUserId()))
                 .collect(Collectors.toList());
     }
 
@@ -152,12 +158,13 @@ public class PostManagementService extends BaseService {
     // ---------------------------------------------------------------
     @Transactional(readOnly = true)
     public List<PostSummaryDTO> getProfilePosts(Integer userId) {
+        User currentUser = getAuthenticatedUser();
         return postRepository.findProfilePostsByUser(userId)
                 .stream()
-                .map(this::mapToSummaryDTO)
+                .map(p -> mapToSummaryDTO(p, currentUser.getUserId()))
                 .collect(Collectors.toList());
     }
-    
+
     @Transactional(readOnly = true)
     public List<PostSummaryDTO> getProfilePostsByUsername(String username) {
         User user = userRepository.findByUsername(username)
@@ -170,9 +177,10 @@ public class PostManagementService extends BaseService {
     // ---------------------------------------------------------------
     @Transactional(readOnly = true)
     public List<PostSummaryDTO> getCommunityPostsByUser(Integer userId) {
+        User currentUser = getAuthenticatedUser();
         return postRepository.findCommunityPostsByUser(userId)
                 .stream()
-                .map(this::mapToSummaryDTO)
+                .map(p -> mapToSummaryDTO(p, currentUser.getUserId()))
                 .collect(Collectors.toList());
     }
 
@@ -181,36 +189,52 @@ public class PostManagementService extends BaseService {
     // ---------------------------------------------------------------
     @Transactional(readOnly = true)
     public List<PostSummaryDTO> getPostsByCommunity(Integer communityId) {
+        User currentUser = getAuthenticatedUser();
         return postRepository.findPostsByCommunity(communityId)
                 .stream()
-                .map(this::mapToSummaryDTO)
+                .map(p -> mapToSummaryDTO(p, currentUser.getUserId()))
                 .collect(Collectors.toList());
     }
 
     // ---------------------------------------------------------------
     // HELPERS
     // ---------------------------------------------------------------
-    private PostSummaryDTO mapToSummaryDTO(Post post) {
+
+    // used for read queries - tags fetched from already-loaded post.getTags()
+    private PostSummaryDTO mapToSummaryDTO(Post post, Integer currentUserId) {
         List<String> tagNames = post.getTags()
                 .stream()
                 .map(pt -> pt.getTag().getName())
                 .collect(Collectors.toList());
-        return mapToSummaryDTO(post, tagNames);
+        return mapToSummaryDTO(post, tagNames, currentUserId);
     }
 
-    private PostSummaryDTO mapToSummaryDTO(Post post, List<String> tagNames) {
+    // used for createPost - tags passed in directly from postTagService
+    private PostSummaryDTO mapToSummaryDTO(Post post, List<String> tagNames, Integer currentUserId) {
+        boolean liked = postLikeRepository.existsById(
+                new PostLikeId(currentUserId, post.getPostId()));
+
+        boolean canDelete = post.getAuthor().getUserId().equals(currentUserId)
+                || (post.getCommunity() != null
+                    && communityMemberRepository.existsById_CommunityIdAndId_UserIdAndRole(
+                        post.getCommunity().getCommunityId(),
+                        currentUserId,
+                        CommunityMemberRole.ADMIN));
+
         return new PostSummaryDTO(
             post.getPostId(),
             post.getAuthor().getUsername(),
             post.getAuthor().getUserId(),
             post.getCommunity() != null ? post.getCommunity().getCommunityName() : null,
-            post.getCommunity() != null ? post.getCommunity().getCommunityId() : null,
+            post.getCommunity() != null ? post.getCommunity().getCommunityId()   : null,
             post.getTitle(),
             post.getContentText(),
             post.getLikeCount(),
             post.getCommentCount(),
             post.getCreatedAt(),
-            tagNames
+            tagNames,
+            liked,
+            canDelete
         );
     }
 }
