@@ -17,9 +17,15 @@
 html {
   align-items: center;
   overflow-y: scroll;
-  scrollbar-color: #242424;
+  scrollbar-color: #c0cdd6 #f0f2f5;
   scrollbar-width: thin;
 }
+
+/* Light mode — global scrollbar */
+::-webkit-scrollbar { width: 7px; height: 7px; }
+::-webkit-scrollbar-track { background: #f0f2f5; border-radius: 8px; }
+::-webkit-scrollbar-thumb { background: #c0cdd6; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #a0adb8; }
 
 body {
   min-height: 100vh;

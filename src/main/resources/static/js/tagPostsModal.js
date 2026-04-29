@@ -183,14 +183,15 @@
       });
     });
 
-    // Global hashtag delegation — catches .mc-tag and .community-tag anywhere on the page
+    // Global hashtag delegation — capture phase so it fires before card click handlers
     document.addEventListener('click', e => {
-      const tagEl = e.target.closest('.mc-tag, .community-tag');
+      const tagEl = e.target.closest('.mc-tag, .community-tag, .post-card-tag');
       if (!tagEl) return;
       e.stopPropagation();
+      e.preventDefault();
       const tag = tagEl.textContent.replace(/^#/, '').trim();
       if (tag) openTagPostsModal(tag);
-    });
+    }, true);
   });
 
   window.openTagPostsModal = function (tag) {

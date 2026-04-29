@@ -24,10 +24,13 @@ function sectionLabel(text) {
   return li;
 }
 
-document.getElementById('search-input').addEventListener('keydown', async function(e) {
-  if (e.key !== 'Enter') return;
-  const query = this.value.trim();
-  if (!query) return;
+let _searchTimer = null;
+document.getElementById('search-input').addEventListener('input', function() {
+  clearTimeout(_searchTimer);
+  const input = this;
+  _searchTimer = setTimeout(async function() {
+  const query = input.value.trim();
+  if (!query) { document.getElementById('search-results').innerHTML = ''; return; }
 
   const results = document.getElementById('search-results');
   results.innerHTML = '<li class="search-result-empty">Searching...</li>';
@@ -174,5 +177,6 @@ document.getElementById('search-input').addEventListener('keydown', async functi
   } catch (err) {
     results.innerHTML = '<li class="search-result-empty">Could not connect to server.</li>';
   }
-	});
-}); 
+  }, 300);
+});
+});
