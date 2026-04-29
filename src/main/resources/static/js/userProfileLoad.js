@@ -1,15 +1,16 @@
+// Loads another user's profile page (/profile/{username}).
+// Delegates post card rendering to postCardRenderer.js.
+
 (function () {
   const token = localStorage.getItem('token');
   const authHeaders = token ? { 'Authorization': 'Bearer ' + token } : {};
   const viewedUsername = window.location.pathname.split('/').filter(Boolean).pop();
   const currentUsername = localStorage.getItem('currentUsername') || '';
 
-  // redirect to own profile if someone navigates to their own /profile/{username}
   if (viewedUsername && viewedUsername === currentUsername) {
     window.location.replace('/profile');
     return;
   }
-
 
   function openPendingPostModal() {
     const raw = sessionStorage.getItem('pendingPostModal');
@@ -38,8 +39,44 @@
     });
   }
 
-  function renderPosts(posts) {
-    renderPostList(posts, 'profile-posts-container');
+  // ── filter dropdown ───────────────────────────────────────────────
+  function createFilterBar(allPosts, profilePosts, communityPosts) {
+	const bar = document.createElement('div');
+	  bar.className = 'posts-filter-bar';          // ← class instead of inline style
+
+	  const select = document.createElement('select');
+	  select.className = 'posts-filter-select';    // ← class instead of inline style
+	  select.innerHTML = `
+	    <option value="all">All posts</option>
+	    <option value="profile">Profile posts</option>
+	    <option value="community">Community posts</option>
+	  `;
+
+    select.addEventListener('change', () => {
+      const val = select.value;
+      const posts = val === 'all' ? allPosts
+                  : val === 'profile' ? profilePosts
+                  : communityPosts;
+      renderFilteredPosts(posts, bar);
+    });
+
+    bar.appendChild(select);
+    return bar;
+  }
+
+  function renderFilteredPosts(posts, filterBar) {
+    const c = document.getElementById('profile-posts-container');
+    if (!c) return;
+    c.innerHTML = '';
+    if (filterBar) c.appendChild(filterBar);
+    if (!posts || posts.length === 0) {
+      const empty = document.createElement('p');
+      empty.style.cssText = 'color:#999;font-size:0.9em;padding:16px';
+      empty.textContent = 'No posts yet.';
+      c.appendChild(empty);
+      return;
+    }
+    posts.forEach(post => c.appendChild(createPostCard(post)));
   }
 
   function setupFollowModal(profileUserId) {
@@ -117,57 +154,42 @@
     document.getElementById('stat-following')?.addEventListener('click', () => openFollowModal('following'));
   }
 
+  // ── main fetch ────────────────────────────────────────────────────
   Promise.all([
     fetch(`/api/profile/${viewedUsername}`, { headers: authHeaders }).then(r => r.ok ? r.json() : null),
-    fetch(`/api/posts/profile/by-username/${viewedUsername}`, { headers: authHeaders }).then(r => r.ok ? r.json() : []),
     fetch('/api/community/trending-tags').then(r => r.ok ? r.json() : []),
     token ? fetch('/api/users/following/ids', { headers: authHeaders }).then(r => r.ok ? r.json() : []) : Promise.resolve([])
-  ]).then(([profile, posts, trendingTags, followingIds]) => {
-	initPostViewModal();
+  ]).then(([profile, trendingTags, followingIds]) => {
+    initPostViewModal();
     if (!profile) return;
 
-    // header
-    const headerEl = document.getElementById('profile-header');
-    if (headerEl) headerEl.textContent = 'Profile';
-
-    // username
+    // render profile info
     const usernameEl = document.getElementById('profile-username');
     if (usernameEl) usernameEl.textContent = 'u/' + (profile.username || '');
-	
-	// full name
-	const fullnameEl = document.getElementById('profile-fullname');
-	if (fullnameEl) fullnameEl.textContent = profile.name || '';
-	
-    // avatar
+
+    const fullnameEl = document.getElementById('profile-fullname');
+    if (fullnameEl) fullnameEl.textContent = profile.name || '';
+
     const avatarEl = document.getElementById('profile-picture-img');
     if (avatarEl && profile.profilePicture) avatarEl.src = profile.profilePicture;
 
-    // stats
-    const followerEl = document.getElementById('follower-count');
+    const followerEl  = document.getElementById('follower-count');
     const followingEl = document.getElementById('following-count');
     const communityEl = document.getElementById('community-count');
     if (followerEl)  followerEl.textContent  = profile.followerCount  ?? 0;
     if (followingEl) followingEl.textContent = profile.followingCount ?? 0;
     if (communityEl) communityEl.textContent = profile.communityCount ?? 0;
 
-    // bio
-	const bioSection = document.getElementById('profile-bio-section');
-	if (bioSection) {
-	  bioSection.innerHTML = '';
-	  if (profile.userBio) {
-	    const bioEl = document.createElement('p');
-	    bioEl.className = 'profile-bio';
-	    bioEl.textContent = profile.userBio;
-	    bioSection.appendChild(bioEl);
-	  } else {
-	    const emptyEl = document.createElement('p');
-	    emptyEl.className = 'profile-bio-empty';
-	    emptyEl.textContent = 'No bio yet.';
-	    bioSection.appendChild(emptyEl);
-	  }
-	}
+    const bioSection = document.getElementById('profile-bio-section');
+    if (bioSection) {
+      bioSection.innerHTML = '';
+      const bioEl = document.createElement('p');
+      bioEl.className = profile.userBio ? 'profile-bio' : 'profile-bio-empty';
+      bioEl.textContent = profile.userBio || 'No bio yet.';
+      bioSection.appendChild(bioEl);
+    }
 
-    // follow / unfollow button
+    // follow button
     const followBtn = document.getElementById('follow-profile-btn');
     if (followBtn && profile.userId) {
       const isFollowing = new Set(followingIds).has(profile.userId);
@@ -189,16 +211,13 @@
       });
     }
 
-    renderPosts(posts);
     renderTrending(trendingTags);
-    openPendingPostModal();
     if (profile.userId) setupFollowModal(profile.userId);
 
     // communities modal
     const commModal      = document.getElementById('communities-modal');
     const commModalList  = document.getElementById('communities-modal-list');
     const commModalClose = document.getElementById('communities-modal-close');
-
     if (commModal && profile.userId) {
       commModalClose?.addEventListener('click', () => { commModal.classList.remove('active'); commModal.setAttribute('aria-hidden', 'true'); });
       commModal.addEventListener('click', e => { if (e.target === commModal) { commModal.classList.remove('active'); commModal.setAttribute('aria-hidden', 'true'); } });
@@ -214,7 +233,6 @@
         ]);
 
         const myIds = new Set(myCommunities.map(c => c.communityId));
-
         commModalList.innerHTML = '';
         if (!communities.length) {
           commModalList.innerHTML = '<li style="padding:12px 8px;color:#999;font-size:0.9em">No communities yet.</li>';
@@ -257,9 +275,22 @@
         });
       });
     }
+
+    // fetch posts for both types then render with filter
+    return Promise.all([
+      fetch(`/api/posts/profile/by-username/${viewedUsername}`, { headers: authHeaders }).then(r => r.ok ? r.json() : []),
+      fetch(`/api/posts/user/${profile.userId}/community`, { headers: authHeaders }).then(r => r.ok ? r.json() : [])
+    ]).then(([profilePosts, communityPosts]) => {
+      const allPosts = [...profilePosts, ...communityPosts]
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      const filterBar = createFilterBar(allPosts, profilePosts, communityPosts);
+      renderFilteredPosts(allPosts, filterBar);
+      openPendingPostModal();
+    });
+
   }).catch(() => {});
 
-  // --- Search filters for follow and communities modals ---
+  // ── search filters for follow and communities modals ──────────────
   function filterList(listId, query) {
     const q = query.toLowerCase();
     document.querySelectorAll(`#${listId} .follow-list-item`).forEach(li => {
