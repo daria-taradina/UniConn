@@ -21,7 +21,7 @@ function createPostCard(post, { onDelete } = {}) {
   // meta
   const meta = document.createElement('div');
   meta.className = 'post-card-meta';
-  meta.innerHTML = `<span class="post-card-author">u/${post.authorUsername}</span>`;
+  meta.innerHTML = `<a href="/profile/${post.authorUsername}" class="post-card-author post-username-link" onclick="event.stopPropagation()">u/${post.authorUsername}</a>`;
   if (post.communityName) {
     meta.innerHTML += `<span class="post-card-community">c/${post.communityName}</span>`;
   }
@@ -51,7 +51,7 @@ function createPostCard(post, { onDelete } = {}) {
       t.textContent = '#' + tag;
       t.addEventListener('click', e => {
         e.stopPropagation();
-        window.location.href = '/posts/tag/' + encodeURIComponent(tag);
+        openTagPostsModal(tag);
       });
       tagsWrap.appendChild(t);
     });
@@ -97,7 +97,7 @@ function createPostCard(post, { onDelete } = {}) {
   // comment count
   const commentBtn = document.createElement('button');
   commentBtn.className = 'post-card-action';
-  commentBtn.innerHTML = `<span>💬</span><span>${post.commentCount}</span>`;
+  commentBtn.innerHTML = `<img src="/vector-logos/commentCloud.svg" alt="Comments" style="width:18px;height:18px;margin:0"><span>${post.commentCount}</span>`;
   commentBtn.addEventListener('click', e => {
     e.stopPropagation();
     openPostViewModal(post);
@@ -161,7 +161,7 @@ function openPostViewModal(post) {
   if (!overlay) return;
 
   // meta
-  modalMeta.innerHTML = `<span style="font-weight:600;color:#333">u/${post.authorUsername}</span>`;
+  modalMeta.innerHTML = `<a href="/profile/${post.authorUsername}" class="post-username-link" style="font-weight:600;color:#333">u/${post.authorUsername}</a>`;
   if (post.communityName) {
     modalMeta.innerHTML += `<span class="post-view-community">c/${post.communityName}</span>`;
   }
@@ -182,9 +182,7 @@ function openPostViewModal(post) {
     const t = document.createElement('span');
     t.className = 'post-card-tag';
     t.textContent = '#' + tag;
-    t.addEventListener('click', () => {
-      window.location.href = '/posts/tag/' + encodeURIComponent(tag);
-    });
+    t.addEventListener('click', () => openTagPostsModal(tag));
     modalTags.appendChild(t);
   });
 
@@ -220,7 +218,7 @@ function openPostViewModal(post) {
 
   const commentCount = document.createElement('span');
   commentCount.className = 'post-card-action';
-  commentCount.innerHTML = `<span>💬</span><span id="modal-comment-count">${post.commentCount}</span>`;
+  commentCount.innerHTML = `<img src="/vector-logos/commentCloud.svg" alt="Comments" style="width:18px;height:18px;margin:0"><span id="modal-comment-count">${post.commentCount}</span>`;
   modalFooter.appendChild(commentCount);
 
   if (post.canDelete) {

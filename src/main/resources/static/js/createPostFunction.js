@@ -1,3 +1,6 @@
+// handles the create post modal: with destination option (profile vs community),
+// includes community dropdown, optional tag input, and form submission.
+// loaded on all pages that include the create-post-modal in sidenav
 const titleInput           = document.getElementById('create-post-title-input');
 const bodyInput            = document.getElementById('create-post-body-input');
 const destinationBtn       = document.getElementById('create-post-destination-btn');

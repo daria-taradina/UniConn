@@ -1,3 +1,5 @@
+// Handles the Edit Profile modal: submits name/bio updates and refreshes the bio section in place.
+// Loaded on profile.html only.
 const editNameInput    = document.getElementById('edit-name-input');
 const editBioInput     = document.getElementById('edit-bio-input');
 const editMsg          = document.getElementById('edit-profile-message');

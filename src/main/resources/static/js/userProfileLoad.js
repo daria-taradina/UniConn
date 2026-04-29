@@ -10,11 +10,15 @@
     return;
   }
 
-  function formatDate(iso) {
-    const d = new Date(iso);
-    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-      + ' · '
-      + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+
+  function openPendingPostModal() {
+    const raw = sessionStorage.getItem('pendingPostModal');
+    if (!raw) return;
+    sessionStorage.removeItem('pendingPostModal');
+    try {
+      const post = JSON.parse(raw);
+      if (typeof openPostViewModal === 'function') openPostViewModal(post);
+    } catch {}
   }
 
   function renderTrending(tags) {
@@ -29,7 +33,7 @@
       const li = document.createElement('li');
       li.className = 'trending-tag-item';
       li.innerHTML = `<span class="trending-tag-rank">#${i + 1}</span><span class="trending-tag-name">${tag}</span>`;
-      li.addEventListener('click', () => { window.location.href = '/communities?tag=' + encodeURIComponent(tag); });
+      li.addEventListener('click', () => openTagPostsModal(tag));
       trendingList.appendChild(li);
     });
   }
@@ -38,7 +42,7 @@
     renderPostList(posts, 'profile-posts-container');
   }
 
-  function setupFollowModal(profileUserId, initialFollowingIds) {
+  function setupFollowModal(profileUserId) {
     const followModal = document.getElementById('follow-list-modal');
     const followTitle = document.getElementById('follow-list-title');
     const followList  = document.getElementById('follow-list');
@@ -187,7 +191,8 @@
 
     renderPosts(posts);
     renderTrending(trendingTags);
-    if (profile.userId) setupFollowModal(profile.userId, followingIds);
+    openPendingPostModal();
+    if (profile.userId) setupFollowModal(profile.userId);
 
     // communities modal
     const commModal      = document.getElementById('communities-modal');
@@ -253,4 +258,32 @@
       });
     }
   }).catch(() => {});
+
+  // --- Search filters for follow and communities modals ---
+  function filterList(listId, query) {
+    const q = query.toLowerCase();
+    document.querySelectorAll(`#${listId} .follow-list-item`).forEach(li => {
+      li.style.display = li.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+
+  document.getElementById('follow-search')?.addEventListener('input', e => {
+    filterList('follow-list', e.target.value.trim());
+  });
+  document.getElementById('communities-modal-search')?.addEventListener('input', e => {
+    filterList('communities-modal-list', e.target.value.trim());
+  });
+
+  document.getElementById('stat-followers')?.addEventListener('click', () => {
+    const s = document.getElementById('follow-search');
+    if (s) { s.value = ''; filterList('follow-list', ''); }
+  });
+  document.getElementById('stat-following')?.addEventListener('click', () => {
+    const s = document.getElementById('follow-search');
+    if (s) { s.value = ''; filterList('follow-list', ''); }
+  });
+  document.getElementById('stat-communities')?.addEventListener('click', () => {
+    const s = document.getElementById('communities-modal-search');
+    if (s) { s.value = ''; filterList('communities-modal-list', ''); }
+  });
 })();

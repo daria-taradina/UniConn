@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" th:href="@{/vector-logos/unicornLogo.png}" type="image/png">
   <link rel="stylesheet" th:href="@{/css/login.css}">
+  <link rel="stylesheet" th:href="@{/css/dark-mode.css}">
   <title>Log In - UniConn</title>
 </head>
 
@@ -14,6 +15,7 @@
   <nav class="navbar">
     <img th:src="@{/vector-logos/unicornLogo.png}" alt="UniConn Logo" width="100">
     <a th:href="@{/login}" class="main">UniConn</a>
+    <button id="dark-mode-toggle" class="dark-mode-btn" style="margin-left:auto" title="Toggle dark mode">🌙</button>
   </nav><hr><br><br>
 
     <div class="login-container">
@@ -33,6 +35,7 @@
         <img class="icon" th:src="@{/vector-logos/passwordSignIn.svg}">
         <input type="password" name="password" required placeholder=" ">
         <label>Password</label>
+        <button type="button" class="password-toggle" aria-label="Toggle password visibility"></button>
       </div>
 
       <p id="login-error" style="color:#e05c5c;font-size:0.9em;display:none">Invalid email or password.</p>
@@ -47,6 +50,8 @@
       </form>
         </div>
 
+<script th:src="@{/js/darkMode.js}" defer></script>
+<script th:src="@{/js/passwordToggle.js}" defer></script>
 <script th:src="@{/js/login.js}" defer></script>
 </body>
 

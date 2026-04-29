@@ -517,6 +517,73 @@ button:hover {
   color: #333;
 }*/
 
+/* FEED POSTS */
+.feed-posts-container {
+  margin-top: 46px;
+  padding: 10px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  max-height: calc(1114px - 60px);
+}
+.feed-post-card {
+  border: 1.5px solid #ddd;
+  border-radius: 10px;
+  padding: 12px 16px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: background 0.15s;
+}
+.feed-post-card:hover {
+  background: #f0f7fc;
+  border-color: #91c5e8;
+}
+.feed-post-meta {
+  font-size: 0.82em;
+  color: #888;
+}
+.feed-post-community {
+  font-weight: 600;
+  color: #555;
+}
+.feed-post-title {
+  font-weight: 700;
+  font-size: 0.97em;
+  color: #24283b;
+  margin: 0;
+}
+.feed-post-body {
+  font-size: 0.9em;
+  color: #333;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.feed-post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.feed-post-tag {
+  background: #f0f0f0;
+  border-radius: 20px;
+  padding: 2px 8px;
+  font-size: 0.78em;
+  color: #555;
+}
+.feed-posts-empty {
+  font-size: 0.9em;
+  color: #aaa;
+  font-style: italic;
+  padding: 8px 0;
+}
+
 /* ACTIONS PANEL */
 /*.actions-panel {
   position: relative;

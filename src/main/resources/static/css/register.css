@@ -102,6 +102,7 @@ h3 {
 .input-box input {
   width: 100%;
   padding-left: 32px;
+  padding-right: 36px;
   height: 30px;
   background: transparent;
   font-size: 1em;
