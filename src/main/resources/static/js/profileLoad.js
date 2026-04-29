@@ -36,6 +36,7 @@
 	
     const avatarEl = document.getElementById('profile-picture-img');
     if (avatarEl && data.profilePicture) avatarEl.src = data.profilePicture;
+    if (data.profilePicture) localStorage.setItem('profilePicture', data.profilePicture);
 
     const followerEl = document.getElementById('follower-count');
     const followingEl = document.getElementById('following-count');
@@ -102,6 +103,7 @@
         });
         if (saveRes.ok) {
           if (avatarImg) avatarImg.src = url;
+          localStorage.setItem('profilePicture', url);
         } else {
           const err = await saveRes.json().catch(() => ({}));
           alert('Failed to save picture: ' + (err.error || saveRes.status));

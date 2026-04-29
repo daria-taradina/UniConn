@@ -30,7 +30,7 @@
       </a>
       <button id="dark-mode-toggle" class="dark-mode-btn" title="Toggle dark mode">🌙</button>
       <span class="signout-divider">|</span>
-      <a href="#" class="signout-link" onclick="['token','currentUsername','myProfilePosts','myCommunities'].forEach(k=>localStorage.removeItem(k)); window.location.href='/login'; return false;">Sign Out</a>
+      <a href="#" class="signout-link" onclick="['token','currentUsername','myProfilePosts','myCommunities','profilePicture'].forEach(k=>localStorage.removeItem(k)); window.location.href='/login'; return false;">Sign Out</a>
     </div>
   </nav><hr><br>
 
@@ -140,6 +140,7 @@
     <!-- LEFT CONTAINER: post detail -->
     <div class="left-container">
       <div class="header-left"><a id="post-detail-header-link" class="post-detail-header-link"><h3 id="post-detail-header-name">Post</h3></a></div>
+      <button class="back-btn" onclick="history.back()">&#8592; Back</button>
 
       <div class="community-detail-content">
         <div class="community-detail-top">
@@ -191,6 +192,7 @@
   </div>
 
 <script th:src="@{/js/darkMode.js}" defer></script>
+<script th:src="@{/js/navbarPfp.js}" defer></script>
 <script th:src="@{/js/tagPostsModal.js}" defer></script>
 <script th:src="@{/js/postDetailLoad.js}" defer></script>
 <script th:src="@{/js/modalManager.js}" defer></script>

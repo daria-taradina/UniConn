@@ -53,13 +53,14 @@ body {
 .login-container {
   position: relative;
   width: 700px;
-  height: 550px;
+  min-height: 550px;
   background-color: white;
   border-radius: 10px;
   border: 2px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 30px;
 }
 
 .input-box {
@@ -81,18 +82,18 @@ body {
 }
 
 .header {
-    height:30px;
-    width: 699px;
-    overflow:hidden;
+    height: 30px;
+    width: 100%;
+    overflow: hidden;
     position: absolute;
-    margin-top: -140px;
-    margin-left: -191px;
+    top: 0;
+    left: 0;
     background: #91c5e8;
-    border: 2px solid black;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
+    border: none;
+    border-bottom: 2px solid black;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
+    box-sizing: border-box;
     z-index: 999;
 }
 h3 {
@@ -109,7 +110,8 @@ h3 {
   border-radius: 10px;
 }
 .input-box input:focus + label,
-.input-box input:not(:placeholder-shown) + label {
+.input-box input:not(:placeholder-shown) + label,
+.input-box input:-webkit-autofill + label {
   opacity: 0;
   visibility: hidden;
 }

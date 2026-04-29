@@ -40,11 +40,11 @@
   height: auto;
   font-size: 1.6em;
   cursor: pointer;
-  color: #fff;
+  color: #000;
   line-height: 1;
   z-index: 1000;
 }
-.search-modal-close:hover { color: #fff; background: none; border: none; }
+.search-modal-close:hover { color: #333; background: none; border: none; }
 
 .search-modal-input {
   width: 100%;
@@ -191,9 +191,9 @@
 .post-view-close {
   position: absolute; top: 4px; right: 14px;
   background: none; border: none; width: auto; height: auto;
-  font-size: 1.6em; cursor: pointer; color: #fff; line-height: 1; z-index: 10;
+  font-size: 1.6em; cursor: pointer; color: #000; line-height: 1; z-index: 10;
 }
-.post-view-close:hover { background: none; color: #fff; border: none; }
+.post-view-close:hover { background: none; color: #333; border: none; }
 
 .post-view-body {
   padding: 20px; overflow-y: auto; flex: 1;

@@ -35,7 +35,7 @@
       </a>
       <button id="dark-mode-toggle" class="dark-mode-btn" title="Toggle dark mode">🌙</button>
       <span class="signout-divider">|</span>
-      <a href="#" class="signout-link" onclick="['token','currentUsername','myProfilePosts','myCommunities'].forEach(k=>localStorage.removeItem(k)); window.location.href='/login'; return false;">Sign Out</a>
+      <a href="#" class="signout-link" onclick="['token','currentUsername','myProfilePosts','myCommunities','profilePicture'].forEach(k=>localStorage.removeItem(k)); window.location.href='/login'; return false;">Sign Out</a>
     </div>
   </nav><hr class="navbar-divider">
 
@@ -168,6 +168,7 @@
     <!-- LEFT CONTAINER: community detail -->
     <div class="left-container">
       <div class="header-left"><h3 id="community-header-name">Community</h3></div>
+      <button class="back-btn" onclick="history.back()">&#8592; Back</button>
 
       <div class="community-detail-content">
 
@@ -255,6 +256,7 @@
 </div>
 
 <script th:src="@{/js/darkMode.js}" defer></script>
+<script th:src="@{/js/navbarPfp.js}" defer></script>
 <script th:src="@{/js/tagPostsModal.js}" defer></script>
 <script th:src="@{/js/tagInput.js}" defer></script>
 <script th:src="@{/js/postCardRenderer.js}" defer></script>
