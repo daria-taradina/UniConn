@@ -154,6 +154,15 @@ body.dark-mode .mc-tag {
 }
 
 /* profile */
+body.dark-mode .profile-action-btn {
+  background-color: #2e2e2e;
+  border-color: #555;
+  color: #ccc;
+}
+body.dark-mode .profile-action-btn:hover {
+  background-color: #383838;
+  border-color: #777;
+}
 body.dark-mode .profile-username { color: #e0e0e0; }
 body.dark-mode .profile-name { color: #aaa; }
 body.dark-mode .profile-bio { color: #ccc; }

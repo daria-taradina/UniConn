@@ -18,7 +18,7 @@
 
 .profile-top {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 14px;
   margin-bottom: 12px;
 }
