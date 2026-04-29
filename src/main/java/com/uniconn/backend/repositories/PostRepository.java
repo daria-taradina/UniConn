@@ -7,9 +7,22 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface PostRepository extends JpaRepository<Post, Integer> {
-
+	
+	@Query("""
+		    SELECT p FROM Post p
+		    LEFT JOIN FETCH p.author
+		    LEFT JOIN FETCH p.community
+		    LEFT JOIN FETCH p.tags pt
+		    LEFT JOIN FETCH pt.tag
+		    WHERE p.postId = :postId
+		      AND p.isDeleted = false
+		""")
+		Optional<Post> findByIdWithTags(@Param("postId") Integer postId);
+	
+	
     // ---------------------------------------------------------------
     // FEED: posts from communities the user is a member of
     //       + posts from users the user follows

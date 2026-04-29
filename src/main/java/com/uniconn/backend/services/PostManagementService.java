@@ -104,6 +104,18 @@ public class PostManagementService extends BaseService {
         post.setDeleted(true);
         postRepository.save(post);
     }
+    
+    // post for postcard
+    @Transactional(readOnly = true)
+    public PostSummaryDTO getPost(Integer postId) {
+        User currentUser = getAuthenticatedUser();
+        Post post = postRepository.findByIdWithTags(postId)
+        	    .orElseThrow(() -> new ResourceNotFoundException("Post not found: " + postId));
+        if (post.isDeleted()) {
+            throw new ResourceNotFoundException("Post not found: " + postId);
+        }
+        return mapToSummaryDTO(post, currentUser.getUserId());
+    }
 
     // ---------------------------------------------------------------
     // FEED

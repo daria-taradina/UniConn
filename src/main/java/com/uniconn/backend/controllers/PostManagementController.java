@@ -37,6 +37,13 @@ public class PostManagementController {
         postManagementService.deletePost(postId);
         return ResponseEntity.noContent().build();
     }
+    
+    // GET /api/posts/{postId}
+    // Fetch a single post by ID (used to refresh modal state)
+    @GetMapping("/{postId}")
+    public ResponseEntity<PostSummaryDTO> getPost(@PathVariable Integer postId) {
+    	return ResponseEntity.ok(postManagementService.getPost(postId));
+    }
 
     // ---------------------------------------------------------------
     // GET /api/posts/feed/{userId}
