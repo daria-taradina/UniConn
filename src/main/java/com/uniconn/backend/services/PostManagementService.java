@@ -207,6 +207,18 @@ public class PostManagementService extends BaseService {
                 .map(p -> mapToSummaryDTO(p, currentUser.getUserId()))
                 .collect(Collectors.toList());
     }
+    
+    // ---------------------------------------------------------------
+    // POSTS USER LIKED
+    // ---------------------------------------------------------------
+    @Transactional(readOnly = true)
+    public List<PostSummaryDTO> getPostsLikedByUser(Integer userId) {
+        User currentUser = getAuthenticatedUser();
+        return postRepository.findPostsLikedByUser(userId)
+                .stream()
+                .map(p -> mapToSummaryDTO(p, currentUser.getUserId()))
+                .collect(Collectors.toList());
+    }
 
     // ---------------------------------------------------------------
     // HELPERS

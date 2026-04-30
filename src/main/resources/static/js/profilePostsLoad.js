@@ -2,8 +2,8 @@
 // Delegates post card rendering to postCardRenderer.js.
 
 (function () {
-  const token  = localStorage.getItem('token');
-  const userId = localStorage.getItem('currentUserId');
+  const token   = localStorage.getItem('token');
+  const userId  = localStorage.getItem('currentUserId');
   const headers = { 'Authorization': 'Bearer ' + token };
   const container = document.getElementById('profile-posts-container');
 
@@ -24,51 +24,135 @@
     } catch {}
   }
 
-  // ── filter dropdown ───────────────────────────────────────────────
-  function createFilterBar(allPosts, profilePosts, communityPosts) {
-	const bar = document.createElement('div');
-	  bar.className = 'posts-filter-bar';          // ← class instead of inline style
+  // ── liked posts modal ─────────────────────────────────────────────
+  function openLikedPostsModal(targetUserId) {
+    const existing = document.getElementById('liked-posts-modal');
+    if (existing) existing.remove();
 
-	  const select = document.createElement('select');
-	  select.className = 'posts-filter-select';    // ← class instead of inline style
-	  select.innerHTML = `
-	    <option value="all">All posts</option>
-	    <option value="profile">Profile posts</option>
-	    <option value="community">Community posts</option>
-	  `;
+    const overlay = document.createElement('div');
+    overlay.id = 'liked-posts-modal';
+    overlay.className = 'search-modal-overlay active';
+    overlay.setAttribute('aria-hidden', 'false');
+
+	overlay.innerHTML = `
+	  <div class="search-modal create-post-modal">
+	    <div class="header-right">
+	      <h3 class="search-modal-title">Liked Posts</h3>
+	    </div>
+	    <button class="search-modal-close" id="liked-posts-close">&times;</button>
+	    <div id="liked-posts-list" style="margin-top:12px; max-height:560px; overflow-y:auto;">
+	      <p style="color:#999;font-size:0.9em;padding:8px">Loading...</p>
+	    </div>
+	  </div>
+	`;
+    document.body.appendChild(overlay);
+
+    const closeBtn = overlay.querySelector('#liked-posts-close');
+    closeBtn.addEventListener('click', () => overlay.remove());
+    overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+    document.addEventListener('keydown', function onEsc(e) {
+      if (e.key === 'Escape') { overlay.remove(); document.removeEventListener('keydown', onEsc); }
+    });
+
+    fetch(`/api/posts/liked-by/${targetUserId}`, { headers })
+      .then(r => r.ok ? r.json() : [])
+      .then(posts => {
+        const list = document.getElementById('liked-posts-list');
+        if (!list) return;
+        if (!posts || posts.length === 0) {
+          list.innerHTML = '<p style="color:#999;font-size:0.9em;padding:8px">No liked posts yet.</p>';
+          return;
+        }
+        list.innerHTML = '';
+        posts.forEach(post => {
+          const item = document.createElement('div');
+          item.className = 'search-result-card';
+          item.style.cursor = 'pointer';
+		  item.innerHTML = `
+		    <div class="src-card-header">
+		      <span class="src-card-name">${post.title || ('u/' + post.authorUsername)}</span>
+		      ${post.communityName ? `<span class="post-card-community" style="font-size:0.8em">c/${post.communityName}</span>` : ''}
+		    </div>
+		    <p class="src-card-desc">${post.contentText || ''}</p>
+		    <span style="font-size:0.78em;color:#aaa;display:flex;align-items:center;gap:4px;">
+		      u/${post.authorUsername} · <img src="/vector-logos/heartBlue.svg" style="width:14px;height:14px;margin:0;display:inline-block;"> ${post.likeCount}
+		    </span>
+		  `;
+          item.addEventListener('click', () => {
+            overlay.remove();
+            openPostViewModal(post);
+          });
+          list.appendChild(item);
+        });
+      })
+      .catch(() => {
+        const list = document.getElementById('liked-posts-list');
+        if (list) list.innerHTML = '<p style="color:#999;font-size:0.9em;padding:8px">Could not load liked posts.</p>';
+      });
+  }
+
+  // ── controls (FILTER + SEPARATE LIKE BUTTON) ──────────────────────
+  function createControlBar(allPosts, profilePosts, communityPosts, targetUserId) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'posts-controls-wrapper';
+
+    // LEFT → dropdown
+    const filterBar = document.createElement('div');
+    filterBar.className = 'posts-filter-bar';
+
+    const select = document.createElement('select');
+    select.className = 'posts-filter-select';
+    select.innerHTML = `
+      <option value="all">All posts</option>
+      <option value="profile">Profile posts</option>
+      <option value="community">Community posts</option>
+    `;
 
     select.addEventListener('change', () => {
       const val = select.value;
       const posts = val === 'all' ? allPosts
                   : val === 'profile' ? profilePosts
                   : communityPosts;
-      renderPostList(posts, 'profile-posts-container', bar);
+      renderFilteredPosts(posts, wrapper);
     });
 
-    bar.appendChild(select);
-    return bar;
+    filterBar.appendChild(select);
+
+    // RIGHT → separate liked button
+    const likedBtn = document.createElement('button');
+    likedBtn.className = 'liked-posts-btn';
+	likedBtn.innerHTML = `
+	  <img src="/vector-logos/heartBlue.svg" alt="Liked">
+	  <span>Liked</span>
+	`;
+    likedBtn.addEventListener('click', () => openLikedPostsModal(targetUserId));
+
+    wrapper.appendChild(filterBar);
+    wrapper.appendChild(likedBtn);
+
+    return wrapper;
   }
 
-  // ── render with filter bar preserved ─────────────────────────────
-  function renderPostList(posts, containerId, filterBar) {
-    const c = document.getElementById(containerId);
+  function renderFilteredPosts(posts, controlWrapper) {
+    const c = document.getElementById('profile-posts-container');
     if (!c) return;
+
     c.innerHTML = '';
-    if (filterBar) c.appendChild(filterBar);
+
+    if (controlWrapper) c.appendChild(controlWrapper);
+
     if (!posts || posts.length === 0) {
       const empty = document.createElement('p');
-      empty.className = 'profile-posts-empty';
-      empty.style.color = '#999';
-      empty.style.fontSize = '0.9em';
-      empty.style.padding = '16px';
+      empty.style.cssText = 'color:#999;font-size:0.9em;padding:16px';
       empty.textContent = 'No posts yet.';
       c.appendChild(empty);
       return;
     }
+
     posts.forEach(post => c.appendChild(createPostCard(post)));
   }
 
-  // ── fetch both post types in parallel ────────────────────────────
+  // ── fetch posts ───────────────────────────────────────────────────
   Promise.all([
     fetch(`/api/posts/profile/${userId}`, { headers }).then(r => r.ok ? r.json() : []),
     fetch(`/api/posts/user/${userId}/community`, { headers }).then(r => r.ok ? r.json() : [])
@@ -77,11 +161,14 @@
       const allPosts = [...profilePosts, ...communityPosts]
         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-      const filterBar = createFilterBar(allPosts, profilePosts, communityPosts);
-      renderPostList(allPosts, 'profile-posts-container', filterBar);
+      const controls = createControlBar(allPosts, profilePosts, communityPosts, userId);
+
+      renderFilteredPosts(allPosts, controls);
       openPendingPostModal();
     })
     .catch(() => {
-      if (container) container.innerHTML = '<p style="color:#999;font-size:0.9em;padding:16px">Could not load posts.</p>';
+      if (container) container.innerHTML =
+        '<p style="color:#999;font-size:0.9em;padding:16px">Could not load posts.</p>';
     });
+
 })();

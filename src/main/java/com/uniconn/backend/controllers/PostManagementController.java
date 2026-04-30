@@ -110,6 +110,13 @@ public class PostManagementController {
     public ResponseEntity<List<PostSummaryDTO>> getCommunityPostsByUser(@PathVariable Integer userId) {
         return ResponseEntity.ok(postManagementService.getCommunityPostsByUser(userId));
     }
+    
+    // GET /api/posts/liked-by/{userId}
+    // Posts user liked
+    @GetMapping("/liked-by/{userId}")
+    public ResponseEntity<List<PostSummaryDTO>> getPostsLikedByUser(@PathVariable Integer userId) {
+        return ResponseEntity.ok(postManagementService.getPostsLikedByUser(userId));
+    }
 
     // ---------------------------------------------------------------
     // GET /api/posts/community/{communityId}
