@@ -103,6 +103,7 @@ public class PostInteractionService extends BaseService {
         comment.setPost(post);
         comment.setAuthor(currentUser);
         comment.setContentText(dto.getContentText());
+        comment.setGifUrl(dto.getGifUrl());
 
         Comment saved = commentRepository.save(comment);
 
@@ -178,7 +179,8 @@ public class PostInteractionService extends BaseService {
             comment.getAuthor().getUsername(),
             comment.getAuthor().getUserId(),
             comment.getContentText(),
-            comment.getCreatedAt()
+            comment.getCreatedAt(),
+            comment.getGifUrl()
         );
     }
 }
