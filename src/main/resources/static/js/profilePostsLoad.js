@@ -3,16 +3,29 @@
 
 (function () {
   const token   = localStorage.getItem('token');
-  const userId  = localStorage.getItem('currentUserId');
   const headers = { 'Authorization': 'Bearer ' + token };
   const container = document.getElementById('profile-posts-container');
 
-  if (!token || !userId) {
+  if (!token) {
     if (container) container.innerHTML = '<p class="profile-posts-empty">No posts yet.</p>';
     return;
   }
 
   initPostViewModal();
+
+  fetch('/api/profile/me', { headers })
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(profile => {
+      const userId = profile.userId;
+      if (!userId) return;
+      localStorage.setItem('currentUserId', userId);
+      loadPosts(userId);
+    })
+    .catch(() => {
+      if (container) container.innerHTML = '<p class="profile-posts-empty">No posts yet.</p>';
+    });
+
+  function loadPosts(userId) {
 
   function openPendingPostModal() {
     const raw = sessionStorage.getItem('pendingPostModal');
@@ -170,5 +183,6 @@
       if (container) container.innerHTML =
         '<p style="color:#999;font-size:0.9em;padding:16px">Could not load posts.</p>';
     });
+  }
 
 })();
