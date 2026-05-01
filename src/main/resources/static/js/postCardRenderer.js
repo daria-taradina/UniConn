@@ -358,7 +358,40 @@ function createCommentEl(c) {
     <span class="comment-date">${formatPostDate(c.createdAt)}</span>
     <p class="comment-text">${c.contentText}</p>
     ${c.gifUrl ? `<img src="${c.gifUrl}" class="comment-gif" alt="GIF">` : ''}
+    <div class="comment-footer">
+      <button class="comment-like-btn" data-liked="${c.likedByCurrentUser ? 'true' : 'false'}">
+        <img src="${c.likedByCurrentUser ? '/vector-logos/heartBlue.svg' : '/vector-logos/heartOutline.svg'}" 
+             alt="Like" class="comment-like-icon">
+        <span class="comment-like-count">${c.likeCount ?? 0}</span>
+      </button>
+    </div>
   `;
+
+  // like toggle
+  let liked = c.likedByCurrentUser ?? false;
+  const likeBtn   = el.querySelector('.comment-like-btn');
+  const likeImg   = el.querySelector('.comment-like-icon');
+  const likeCount = el.querySelector('.comment-like-count');
+
+  likeBtn.addEventListener('click', async e => {
+    e.stopPropagation();
+    try {
+      const res = await fetch(`/api/posts/comments/${c.commentId}/like`, {
+        method: liked ? 'DELETE' : 'POST',
+        headers: authHeaders()
+      });
+      if (res.ok) {
+        liked = !liked;
+        likeImg.src = liked ? '/vector-logos/heartBlue.svg' : '/vector-logos/heartOutline.svg';
+        likeCount.textContent = liked
+          ? parseInt(likeCount.textContent) + 1
+          : parseInt(likeCount.textContent) - 1;
+        likeBtn.dataset.liked = liked;
+      }
+    } catch {}
+  });
+
+  // delete button
   const currentUsername = localStorage.getItem('currentUsername');
   if (c.authorUsername === currentUsername) {
     const delBtn = document.createElement('button');
@@ -383,8 +416,9 @@ function createCommentEl(c) {
         }
       } catch {}
     });
-    el.appendChild(delBtn);
+    el.querySelector('.comment-footer').appendChild(delBtn);
   }
+
   return el;
 }
 

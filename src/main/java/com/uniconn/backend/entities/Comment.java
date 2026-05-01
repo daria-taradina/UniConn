@@ -26,6 +26,10 @@ public class Comment {
     
     @Column(name = "gif_url")
     private String gifUrl;
+    
+    @Column(nullable = false)
+    @ColumnDefault("0")
+    private int likeCount = 0;
 
     @CreationTimestamp
     @Column(updatable = false)
@@ -88,6 +92,14 @@ public class Comment {
 
 	public void setGifUrl(String gifUrl) {
 		this.gifUrl = gifUrl;
-	}    
+	}
 
+	public int getLikeCount() {
+		return likeCount;
+	}
+
+	public void setLikeCount(int likeCount) {
+		this.likeCount = likeCount;
+	}    
+	
 }
