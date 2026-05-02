@@ -150,9 +150,13 @@
     const c = document.getElementById('profile-posts-container');
     if (!c) return;
 
-    c.innerHTML = '';
+    const ctrl = document.getElementById('profile-posts-controls');
+    if (ctrl && controlWrapper) {
+      ctrl.innerHTML = '';
+      ctrl.appendChild(controlWrapper);
+    }
 
-    if (controlWrapper) c.appendChild(controlWrapper);
+    c.innerHTML = '';
 
     if (!posts || posts.length === 0) {
       const empty = document.createElement('p');
