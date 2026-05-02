@@ -1,5 +1,5 @@
 /* ── Feed list ────────────────────────────────────────────────────────────── */
-.feed-posts-list {
+/*.feed-posts-list {
   margin-top: 40px;
   padding: 12px;
   display: flex;
@@ -7,7 +7,7 @@
   gap: 12px;
   overflow-y: auto;
   height: calc(100% - 40px);
-}
+}*/
 
 /* ── Post card ────────────────────────────────────────────────────────────── */
 .post-card {
@@ -218,3 +218,4 @@
 }
 .comment-delete-btn img         { width: 15px; height: 15px; opacity: 0.5; }
 .comment-delete-btn:hover img   { opacity: 1; }
+
