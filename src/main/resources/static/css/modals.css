@@ -99,6 +99,9 @@
 .search-result-empty { list-style: none; color: #999; font-size: 0.9em; padding: 12px 4px; }
 
 /* NOTIFICATIONS */
+.notif-unread { border-left: 3px solid #4a90d9; background: #f5f9ff; }
+.notif-unread:hover { background: #eaf3fb; }
+
 .notification-list {
   list-style: none; margin: 12px 0 0 0; padding: 0;
   max-height: 600px; overflow-y: auto;
