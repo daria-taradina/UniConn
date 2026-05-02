@@ -109,7 +109,7 @@
     const wrapper = document.createElement('div');
     wrapper.className = 'posts-controls-wrapper';
 
-    // LEFT → dropdown
+    // LEFT -> dropdown
     const filterBar = document.createElement('div');
     filterBar.className = 'posts-filter-bar';
 
@@ -131,7 +131,7 @@
 
     filterBar.appendChild(select);
 
-    // RIGHT → separate liked button
+    // RIGHT -> separate liked button
     const likedBtn = document.createElement('button');
     likedBtn.className = 'liked-posts-btn';
 	likedBtn.innerHTML = `
