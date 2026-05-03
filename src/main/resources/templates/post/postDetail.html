@@ -1,4 +1,3 @@
-<!--Another User's Profile - read only -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
@@ -6,16 +5,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" th:href="@{/vector-logos/unicornLogo.png}" type="image/png">
-  <link rel="stylesheet" th:href="@{/css/base.css}">
-  <link rel="stylesheet" th:href="@{/css/navbar.css}">
-  <link rel="stylesheet" th:href="@{/css/layout.css}">
-  <link rel="stylesheet" th:href="@{/css/modals.css}">
-  <link rel="stylesheet" th:href="@{/css/postCards.css}">
-  <link rel="stylesheet" th:href="@{/css/profile.css}">
+  <link rel="stylesheet" th:href="@{/css/communities.css}">
   <link rel="stylesheet" th:href="@{/css/followButton.css}">
   <link rel="stylesheet" th:href="@{/css/tagInput.css}">
   <link rel="stylesheet" th:href="@{/css/dark-mode.css}">
-  <title>Profile - UniConn</title>
+  <title>Post - UniConn</title>
 </head>
 
 <body>
@@ -38,7 +32,7 @@
       <span class="signout-divider">|</span>
       <a href="#" class="signout-link" onclick="['token','currentUsername','currentUserId','myProfilePosts','myCommunities','profilePicture'].forEach(k=>localStorage.removeItem(k)); window.location.href='/login'; return false;">Sign Out</a>
     </div>
-  </nav><hr class="navbar-divider">
+  </nav><hr><br>
 
   <!-- NOTIFICATION MODAL -->
   <div id="notification-modal" class="search-modal-overlay" aria-hidden="true">
@@ -50,70 +44,6 @@
       <ul id="notification-list" class="search-results-list">
         <li style="padding:12px 8px;color:#999;font-size:0.9em">No notifications yet.</li>
       </ul>
-    </div>
-  </div>
-
-  <!-- SEARCH MODAL -->
-  <div id="search-modal" class="search-modal-overlay" aria-hidden="true">
-    <div class="search-modal">
-      <div class="header-right">
-        <h3 class="search-modal-title">Search</h3>
-      </div>
-      <button class="search-modal-close" id="search-close" aria-label="Close">&times;</button>
-      <input type="text" id="search-input" class="search-modal-input" placeholder="Search by title, username, or community...">
-      <ul id="search-results" class="search-results-list"></ul>
-    </div>
-  </div>
-
-
-  <!-- COMMUNITIES MODAL -->
-  <div id="communities-modal" class="search-modal-overlay" aria-hidden="true">
-    <div class="search-modal">
-      <div class="header-right">
-        <h3 class="search-modal-title">Communities</h3>
-      </div>
-      <button class="search-modal-close" id="communities-modal-close" aria-label="Close">&times;</button>
-      <input type="text" id="communities-modal-search" class="search-modal-input" placeholder="Search communities...">
-      <ul id="communities-modal-list" class="follow-list"></ul>
-    </div>
-  </div>
-
-  <!-- FOLLOWERS / FOLLOWING MODAL -->
-  <div id="follow-list-modal" class="search-modal-overlay" aria-hidden="true">
-    <div class="search-modal">
-      <div class="header-right">
-        <h3 class="search-modal-title" id="follow-list-title">Followers</h3>
-      </div>
-      <button class="search-modal-close" id="follow-list-close" aria-label="Close">&times;</button>
-      <input type="text" id="follow-search" class="search-modal-input" placeholder="Search by username...">
-      <ul id="follow-list" class="follow-list"></ul>
-    </div>
-  </div>
-
-  <!-- POST VIEW MODAL -->
-  <div id="post-view-overlay" class="post-view-overlay" aria-hidden="true">
-    <div class="post-view-modal">
-      <div class="post-view-header">
-        <h3>Post</h3>
-      </div>
-      <button class="post-view-close" id="post-view-close" aria-label="Close">&times;</button>
-      <div class="post-view-body">
-        <div class="post-view-meta" id="post-view-meta"></div>
-        <p class="post-view-title" id="post-view-title" style="display:none"></p>
-        <p class="post-view-content" id="post-view-content"></p>
-        <div class="post-view-tags" id="post-view-tags"></div>
-        <div class="post-view-footer" id="post-view-footer"></div>
-        <hr class="comments-divider">
-        <div class="comment-input-wrap">
-			<textarea class="comment-input" id="post-view-comment-input" placeholder="Write a comment..." rows="1"></textarea>
-			        <button type="button" class="gif-trigger-btn" id="comment-gif-btn">GIF</button>
-			        <div id="comment-gif-preview"></div>
-			        <button class="comment-submit-btn" id="post-view-comment-submit">Post</button>
-        </div>
-        <div class="comments-list" id="post-view-comments-list">
-          <p class="comment-empty">Loading comments...</p>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -187,65 +117,56 @@
           <input type="text" id="create-post-tags-input" class="tag-text-input" placeholder="Press enter to add a tag">
         </div>
       </div>
-
-	    <div class="create-post-gif-wrap">
-	       <button type="button" class="gif-trigger-btn" id="post-gif-btn">GIF</button>
-	     <div id="post-gif-preview"></div>
-	   </div>
-	  		
+	  <div class="create-post-gif-wrap">
+	          <button type="button" class="gif-trigger-btn" id="post-gif-btn">GIF</button>
+	          <div id="post-gif-preview"></div>
+	        </div>
+	        <div class="create-post-action">
+	          <button type="button" class="create-post-btn-post" id="create-post-submit">Post</button>
+	        </div>
       <div class="create-post-action">
         <button type="button" class="create-post-btn-post" id="create-post-submit">Post</button>
       </div>
     </div>
   </div>
 
+  <!-- SEARCH MODAL -->
+  <div id="search-modal" class="search-modal-overlay" aria-hidden="true">
+    <div class="search-modal">
+      <div class="header-right">
+        <h3 class="search-modal-title">Search</h3>
+      </div>
+      <button class="search-modal-close" id="search-close" aria-label="Close">&times;</button>
+      <input type="text" id="search-input" class="search-modal-input" placeholder="Search by title, username, or community...">
+      <ul id="search-results" class="search-results-list"></ul>
+    </div>
+  </div>
+
   <div class="wrap">
 
-    <!-- LEFT CONTAINER: user profile -->
+    <!-- LEFT CONTAINER: post detail -->
     <div class="left-container">
-      <div class="header-left"><h3 id="profile-header">Profile</h3></div>
+      <div class="header-left"><a id="post-detail-header-link" class="post-detail-header-link"><h3 id="post-detail-header-name">Post</h3></a></div>
       <button class="back-btn" onclick="history.back()">&#8592; Back</button>
 
-      <div class="profile-content">
+      <div class="community-detail-content">
+        <div class="community-detail-top">
 
-        <div class="profile-top">
-          <div class="profile-avatar-static">
-            <img id="profile-picture-img" src="/vector-logos/usernameSignIn.svg" alt="User Avatar" class="avatar-img">
-			</div>
-			  <div class="profile-right">
-			    <span class="profile-username" id="profile-username">u/</span>
-			    <span class="profile-fullname" id="profile-fullname"></span> <!-- new -->
-			    <div class="profile-stats">
-			      <div class="stat stat-clickable" id="stat-followers">
-			        <span class="stat-num" id="follower-count">0</span>
-			        <span class="stat-label">followers</span>
-			      </div>
-			      <div class="stat stat-clickable" id="stat-following">
-			        <span class="stat-num" id="following-count">0</span>
-			        <span class="stat-label">following</span>
-			      </div>
-			      <div class="stat stat-clickable" id="stat-communities">
-			        <span class="stat-num" id="community-count">0</span>
-			        <span class="stat-label">communities</span>
-			      </div>
-			    </div>
-			  </div>
-          <button type="button" id="follow-profile-btn" class="follow-btn" style="display:none">Follow</button>
+          <div class="community-post-header">
+            <a id="post-detail-username" class="community-post-username post-username-link"></a>
+            <span id="post-detail-date" class="community-post-date"></span>
+          </div>
+          <h2 id="post-detail-title" class="post-detail-title"></h2>
+          <p id="post-detail-body" class="post-detail-body"></p>
+          <div id="post-detail-tags" class="community-detail-tags"></div>
+          <p id="post-detail-stats" class="post-detail-stats"></p>
+          <p id="post-not-found" class="post-detail-not-found" style="display:none">Post not found.</p>
+
         </div>
-
-        <div class="profile-bio-section" id="profile-bio-section">
-          <p class="profile-bio-empty">No bio yet.</p>
-        </div>
-
-        <hr id="left-container-break">
-
-        <div id="profile-posts-controls"></div>
-        <div id="profile-posts-container"></div>
-
       </div>
     </div>
 
-    <!-- RIGHT CONTAINER -->
+    <!-- RIGHT CONTAINER: sidenav -->
     <div class="right-wrap">
       <div class="right-container">
         <div class="right-upper-container">
@@ -282,12 +203,13 @@
 <script th:src="@{/js/gifPicker.js}" defer></script>
 <script th:src="@{/js/emojiPicker.js}" defer></script>
 <script th:src="@{/js/tagPostsModal.js}" defer></script>
-<script th:src="@{/js/postCardRenderer.js}" defer></script>
-<script th:src="@{/js/userProfileLoad.js}" defer></script>
-<script th:src="@{/js/modalManager.js}" defer></script><script th:src="@{/js/notificationFunction.js}" defer></script><script th:src="@{/js/searchFunction.js}" defer></script>
+<script th:src="@{/js/postDetailLoad.js}" defer></script>
+<script th:src="@{/js/modalManager.js}" defer></script>
+<script th:src="@{/js/notificationFunction.js}" defer></script>
 <script th:src="@{/js/tagInput.js}" defer></script>
 <script th:src="@{/js/communityFunction.js}" defer></script>
 <script th:src="@{/js/createPostFunction.js}" defer></script>
+<script th:src="@{/js/searchFunction.js}" defer></script>
 </body>
 
 </html>
