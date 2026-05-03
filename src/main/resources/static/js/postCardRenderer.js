@@ -453,7 +453,7 @@ function initPostViewModal() {
   commentSubmit?.addEventListener('click', async () => {
     const text   = commentInput?.value.trim();
     const postId = overlay._activePostId;
-    if (!text || !postId) return;
+    if ((!text && !commentGifUrl) || !postId) return;
     try {
       const res = await fetch('/api/posts/comments', {
         method: 'POST',

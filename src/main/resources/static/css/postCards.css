@@ -80,6 +80,7 @@
   border-radius: 6px;
   margin-top: 4px;
   display: block;
+  object-fit: contain;
 }
 
 /* ── GIF trigger button ───────────────────────────────────────────────────── */
