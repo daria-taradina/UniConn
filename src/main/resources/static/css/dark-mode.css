@@ -244,7 +244,7 @@ body.dark-mode .tag-text-input {
   color: #e0e0e0;
 }
 
-/* notifications */
+/* NOTIFICATIONS DISABLED
 body.dark-mode .notification-item {
   border-color: #3d3d3d;
   color: #ccc;
@@ -252,6 +252,7 @@ body.dark-mode .notification-item {
 body.dark-mode .notification-empty { color: #666; }
 body.dark-mode .notif-unread { border-left-color: #4a90d9; background: #1e2a38; }
 body.dark-mode .notif-unread:hover { background: #243040; }
+*/
 
 /* category/membership filter buttons */
 body.dark-mode .mc-filter-btn {
