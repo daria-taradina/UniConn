@@ -165,7 +165,12 @@ body.dark-mode .mc-tag {
   color: #ccc;
   border-color: #555;
 }
-body.dark-mode .mc-tag:hover { background: #555; }
+body.dark-mode .mc-tag:hover,
+body.dark-mode .community-tag:hover { background: #555; }
+
+/* community detail buttons */
+body.dark-mode .leave-btn { background: #3a3a3a; color: #ccc; border-color: #555; }
+body.dark-mode .leave-btn:hover { background: #484848; border-color: #777; }
 
 /* profile */
 body.dark-mode .profile-action-btn {

@@ -47,9 +47,7 @@
 			  .then(([posts, { type }]) => {
 			    const header = document.getElementById('feed-header-title');
 			    if (header) {
-			      header.innerHTML = type === 'suggested'
-			        ? `<img src="/vector-logos/sparkleLogo.svg" style="width:18px;height:18px;vertical-align:middle;margin-right:6px;">Suggested for You`
-			        : 'For You';
+			      header.textContent = 'For You';
 			    }
 			    if (type === 'suggested') {
 			      posts.forEach(p => p.suggested = true);
