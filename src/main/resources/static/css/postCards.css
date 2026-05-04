@@ -21,6 +21,25 @@
   transition: background 0.15s;
   position: relative;
 }
+
+/* ── Post card & comment avatars ──────────────────────────────────────────── */
+.post-card-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  display: block;
+  margin: 0;
+}
+
+.comment-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
 .post-card-suggested {
   display: flex;
   align-items: center;

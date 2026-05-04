@@ -32,24 +32,46 @@ function createPostCard(post, { onDelete } = {}) {
   card.className = 'post-card';
   card.dataset.postId = post.postId;
 
-  // meta
+  // ── meta ──────────────────────────────────────────────────────────
   const meta = document.createElement('div');
   meta.className = 'post-card-meta';
-  meta.innerHTML = `<a href="/profile/${post.authorUsername}" class="post-card-author post-username-link">u/${post.authorUsername}</a>`;
+
+  // avatar: community picture 
+  const avatar = document.createElement('img');
+  avatar.className = 'post-card-avatar';
+  avatar.alt = '';
+  avatar.src = post.communityName
+    ? (post.communityPicture || '/vector-logos/clubLogo.svg')
+    : (post.authorProfilePicture || '/vector-logos/usernameSignIn.svg');
+  meta.appendChild(avatar);
+
+  // author link
+  const authorLink = document.createElement('a');
+  authorLink.href = `/profile/${post.authorUsername}`;
+  authorLink.className = 'post-card-author post-username-link';
+  authorLink.textContent = `u/${post.authorUsername}`;
+  authorLink.addEventListener('click', e => e.stopPropagation());
+  meta.appendChild(authorLink);
+
+  // community link
   if (post.communityName) {
-	meta.innerHTML += `<a href="/community/${post.communityName}" class="post-card-community">c/${post.communityName}</a>`;
-  }  
-  // suggested label — pushed to the right via margin-left: auto
+    const commLink = document.createElement('a');
+    commLink.href = `/community/${post.communityName}`;
+    commLink.className = 'post-card-community';
+    commLink.textContent = `c/${post.communityName}`;
+    commLink.addEventListener('click', e => e.stopPropagation());
+    meta.appendChild(commLink);
+  }
+
+  // suggested badge
   if (post.suggested) {
     const badge = document.createElement('span');
     badge.className = 'post-card-suggested';
     badge.innerHTML = `<img src="/vector-logos/sparkleLogo.svg" alt="" class="post-card-suggested-icon"> Suggested`;
     meta.appendChild(badge);
   }
+
   card.appendChild(meta);
-  
-  meta.querySelector('a.post-card-author')?.addEventListener('click', e => e.stopPropagation());
-  meta.querySelector('a.post-card-community')?.addEventListener('click', e => e.stopPropagation());
 
   // title
   if (post.title) {
@@ -64,16 +86,16 @@ function createPostCard(post, { onDelete } = {}) {
   body.className = 'post-card-body';
   body.textContent = post.contentText;
   card.appendChild(body);
-  
+
   // gif
   if (post.gifUrl) {
-      const gif = document.createElement('img');
-      gif.src = post.gifUrl;
-      gif.className = 'post-card-gif';
-      gif.alt = 'GIF';
-      gif.addEventListener('click', e => e.stopPropagation());
-      card.appendChild(gif);
-    }
+    const gif = document.createElement('img');
+    gif.src = post.gifUrl;
+    gif.className = 'post-card-gif';
+    gif.alt = 'GIF';
+    gif.addEventListener('click', e => e.stopPropagation());
+    card.appendChild(gif);
+  }
 
   // tags
   if (post.tags && post.tags.length > 0) {
@@ -184,7 +206,6 @@ function renderPostList(posts, containerId) {
 
 // ── Post view modal (shared) ─────────────────────────────────────────────────
 
-// fetch fresh post data then render — ensures modal always shows current like/comment counts
 function openPostViewModal(post) {
   fetch(`/api/posts/${post.postId}`, { headers: authHeaders() })
     .then(r => r.ok ? r.json() : post)
@@ -203,17 +224,39 @@ function _renderPostViewModal(post) {
   const commentsList = document.getElementById('post-view-comments-list');
   if (!overlay) return;
 
-  // store active post state on overlay so createCommentEl can access it
   overlay._activePostId    = post.postId;
   overlay._activeLiked     = post.likedByCurrentUser;
   overlay._activeLikeCount = post.likeCount;
 
-  // meta
-  modalMeta.innerHTML = `<a href="/profile/${post.authorUsername}" class="post-modal-author post-username-link">u/${post.authorUsername}</a>`;
+  // ── modal meta with avatar ─────────────────────────────────────────
+  modalMeta.innerHTML = '';
+
+  const modalAvatar = document.createElement('img');
+  modalAvatar.className = 'post-card-avatar';
+  modalAvatar.alt = '';
+  modalAvatar.src = post.communityName
+    ? (post.communityPicture || '/vector-logos/clubLogo.svg')
+    : (post.authorProfilePicture || '/vector-logos/usernameSignIn.svg');
+  modalMeta.appendChild(modalAvatar);
+
+  const modalAuthorLink = document.createElement('a');
+  modalAuthorLink.href = `/profile/${post.authorUsername}`;
+  modalAuthorLink.className = 'post-modal-author post-username-link';
+  modalAuthorLink.textContent = `u/${post.authorUsername}`;
+  modalMeta.appendChild(modalAuthorLink);
+
   if (post.communityName) {
-    modalMeta.innerHTML += `<a href="/community/${post.communityName}" class="post-view-community post-card-community">c/${post.communityName}</a>`;
+    const modalCommLink = document.createElement('a');
+    modalCommLink.href = `/community/${post.communityName}`;
+    modalCommLink.className = 'post-view-community post-card-community';
+    modalCommLink.textContent = `c/${post.communityName}`;
+    modalMeta.appendChild(modalCommLink);
   }
-  modalMeta.innerHTML += `<span style="margin-left:auto;font-size:0.78em;color:#aaa">${formatPostDate(post.createdAt)}</span>`;
+
+  const dateSpan = document.createElement('span');
+  dateSpan.style.cssText = 'margin-left:auto;font-size:0.78em;color:#aaa';
+  dateSpan.textContent = formatPostDate(post.createdAt);
+  modalMeta.appendChild(dateSpan);
 
   // title
   if (post.title) {
@@ -223,21 +266,22 @@ function _renderPostViewModal(post) {
     modalTitle.style.display = 'none';
   }
 
-  // content + tags
+  // content
   modalContent.textContent = post.contentText;
-  
+
   // gif
-    let existingGif = document.getElementById('post-view-gif');
-    if (existingGif) existingGif.remove();
-    if (post.gifUrl) {
-      const gif = document.createElement('img');
-      gif.id = 'post-view-gif';
-      gif.src = post.gifUrl;
-      gif.className = 'post-card-gif';
-      gif.alt = 'GIF';
-      modalContent.insertAdjacentElement('afterend', gif);
-    }
-	
+  let existingGif = document.getElementById('post-view-gif');
+  if (existingGif) existingGif.remove();
+  if (post.gifUrl) {
+    const gif = document.createElement('img');
+    gif.id = 'post-view-gif';
+    gif.src = post.gifUrl;
+    gif.className = 'post-card-gif';
+    gif.alt = 'GIF';
+    modalContent.insertAdjacentElement('afterend', gif);
+  }
+
+  // tags
   modalTags.innerHTML = '';
   (post.tags || []).forEach(tag => {
     const t = document.createElement('span');
@@ -321,7 +365,6 @@ function _renderPostViewModal(post) {
     loadComments(post.postId, commentsList);
   }
 
-  // also sync the card now with fresh data from the fetch
   syncCardFromModal(post.postId, {
     liked:        post.likedByCurrentUser,
     likeCount:    post.likeCount,
@@ -364,8 +407,11 @@ function createCommentEl(c) {
   el.className = 'comment-item';
   el.dataset.commentId = c.commentId;
   el.innerHTML = `
-    <span class="comment-author">u/${c.authorUsername}</span>
-    <span class="comment-date">${formatPostDate(c.createdAt)}</span>
+    <div class="comment-meta">
+      <img class="post-card-avatar" src="${c.authorProfilePicture || '/vector-logos/usernameSignIn.svg'}" alt="">
+      <span class="comment-author">u/${c.authorUsername}</span>
+      <span class="comment-date">${formatPostDate(c.createdAt)}</span>
+    </div>
     <p class="comment-text">${c.contentText}</p>
     ${c.gifUrl ? `<img src="${c.gifUrl}" class="comment-gif" alt="GIF">` : ''}
     <div class="comment-footer">
@@ -440,23 +486,18 @@ function initPostViewModal() {
   const commentSubmit = document.getElementById('post-view-comment-submit');
   const commentsList  = document.getElementById('post-view-comments-list');
   if (!overlay) return;
-  
+
   // auto-grow textarea
   commentInput?.addEventListener('input', () => {
     commentInput.style.height = 'auto';
     commentInput.style.height = Math.min(commentInput.scrollHeight, 200) + 'px';
-	if (commentInput.scrollHeight > 200) {
-	    commentInput.style.overflowY = 'auto';  // re-enable scroll only when maxed out
-	  } else {
-	    commentInput.style.overflowY = 'hidden';
-	  }
-	const counter = document.getElementById('comment-char-count');
-	  if (counter) counter.textContent = `${commentInput.value.length}/1000`;
-	});
+    commentInput.style.overflowY = commentInput.scrollHeight > 200 ? 'auto' : 'hidden';
+    const counter = document.getElementById('comment-char-count');
+    if (counter) counter.textContent = `${commentInput.value.length}/1000`;
+  });
 
-  let commentGifUrl = null;  // add this
+  let commentGifUrl = null;
 
-  // init GIF picker for comment input
   initGifPicker({
     triggerBtnId:       'comment-gif-btn',
     previewContainerId: 'comment-gif-preview',
@@ -482,10 +523,13 @@ function initPostViewModal() {
       if (res.ok) {
         const newComment = await res.json();
         commentInput.value = '';
-		commentInput.style.height = '66px';
-        commentGifUrl = null;  // reset after submit
+        commentInput.style.height = '66px';
+        commentInput.style.overflowY = 'hidden';
+        commentGifUrl = null;
         const preview = document.getElementById('comment-gif-preview');
-        if (preview) preview.innerHTML = '';  // clear preview
+        if (preview) preview.innerHTML = '';
+        const counter = document.getElementById('comment-char-count');
+        if (counter) counter.textContent = '0/1000';
         if (commentsList.querySelector('.comment-empty')) commentsList.innerHTML = '';
         commentsList.prepend(createCommentEl(newComment));
         const countEl  = document.getElementById('modal-comment-count');
