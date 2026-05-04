@@ -224,14 +224,14 @@
   border: none;
   width: auto;
   height: auto;
-  padding: 0;
+  padding: 10px;
   font-size: 0.85em;
   color: #555;
   cursor: pointer;
   font-family: inherit;
 }
 .comment-like-btn:hover     { color: #2a7aa8; background: none; }
-.comment-like-icon          { width: 16px; height: 16px; display: block; }
+.comment-like-icon          { width: 16px; height: 16px; display: block; margin: 0; }
 
 .comment-delete-btn {
   background: none;

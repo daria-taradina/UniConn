@@ -370,7 +370,7 @@ function createCommentEl(c) {
     ${c.gifUrl ? `<img src="${c.gifUrl}" class="comment-gif" alt="GIF">` : ''}
     <div class="comment-footer">
       <button class="comment-like-btn" data-liked="${c.likedByCurrentUser ? 'true' : 'false'}">
-        <img src="${c.likedByCurrentUser ? '/vector-logos/heartBlue.svg' : '/vector-logos/heartOutline.svg'}" 
+        <img src="${c.likedByCurrentUser ? '/vector-logos/heartBlue.svg' : '/vector-logos/heartOutline.svg'}"
              alt="Like" class="comment-like-icon">
         <span class="comment-like-count">${c.likeCount ?? 0}</span>
       </button>

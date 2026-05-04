@@ -37,6 +37,8 @@ body.dark-mode .login-container {
   background-color: #252525;
   border-color: #3d3d3d;
 }
+body.dark-mode .register-link,
+body.dark-mode .login-link { color: #e0e0e0; }
 
 /* modals */
 body.dark-mode .search-modal {
@@ -183,6 +185,9 @@ body.dark-mode .stat-label { color: #aaa; }
 body.dark-mode .stat-num { color: #e0e0e0; }
 body.dark-mode .stat-clickable:hover .stat-num,
 body.dark-mode .stat-clickable:hover .stat-label { color: #83b5d6; }
+body.dark-mode .posts-filter-select { background-color: #2e2e2e; border-color: #3d3d3d; color: #e0e0e0; }
+body.dark-mode .posts-filter-select:hover { background-color: #383838; border-color: #555; }
+body.dark-mode .posts-filter-select:focus { background-color: #2e2e2e; border-color: #83b5d6; }
 
 /* follow list */
 body.dark-mode .follow-list-item { border-color: #3d3d3d; }
