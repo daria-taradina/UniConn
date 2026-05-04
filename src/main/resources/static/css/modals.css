@@ -200,8 +200,8 @@
 .post-view-close:hover { background: none; color: #333; border: none; }
 
 .post-view-body {
-  padding: 20px 20px 20px 20px; overflow-y: auto; flex: 1;
-  display: flex; flex-direction: column; gap: 12px;
+  padding: 20px; overflow-y: auto; flex: 1;
+  display: flex; flex-direction: column; gap: 8px;
 }
 .post-view-meta { display: flex; align-items: center; gap: 8px; font-size: 0.82em; color: #666; flex-wrap: wrap; }
 .post-modal-author { font-weight: 600; color: #333; text-decoration: none; }
@@ -210,7 +210,13 @@
 .post-view-title { font-size: 1.15em; font-weight: 700; color: #24283b; margin: 0; }
 .post-view-content { font-size: 0.95em; color: #333; line-height: 1.6; white-space: pre-wrap; }
 .post-view-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-.post-view-footer { display: flex; align-items: center; gap: 16px; padding-top: 8px; border-top: 1px solid #eee; }
+.post-view-footer { 
+  display: flex; 
+  align-items: center; 
+  gap: 2px; 
+  padding-top: 4px; 
+  border-top: 1px solid #eee; 
+}
 .post-view-date { font-size: 0.78em; color: #aaa; margin-left: auto; }
 
 /* COMMENTS */
@@ -219,10 +225,21 @@
 .comment-input {
   flex: 1; padding: 8px 12px; border: 2px solid #ccc;
   border-radius: 8px; font-family: inherit; font-size: 0.9em;
-  resize: none; min-height: 38px; max-height: 100px;
+  resize: none; min-height: 38px; max-height: 200px;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 .comment-input:focus { outline: none; border-color: #83b5d6; }
 .comment-submit-btn { width: auto; height: 38px; padding: 0 18px; border-radius: 20px; font-size: 0.9em; flex-shrink: 0; }
+
+.comment-char-count {
+  display: block;
+  text-align: right;
+  font-size: 0.75em;
+  color: #aaa;
+  margin-top: 2px;
+  padding-right: 2px;
+}
 
 .comments-list {
   display: flex;

@@ -440,6 +440,19 @@ function initPostViewModal() {
   const commentSubmit = document.getElementById('post-view-comment-submit');
   const commentsList  = document.getElementById('post-view-comments-list');
   if (!overlay) return;
+  
+  // auto-grow textarea
+  commentInput?.addEventListener('input', () => {
+    commentInput.style.height = 'auto';
+    commentInput.style.height = Math.min(commentInput.scrollHeight, 200) + 'px';
+	if (commentInput.scrollHeight > 200) {
+	    commentInput.style.overflowY = 'auto';  // re-enable scroll only when maxed out
+	  } else {
+	    commentInput.style.overflowY = 'hidden';
+	  }
+	const counter = document.getElementById('comment-char-count');
+	  if (counter) counter.textContent = `${commentInput.value.length}/1000`;
+	});
 
   let commentGifUrl = null;  // add this
 
@@ -469,6 +482,7 @@ function initPostViewModal() {
       if (res.ok) {
         const newComment = await res.json();
         commentInput.value = '';
+		commentInput.style.height = '66px';
         commentGifUrl = null;  // reset after submit
         const preview = document.getElementById('comment-gif-preview');
         if (preview) preview.innerHTML = '';  // clear preview

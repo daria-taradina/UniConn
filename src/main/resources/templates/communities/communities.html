@@ -252,13 +252,12 @@
       <div class="post-view-footer" id="post-view-footer"></div>
       <hr class="comments-divider">
 	  <div class="comment-input-wrap">
-		<textarea class="comment-input" id="post-view-comment-input" placeholder="Write a comment..." rows="1"></textarea>
-		        <button type="button" class="gif-trigger-btn" id="comment-gif-btn">GIF</button>
-		        <div id="comment-gif-preview"></div>
-		        <button class="comment-submit-btn" id="post-view-comment-submit">Post</button>
+	    <textarea class="comment-input" id="post-view-comment-input" placeholder="Write a comment..." rows="1" maxlength="1000"></textarea>
+	    <button type="button" class="gif-trigger-btn" id="comment-gif-btn">GIF</button>
 	    <div id="comment-gif-preview"></div>
 	    <button class="comment-submit-btn" id="post-view-comment-submit">Post</button>
 	  </div>
+	  <span id="comment-char-count" class="comment-char-count">0/1000</span>
       <div class="comments-list" id="post-view-comments-list">
         <p class="comment-empty">Loading comments...</p>
       </div>
