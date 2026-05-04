@@ -38,7 +38,13 @@ function createPostCard(post, { onDelete } = {}) {
   meta.innerHTML = `<a href="/profile/${post.authorUsername}" class="post-card-author post-username-link">u/${post.authorUsername}</a>`;
   if (post.communityName) {
 	meta.innerHTML += `<a href="/community/${post.communityName}" class="post-card-community">c/${post.communityName}</a>`;
-
+  }  
+  // suggested label — pushed to the right via margin-left: auto
+  if (post.suggested) {
+    const badge = document.createElement('span');
+    badge.className = 'post-card-suggested';
+    badge.innerHTML = `<img src="/vector-logos/sparkleLogo.svg" alt="" class="post-card-suggested-icon"> Suggested`;
+    meta.appendChild(badge);
   }
   card.appendChild(meta);
   

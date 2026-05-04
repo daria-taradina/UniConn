@@ -21,6 +21,25 @@
   transition: background 0.15s;
   position: relative;
 }
+.post-card-suggested {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  background: #d6ecf7;
+  border: 1px solid #91c5e8;
+  border-radius: 20px;
+  padding: 2px 10px;
+  font-size: 1em;
+  color: #555;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.post-card-suggested-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
 .post-card:hover { background: #f0f7fc; border-color: #91c5e8; }
 
 .post-card-meta    { display: flex; align-items: center; gap: 8px; font-size: 0.82em; color: #666; flex-wrap: wrap; }

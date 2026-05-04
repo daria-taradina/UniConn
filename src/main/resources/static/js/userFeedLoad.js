@@ -38,13 +38,27 @@
           });
         })
         .catch(() => {});
+		
+		// ── feed posts ────────────────────────────────────────────────
+		      Promise.all([
+		        fetch(`/api/posts/feed/${currentUserId}`, { headers }).then(r => r.ok ? r.json() : []),
+		        fetch(`/api/posts/feed/${currentUserId}/type`, { headers }).then(r => r.ok ? r.json() : { type: 'feed' })
+		      ])
+			  .then(([posts, { type }]) => {
+			    const header = document.getElementById('feed-header-title');
+			    if (header) {
+			      header.innerHTML = type === 'suggested'
+			        ? `<img src="/vector-logos/sparkleLogo.svg" style="width:18px;height:18px;vertical-align:middle;margin-right:6px;">Suggested for You`
+			        : 'For You';
+			    }
+			    if (type === 'suggested') {
+			      posts.forEach(p => p.suggested = true);
+			    }
+			    renderPostList(posts, 'feed-posts-list');
+			  })
+		      .catch(() => renderPostList([], 'feed-posts-list'));
 
-      // ── feed posts ────────────────────────────────────────────────
-      fetch(`/api/posts/feed/${currentUserId}`, { headers })
-        .then(r => r.ok ? r.json() : [])
-        .then(posts => renderPostList(posts, 'feed-posts-list'))
-        .catch(() => renderPostList([], 'feed-posts-list'));
-    })
-    .catch(() => renderPostList([], 'feed-posts-list'));
+		    })
+		    .catch(() => renderPostList([], 'feed-posts-list'));
 
-})();
+		})();
