@@ -20,10 +20,6 @@ pom.xml.tag
 
 # ===== Application Secrets (CRITICAL!) =====
 # Never commit these!
-application.properties
-**/src/main/resources/application.properties
-src/main/resources/application.properties
-**/application-secrets.properties
 *.secret
 *.key
 *.p12
@@ -174,3 +170,4 @@ docker-compose.override.yml
 # !pom.xml
 # !application.properties.template
 # !**/application.properties.template
+src/main/resources/application-local.properties
