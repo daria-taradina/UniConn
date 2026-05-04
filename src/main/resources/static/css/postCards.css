@@ -40,7 +40,7 @@
   height: 20px;
   display: block;
 }
-.post-card:hover { background: #f0f7fc; border-color: #91c5e8; }
+.post-card:hover { background: #f0f7fc; }
 
 .post-card-meta    { display: flex; align-items: center; gap: 8px; font-size: 0.82em; color: #666; flex-wrap: wrap; }
 .post-card-author  { font-weight: 600; color: #333; }
@@ -72,9 +72,10 @@
 .post-card-action {
   display: flex; align-items: center; gap: 5px;
   background: none; border: none; width: auto; height: auto;
-  padding: 0; font-size: 0.85em; color: #555; cursor: pointer; font-family: inherit;
+  padding: 5px; border-radius: 25%; font-size: 0.85em; color: #555; cursor: pointer; font-family: inherit;
 }
-.post-card-action:hover        { color: #2a7aa8; background: none; }
+.post-card-action:hover        { color: #555; background: #e0e0e0; }
+.post-card:has(.post-card-action:hover) { border-color: #ddd; }
 .post-card-action img          { width: 18px; height: 18px; margin: 0; display: block; }
 .post-card-delete              { margin-left: auto; color: #c0392b; }
 .post-card-delete:hover        { color: #922b21; background: none; }
