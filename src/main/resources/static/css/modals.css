@@ -99,7 +99,7 @@
 .search-result-empty { list-style: none; color: #999; font-size: 0.9em; padding: 12px 4px; }
 
 /* NOTIFICATIONS */
-/*.notif-unread { border-left: 3px solid #4a90d9; background: #f5f9ff; }
+.notif-unread { border-left: 3px solid #4a90d9; background: #f5f9ff; }
 .notif-unread:hover { background: #eaf3fb; }
 
 .notification-list {
@@ -107,7 +107,7 @@
   max-height: 600px; overflow-y: auto;
 }
 .notification-empty { padding: 16px; color: #999; font-size: 0.9em; text-align: center; }
-.notification-item { padding: 12px 8px; border-bottom: 1px solid #eee; font-size: 0.9em; color: #333; }*/
+.notification-item { padding: 12px 8px; border-bottom: 1px solid #eee; font-size: 0.9em; color: #333; }
 
 /* CREATE POST / COMMUNITY MODAL */
 .create-post-modal {

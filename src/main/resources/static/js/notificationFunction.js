@@ -1,4 +1,3 @@
-/*
 // Manages the notification bell modal. Loaded on all main pages.
 document.addEventListener('DOMContentLoaded', () => {
   const token       = localStorage.getItem('token');
@@ -91,4 +90,3 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 });
-*/
