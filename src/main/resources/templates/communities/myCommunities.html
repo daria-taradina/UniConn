@@ -159,11 +159,12 @@
       </div>
 
       <div class="create-post-title-wrap">
-        <input type="text" id="create-post-title-input" class="create-post-title-input" placeholder="Title*" required>
+        <input type="text" id="create-post-title-input" class="create-post-title-input" placeholder="Title*" required maxlength="200">
       </div>
 
       <div class="create-post-field">
-        <textarea id="create-post-body-input" class="create-post-body" placeholder="Body text*" required></textarea>
+		<textarea id="create-post-body-input" class="create-post-body" placeholder="Body text*" required maxlength="2000"></textarea>
+		<span id="post-body-char-count" class="comment-char-count">0/2000</span>
       </div>
 
       <div id="create-post-tags-section" class="create-post-title-wrap" style="display:none">
@@ -265,6 +266,7 @@
 <script src="/js/auth-guard.js"></script>
 <script th:src="@{/js/darkMode.js}" defer></script>
 <script th:src="@{/js/navbarPfp.js}" defer></script>
+<script th:src="@{/js/trendingTags.js}" defer></script>
 <script th:src="@{/js/gifPicker.js}" defer></script>
 <script th:src="@{/js/emojiPicker.js}" defer></script>
 <script th:src="@{/js/tagPostsModal.js}" defer></script>
