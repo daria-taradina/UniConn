@@ -9,22 +9,7 @@
       + ' · ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
   }
 
-  function renderTrending(tags) {
-    const list = document.getElementById('trending-tags-list');
-    if (!list) return;
-    if (!tags || tags.length === 0) {
-      list.innerHTML = '<li class="trending-tag-empty">No trending topics yet.</li>';
-      return;
-    }
-    list.innerHTML = '';
-    tags.forEach((tag, i) => {
-      const li = document.createElement('li');
-      li.className = 'trending-tag-item';
-      li.innerHTML = `<span class="trending-tag-rank">#${i + 1}</span><span class="trending-tag-name">${tag}</span>`;
-      li.addEventListener('click', () => openTagPostsModal(tag));
-      list.appendChild(li);
-    });
-  }
+  
 
   let cachedPost = null;
   const raw = sessionStorage.getItem('pendingPostDetail');
@@ -42,7 +27,7 @@
       : fetch(`/api/posts/${postId}`, { headers }).then(r => r.ok ? r.json() : null),
     fetch('/api/community/trending-tags').then(r => r.ok ? r.json() : [])
   ]).then(([post, trendingTags]) => {
-    renderTrending(trendingTags);
+    
 
     if (!post) {
       const nf = document.getElementById('post-not-found');
