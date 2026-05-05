@@ -251,7 +251,8 @@ public class PostInteractionService extends BaseService {
             comment.getCreatedAt(),
             comment.getGifUrl(),
             comment.getLikeCount(),
-            liked
+            liked,
+            comment.getAuthor().getProfilePicture()
         );
     }
 }

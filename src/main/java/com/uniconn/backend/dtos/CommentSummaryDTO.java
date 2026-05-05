@@ -13,13 +13,15 @@ public class CommentSummaryDTO {
     private String gifUrl;
     private int likeCount;
     private boolean likedByCurrentUser;
+    private String authorProfilePicture;
 
     public CommentSummaryDTO() {}
 
     public CommentSummaryDTO(Integer commentId, Integer postId,
                               String authorUsername, Integer authorId,
                               String contentText, LocalDateTime createdAt, 
-                              String gifUrl, int likeCount, boolean likedByCurrentUser) {
+                              String gifUrl, int likeCount, 
+                              boolean likedByCurrentUser, String authorProfilePicture) {
         this.commentId = commentId;
         this.postId = postId;
         this.authorUsername = authorUsername;
@@ -29,6 +31,7 @@ public class CommentSummaryDTO {
         this.gifUrl = gifUrl;
         this.likeCount = likeCount;
         this.likedByCurrentUser = likedByCurrentUser;
+        this.authorProfilePicture =authorProfilePicture;
     }
     
     // getters
@@ -66,8 +69,10 @@ public class CommentSummaryDTO {
 
 	public boolean isLikedByCurrentUser() {
 		return likedByCurrentUser;
+	}
+
+	public String getAuthorProfilePicture() {
+		return authorProfilePicture;
 	}    
-	
-	
 	
 }

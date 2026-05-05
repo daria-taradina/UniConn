@@ -192,7 +192,11 @@ document.getElementById('create-post-submit').addEventListener('click', async ()
 
 
 titleInput.addEventListener('input', () => titleInput.classList.remove('input-error'));
-bodyInput.addEventListener('input', () => bodyInput.classList.remove('input-error'));
+bodyInput.addEventListener('input', () => {
+  bodyInput.classList.remove('input-error');
+  const counter = document.getElementById('post-body-char-count');
+  if (counter) counter.textContent = `${bodyInput.value.length}/2000`;
+});
 
 // init GIF picker for create post modal
 initGifPicker({

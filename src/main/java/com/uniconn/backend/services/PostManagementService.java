@@ -302,7 +302,9 @@ public class PostManagementService extends BaseService {
             tagNames,
             liked,
             canDelete,
-            post.getGifUrl()
+            post.getGifUrl(),
+            post.getAuthor().getProfilePicture(),                                       
+            post.getCommunity() != null ? post.getCommunity().getCommunityPicture() : null
         );
     }
 }

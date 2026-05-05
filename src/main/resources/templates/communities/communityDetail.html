@@ -76,7 +76,7 @@
       </div>
       <button class="search-modal-close" id="edit-community-close" aria-label="Close">&times;</button>
       <div class="create-post-field">
-        <textarea id="edit-community-desc-input" class="create-post-body" placeholder="Description"></textarea>
+        <textarea id="edit-community-desc-input" class="create-post-body" placeholder="Description" required maxlength="300"></textarea>
       </div>
       <div class="create-post-title-wrap">
         <div class="tag-input-container" id="edit-community-tags-container">
@@ -98,11 +98,11 @@
       </div>
       <button class="search-modal-close" id="create-community-close" aria-label="Close">&times;</button>
       <div class="create-post-title-wrap">
-        <input type="text" id="community-name-input" class="create-post-title-input" placeholder="Community name*" required>
+        <input type="text" id="community-name-input" class="create-post-title-input" placeholder="Community name*" required maxlength="30">
         
       </div>
       <div class="create-post-field">
-        <textarea id="community-desc-input" class="create-post-body" placeholder="Description*" required></textarea>
+        <textarea id="community-desc-input" class="create-post-body" placeholder="Description*" required maxlength="300"></textarea>
       </div>
       <div class="create-post-title-wrap">
         <select id="community-category-input" class="create-post-title-input community-category-select">
@@ -150,10 +150,11 @@
         </ul>
       </div>
       <div class="create-post-title-wrap">
-        <input type="text" id="create-post-title-input" class="create-post-title-input" placeholder="Title*" required>
+        <input type="text" id="create-post-title-input" class="create-post-title-input" placeholder="Title*" required maxlength="200">
       </div>
       <div class="create-post-field">
-        <textarea id="create-post-body-input" class="create-post-body" placeholder="Body text*" required></textarea>
+		<textarea id="create-post-body-input" class="create-post-body" placeholder="Body text*" required maxlength="2000"></textarea>
+		<span id="post-body-char-count" class="comment-char-count">0/2000</span>
       </div>
       <div id="create-post-tags-section" class="create-post-title-wrap" style="display:none">
         <div class="tag-input-container" id="create-post-tags-container">
@@ -257,12 +258,13 @@
       <div class="post-view-tags" id="post-view-tags"></div>
       <div class="post-view-footer" id="post-view-footer"></div>
       <hr class="comments-divider">
-      <div class="comment-input-wrap">
-		<textarea class="comment-input" id="post-view-comment-input" placeholder="Write a comment..." rows="1"></textarea>
-		        <button type="button" class="gif-trigger-btn" id="comment-gif-btn">GIF</button>
-		        <div id="comment-gif-preview"></div>
-		        <button class="comment-submit-btn" id="post-view-comment-submit">Post</button>
-      </div>
+	  <div class="comment-input-wrap">
+	    <textarea class="comment-input" id="post-view-comment-input" placeholder="Write a comment..." rows="1" maxlength="1000"></textarea>
+	    <button type="button" class="gif-trigger-btn" id="comment-gif-btn">GIF</button>
+	    <div id="comment-gif-preview"></div>
+	    <button class="comment-submit-btn" id="post-view-comment-submit">Post</button>
+	  </div>
+	  <span id="comment-char-count" class="comment-char-count">0/1000</span>
       <div class="comments-list" id="post-view-comments-list">
         <p class="comment-empty">Loading comments...</p>
       </div>
@@ -273,6 +275,7 @@
 <script src="/js/auth-guard.js"></script>
 <script th:src="@{/js/darkMode.js}" defer></script>
 <script th:src="@{/js/navbarPfp.js}" defer></script>
+<script th:src="@{/js/trendingTags.js}" defer></script>
 <script th:src="@{/js/gifPicker.js}" defer></script>
 <script th:src="@{/js/emojiPicker.js}" defer></script>
 <script th:src="@{/js/tagPostsModal.js}" defer></script>

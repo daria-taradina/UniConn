@@ -21,6 +21,25 @@
   transition: background 0.15s;
   position: relative;
 }
+
+/* ── Post card & comment avatars ──────────────────────────────────────────── */
+.post-card-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  display: block;
+  margin: 0;
+}
+
+.comment-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
 .post-card-suggested {
   display: flex;
   align-items: center;
@@ -83,24 +102,29 @@
 /* ── GIFs ─────────────────────────────────────────────────────────────────── */
 .post-card-gif,
 #post-view-gif {
-  max-height: 120px;
-  max-width: 200px;
+  max-height: 100px;
+  max-width: 50%;
   width: auto;
   height: auto;
   border-radius: 8px;
   margin-top: 4px;
   display: block;
+  object-fit: contain;
+  flex-shrink: 0;
+  align-self: flex-start;
 }
 
 .comment-gif {
   max-height: 80px;
-  max-width: 160px;
+  max-width: 100%;
   width: auto;
   height: auto;
   border-radius: 6px;
   margin-top: 4px;
   display: block;
   object-fit: contain;
+  flex-shrink: 0;
+  align-self: flex-start;
 }
 
 /* ── GIF trigger button ───────────────────────────────────────────────────── */
@@ -245,3 +269,27 @@
 .comment-delete-btn img         { width: 15px; height: 15px; opacity: 0.5; }
 .comment-delete-btn:hover img   { opacity: 1; }
 
+/* ── Comment input textarea ───────────────────────────────────────────────── */
+#post-view-comment-input {
+  min-height: 66px;
+  max-height: 200px;
+  resize: none;
+  overflow-y: hidden;  /* ← was auto, remove scroll */
+  line-height: 1.4;
+  field-sizing: content;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  contain: inline-size;
+}
+
+/* like, comment, delete area in popup */
+#post-view-footer {
+  display: flex;
+  align-items: center;
+  gap: 2px;        
+  padding: 8px 0;  /* reduce vertical breathing room */
+}
+#post-view-footer .post-card-action {
+  padding: 3px 5px;
+}
