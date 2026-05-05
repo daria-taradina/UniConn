@@ -174,7 +174,24 @@
     document.getElementById('follower-count').textContent = profile.followerCount ?? 0;
     document.getElementById('following-count').textContent = profile.followingCount ?? 0;
     document.getElementById('community-count').textContent = profile.communityCount ?? 0;
-
+	
+	// ── bio rendering ──────────────────────────────────────────────
+	const bioSection = document.getElementById('profile-bio-section');
+	if (bioSection) {
+	  bioSection.innerHTML = '';
+	  if (profile.userBio) {
+	    const bioEl = document.createElement('p');
+	    bioEl.className = 'profile-bio';
+	    bioEl.textContent = profile.userBio;
+	    bioSection.appendChild(bioEl);
+	  } else {
+	    const emptyEl = document.createElement('p');
+	    emptyEl.className = 'profile-bio-empty';
+	    emptyEl.textContent = 'No bio yet.';
+	    bioSection.appendChild(emptyEl);
+	  }
+	}
+	
     // ── follow button ──────────────────────────────────────────────
     const followBtn = document.getElementById('follow-profile-btn');
     const currentUsername = localStorage.getItem('currentUsername');
