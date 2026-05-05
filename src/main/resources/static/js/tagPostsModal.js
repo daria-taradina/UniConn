@@ -15,20 +15,16 @@
             <button class="tag-filter-btn" data-filter="posts">Posts</button>
           </div>
         </div>
-        <ul id="tag-posts-modal-list" class="search-results-list"></ul>
+        <div id="tag-posts-modal-list" style="display:flex;flex-direction:column;gap:10px;margin-top:8px;overflow-y:auto;max-height:560px;"></div>
       </div>
     </div>
   `;
 
   let allPosts       = [];
-  let allCommunities = null; // lazy-loaded, cached for the session
+  let allCommunities = null;
   let activeFilter   = 'all';
   let searchQuery    = '';
   let currentTag     = '';
-
-  function fmt(iso) {
-    return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-  }
 
   // Fetch all communities once and cache them
   async function loadCommunities() {
@@ -44,17 +40,17 @@
     return allCommunities;
   }
 
-  function buildCommunityLi(c) {
-    const li = document.createElement('li');
-    li.className = 'search-result-card';
-    li.style.cursor = 'pointer';
-    li.addEventListener('click', () => { window.location.href = '/community/' + c.communityName; });
+  function buildCommunityCard(c) {
+    const div = document.createElement('div');
+    div.className = 'search-result-card';
+    div.style.cursor = 'pointer';
+    div.addEventListener('click', () => { window.location.href = '/community/' + c.communityName; });
     const tagsHtml = Array.isArray(c.tags) && c.tags.length
       ? '<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:4px">'
         + c.tags.map(t => `<span class="post-card-tag" style="cursor:pointer" onclick="event.stopPropagation();openTagPostsModal('${t}')">#${t}</span>`).join('')
         + '</div>'
       : '';
-    li.innerHTML = `
+    div.innerHTML = `
       <div class="src-card-row">
         <img src="${c.communityPicture || '/vector-logos/clubLogo.svg'}" alt="" class="src-card-icon">
         <div class="src-card-body">
@@ -67,41 +63,14 @@
         </div>
       </div>
     `;
-    return li;
-  }
-
-  function buildPostLi(post) {
-    const li = document.createElement('li');
-    li.className = 'search-result-card';
-    li.style.cursor = 'pointer';
-    li.addEventListener('click', () => openPost(post));
-    const communityPart = post.communityName
-      ? `<a href="/community/${post.communityName}" class="post-username-link" onclick="event.stopPropagation()">c/${post.communityName}</a>`
-      : null;
-    const meta = [
-      `<a href="/profile/${post.authorUsername}" class="post-username-link" onclick="event.stopPropagation()">u/${post.authorUsername}</a>`,
-      communityPart,
-      fmt(post.createdAt)
-    ].filter(Boolean).join(' · ');
-    const tagsHtml = Array.isArray(post.tags) && post.tags.length
-      ? '<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:6px">'
-        + post.tags.map(t => `<span class="post-card-tag" style="cursor:pointer" onclick="event.stopPropagation();openTagPostsModal('${t}')">#${t}</span>`).join('')
-        + '</div>'
-      : '';
-    li.innerHTML = `
-      <span class="src-card-members">${meta}</span>
-      ${post.title ? `<p class="src-card-name" style="margin:4px 0 2px">${post.title}</p>` : ''}
-      <p class="src-card-desc">${post.contentText}</p>
-      ${tagsHtml}
-    `;
-    return li;
+    return div;
   }
 
   function sectionHeader(label) {
-    const li = document.createElement('li');
-    li.style.cssText = 'padding:8px 8px 2px;font-size:0.75em;font-weight:700;color:#888;letter-spacing:0.06em;text-transform:uppercase;list-style:none';
-    li.textContent = label;
-    return li;
+    const div = document.createElement('div');
+    div.style.cssText = 'padding:8px 4px 2px;font-size:0.75em;font-weight:700;color:#888;letter-spacing:0.06em;text-transform:uppercase';
+    div.textContent = label;
+    return div;
   }
 
   function filterCommunities(communities) {
@@ -128,10 +97,10 @@
     list.innerHTML = '';
     const filtered = filterCommunities(communities);
     if (!filtered.length) {
-      list.innerHTML = '<li style="padding:12px 8px;color:#999;font-size:0.9em">No communities found.</li>';
+      list.innerHTML = '<p style="padding:12px 8px;color:#999;font-size:0.9em">No communities found.</p>';
       return;
     }
-    filtered.forEach(c => list.appendChild(buildCommunityLi(c)));
+    filtered.forEach(c => list.appendChild(buildCommunityCard(c)));
   }
 
   function renderPostCards(posts) {
@@ -140,10 +109,10 @@
     list.innerHTML = '';
     const filtered = filterPosts(posts);
     if (!filtered.length) {
-      list.innerHTML = '<li style="padding:12px 8px;color:#999;font-size:0.9em">No posts found.</li>';
+      list.innerHTML = '<p style="padding:12px 8px;color:#999;font-size:0.9em">No posts found.</p>';
       return;
     }
-    filtered.forEach(post => list.appendChild(buildPostLi(post)));
+    filtered.forEach(post => list.appendChild(createPostCard(post)));
   }
 
   function applyFilters() {
@@ -151,39 +120,30 @@
     if (!list) return;
 
     if (activeFilter === 'communities') {
-      list.innerHTML = '<li style="padding:12px 8px;color:#999;font-size:0.9em">Loading...</li>';
+      list.innerHTML = '<p style="padding:12px 8px;color:#999;font-size:0.9em">Loading...</p>';
       loadCommunities().then(renderCommunityCards);
     } else if (activeFilter === 'posts') {
       renderPostCards(allPosts);
     } else {
       // 'all' — communities section + posts section
-      list.innerHTML = '<li style="padding:12px 8px;color:#999;font-size:0.9em">Loading...</li>';
+      list.innerHTML = '<p style="padding:12px 8px;color:#999;font-size:0.9em">Loading...</p>';
       loadCommunities().then(communities => {
         list.innerHTML = '';
         const comms = filterCommunities(communities);
         const posts  = filterPosts(allPosts);
         if (!comms.length && !posts.length) {
-          list.innerHTML = '<li style="padding:12px 8px;color:#999;font-size:0.9em">No results found.</li>';
+          list.innerHTML = '<p style="padding:12px 8px;color:#999;font-size:0.9em">No results found.</p>';
           return;
         }
         if (comms.length) {
           list.appendChild(sectionHeader('Communities'));
-          comms.forEach(c => list.appendChild(buildCommunityLi(c)));
+          comms.forEach(c => list.appendChild(buildCommunityCard(c)));
         }
         if (posts.length) {
           list.appendChild(sectionHeader('Posts'));
-          posts.forEach(post => list.appendChild(buildPostLi(post)));
+          posts.forEach(post => list.appendChild(createPostCard(post)));
         }
       });
-    }
-  }
-
-  function openPost(post) {
-    sessionStorage.setItem('pendingPostModal', JSON.stringify(post));
-    if (post.communityName) {
-      window.location.href = '/community/' + post.communityName;
-    } else {
-      window.location.href = '/profile/' + post.authorUsername;
     }
   }
 
@@ -234,7 +194,7 @@
     allPosts     = [];
 
     title.textContent = '#' + tag;
-    list.innerHTML = '<li style="padding:12px 8px;color:#999;font-size:0.9em">Loading...</li>';
+    list.innerHTML = '<p style="padding:12px 8px;color:#999;font-size:0.9em">Loading...</p>';
     document.querySelectorAll('.tag-filter-btn').forEach(b => {
       b.classList.toggle('active', b.dataset.filter === 'all');
     });
@@ -249,7 +209,7 @@
       .then(r => r.ok ? r.json() : [])
       .then(posts => { allPosts = posts; applyFilters(); })
       .catch(() => {
-        list.innerHTML = '<li style="padding:12px 8px;color:#999;font-size:0.9em">Failed to load posts.</li>';
+        list.innerHTML = '<p style="padding:12px 8px;color:#999;font-size:0.9em">Failed to load posts.</p>';
       });
   };
 })();
