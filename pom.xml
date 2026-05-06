@@ -26,6 +26,7 @@
     </properties>
 
     <dependencies>
+
         <!-- REST APIs -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
