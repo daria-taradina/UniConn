@@ -4,7 +4,7 @@
   const headers = token ? { 'Authorization': 'Bearer ' + token } : {};
 
   function formatDate(iso) {
-    const d = new Date(iso);
+    const d = new Date(iso.endsWith('Z') ? iso : iso + 'Z');
     return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
       + ' · ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
   }
