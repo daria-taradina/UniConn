@@ -338,6 +338,22 @@ function _renderPostViewModal(post) {
   commentCountEl.innerHTML = `<img src="/vector-logos/commentCloud.svg" alt="Comments" style="width:18px;height:18px;margin:0"><span id="modal-comment-count">${post.commentCount}</span>`;
   modalFooter.appendChild(commentCountEl);
 
+  const shareBtn = document.createElement('button');
+  shareBtn.className = 'post-card-action post-share-btn';
+  shareBtn.title = 'Copy link';
+  shareBtn.innerHTML = `<img src="/vector-logos/shareLinkIcon.svg" alt="Share" style="width:18px;height:18px;margin:0">`;
+  shareBtn.addEventListener('click', () => {
+    const url = `${window.location.origin}/post/${post.postId}`;
+    navigator.clipboard.writeText(url).then(() => {
+      const toast = document.createElement('div');
+      toast.className = 'share-toast';
+      toast.textContent = 'Link copied!';
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 2000);
+    });
+  });
+  modalFooter.appendChild(shareBtn);
+
   if (post.canDelete) {
     const delBtn = document.createElement('button');
     delBtn.className = 'post-card-action post-card-delete';

@@ -9,6 +9,15 @@
 
   initPostViewModal();
 
+  const urlPost = new URLSearchParams(window.location.search).get('post');
+  if (urlPost) {
+    history.replaceState(null, '', '/feed');
+    fetch(`/api/posts/${urlPost}`, { headers })
+      .then(r => r.ok ? r.json() : null)
+      .then(post => { if (post) openPostViewModal(post); })
+      .catch(() => {});
+  }
+
   fetch('/api/profile/me', { headers })
     .then(r => r.ok ? r.json() : Promise.reject())
     .then(profile => {

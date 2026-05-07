@@ -13,13 +13,13 @@
   }
 
   function openPendingPostModal() {
-    const raw = sessionStorage.getItem('pendingPostModal');
-    if (!raw) return;
-    sessionStorage.removeItem('pendingPostModal');
-    try {
-      const post = JSON.parse(raw);
-      if (typeof openPostViewModal === 'function') openPostViewModal(post);
-    } catch {}
+    const postId = new URLSearchParams(window.location.search).get('post');
+    if (!postId) return;
+    history.replaceState(null, '', window.location.pathname);
+    fetch(`/api/posts/${postId}`, { headers: authHeaders })
+      .then(r => r.ok ? r.json() : null)
+      .then(post => { if (post && typeof openPostViewModal === 'function') openPostViewModal(post); })
+      .catch(() => {});
   }
 
   // ── liked posts modal ─────────────────────────────────────────────
@@ -159,7 +159,7 @@
     fetch(`/api/profile/${viewedUsername}`, { headers: authHeaders }).then(r => r.ok ? r.json() : null),
     fetch('/api/community/trending-tags').then(r => r.ok ? r.json() : []),
     token ? fetch('/api/users/following/ids', { headers: authHeaders }).then(r => r.ok ? r.json() : []) : Promise.resolve([])
-  ]).then(([profile, trendingTags, followingIds]) => {
+  ]).then(([profile, , followingIds]) => {
     initPostViewModal();
     if (!profile) return;
 
