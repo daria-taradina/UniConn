@@ -28,13 +28,13 @@
   function loadPosts(userId) {
 
   function openPendingPostModal() {
-    const raw = sessionStorage.getItem('pendingPostModal');
-    if (!raw) return;
-    sessionStorage.removeItem('pendingPostModal');
-    try {
-      const post = JSON.parse(raw);
-      if (typeof openPostViewModal === 'function') openPostViewModal(post);
-    } catch {}
+    const postId = new URLSearchParams(window.location.search).get('post');
+    if (!postId) return;
+    history.replaceState(null, '', window.location.pathname);
+    fetch(`/api/posts/${postId}`, { headers })
+      .then(r => r.ok ? r.json() : null)
+      .then(post => { if (post && typeof openPostViewModal === 'function') openPostViewModal(post); })
+      .catch(() => {});
   }
 
   // ── liked posts modal ─────────────────────────────────────────────

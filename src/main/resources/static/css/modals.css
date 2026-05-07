@@ -171,10 +171,32 @@
 .community-category-select { color: #555; cursor: pointer; }
 .community-category-select:focus { outline: none; border-color: #83b5d6; }
 
+/* SHARE TOAST */
+.share-toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 0.88em;
+  z-index: 2000;
+  pointer-events: none;
+  animation: share-toast-fade 2s ease forwards;
+}
+@keyframes share-toast-fade {
+  0%   { opacity: 0; transform: translateX(-50%) translateY(8px); }
+  15%  { opacity: 1; transform: translateX(-50%) translateY(0); }
+  75%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
 /* POST VIEW MODAL */
 .post-view-overlay {
   display: none; position: fixed; inset: 0;
-  background: rgba(0,0,0,0.35); z-index: 1000;
+  background: rgba(0,0,0,0.35); z-index: 1100;
   justify-content: center; align-items: flex-start; padding-top: 60px;
 }
 .post-view-overlay.active { display: flex; }
