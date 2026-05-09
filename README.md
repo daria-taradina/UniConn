@@ -1,214 +1,216 @@
-# UniConn-COMP-380 :unicorn: 
+<div align="center">
 
-A (Uni)versity (Conn)ection platform for CSUN students to interact with peers! Discover student communities, spark conversations, and stay in the loop with everything campus. Built with ❤️ by fellow Matadors.
+<img src="src/main/resources/static/vector-logos/unicornLogo.png" width="80" alt="UniConn Logo" />   UniConn
 
-https://uniconn-backend-production.up.railway.app/
 
-## :computer: Tech Stack
 
-| ⚙️ | **Software / Hardware** |
-| --- | --- |
+**A (Uni)versity (Conn)ection platform for CSUN students.**  
+Discover communities, spark conversations, and stay in the loop with everything campus.
+
+[![Live](https://img.shields.io/badge/Live%20App-uniconn--backend--production.up.railway.app-4A90D9?style=for-the-badge&logo=railway&logoColor=white)](https://uniconn-backend-production.up.railway.app)
+
+*Built with ❤️ by fellow Matadors — COMP 380/L · Spring 2026 · CSUN*
+
+</div>
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
 | Backend | Java 21, Spring Boot 3.3.5, Spring Security, Hibernate/JPA |
 | Database | MySQL (Railway managed) |
-| Frontend | HTML, CSS, JS (Thymeleaf implementation) |
+| Frontend | HTML, CSS, Vanilla JS (Thymeleaf) |
 | Auth | JWT |
-| Hardware | Cloud-hosted - Railway + Cloudinary media storage |
+| Hosting | Railway (backend + DB), Cloudinary (media) |
 
-| ☁️ | **External APIs / Integrations** |
-| --- | --- |
-| Giphy API | GIF search |
-| Cloudinary | Image upload & storage |
-| Railway | Cloud deployment |
+---
 
-## System Architecture Design
+## System Architecture
 
-<img width="3435" height="1819" alt="image" src="https://github.com/user-attachments/assets/c175489b-556c-4020-9671-c45519e65b72" />
+<img width="3435" alt="UniConn System Architecture" src="https://github.com/user-attachments/assets/c175489b-556c-4020-9671-c45519e65b72" />
 
+---
 
+## Features
 
-## Prerequisites
+| Feature | Description | Status |
+|---|---|---|
+| **User Authentication** | JWT-based login, registration, password reset via email | ✅ Complete |
+| **User Profiles** | View and edit profile, profile picture upload via Cloudinary | ✅ Complete |
+| **User Connections** | Follow/unfollow users, follower and following counts | ✅ Complete |
+| **Communities** | Browse, create, join communities with categories and tags | ✅ Complete |
+| **Community Roles** | `ADMIN`, `MODERATOR`, `REGULAR_MEMBER` role management | ✅ Complete |
+| **Post Feed** | Personalized feed, trending tags, community and profile post views | ✅ Complete |
+| **Post Interactions** | Create posts with GIFs, like, comment, share link, tag filtering | ✅ Complete |
+| **Image Upload** | Profile and community pictures via Cloudinary CDN | ✅ Complete |
+| **Dark Mode** | System-aware dark/light theme toggle | ✅ Complete |
+| **Search** | Search users and communities | ✅ Complete |
+| **Notifications** | In-app notification system | 🔜 Planned |
 
-Make sure you have the following installed before running the project:
+---
 
-- [Java 17+](https://www.oracle.com/java/technologies/downloads/)
-- [Maven 3.8+](https://maven.apache.org/download.cgi)
-- [MySQL 8+](https://dev.mysql.com/downloads/) - Community Server and Workbench(should have it if followed video tutorial provided)
-- [IntelliJ IDEA](https://www.jetbrains.com/idea/) (recommended) or any IDE of your choice (I work in Eclipse)
-
-
-## :arrow_forward: Getting Started
-
-**1. Clone the repository**
-
-**2. Create the database**
-
-Open MySQL Workbench or your MySQL client and run:
-
-```sql
-CREATE DATABASE uni_conn;
-```
-
-**3. Configure environment variables**
-
-Open `src/main/resources/application.properties` and update the following with your local MySQL credentials:
-
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/uni_conn
-spring.datasource.username=your_mysql_username  // I have root
-spring.datasource.password=your_mysql_password
-```
-
-**4. Run the application** :rocket: 
-
-**Option A — IntelliJ IDEA:**
-Open the project and click the green Run button. IntelliJ will automatically download all dependencies on first launch.
-
-**Option B — Terminal:**
-```bash
-mvn spring-boot:run
-```
-
-On first run, Maven will download all required dependencies from `pom.xml` automatically.
-
-The API will start at `http://localhost:8080`.
-
-
-## :file_cabinet: Project Structure
+## Project Structure
 
 ```
 src/
 ├── main/
 │   ├── java/com/uniconn/backend/
-│   │   ├── composite-keys/         # For join tables (UserFollow, CommunityMember, ...)
-│   │   ├── config/                 # Security configurations
-│   │   ├── controllers/            # REST controllers
-│   │   ├── dtos/                   # (LoginResponseDTO, CommunityDTO, ...)
-│   │   ├── entities/               # JPA entities (User, Community, ...)
-│   │   ├── exception/              # GlobalExceptionHandler and related exception classes
-│   │   ├── repositories/           # Spring Data repositories
-│   │   ├── services/               # Business logic
-│   │   ├── utils/                  # JWT
-│   │   └── validation/             # Tags validator
+│   │   ├── composite_keys/     # Composite PKs for join tables (UserFollowId, PostLikeId, ...)
+│   │   ├── config/             # Security and Cloudinary configuration
+│   │   ├── controllers/        # REST controllers
+│   │   ├── dtos/               # Data transfer objects (request/response)
+│   │   ├── entities/           # JPA entities (User, Post, Community, ...)
+│   │   ├── exception/          # GlobalExceptionHandler and custom exceptions
+│   │   ├── repositories/       # Spring Data JPA repositories
+│   │   ├── services/           # Business logic
+│   │   └── validation/         # Custom annotation validators (tags)
 │   └── resources/
-│       ├── db/                     # SQL seed scripts (run manually in Workbench)
+│       ├── db/                 # SQL seed scripts (run manually in Workbench)
 │       ├── static/
-│       |   ├── css/
-│       |   ├── js/
-│       |   └── vector-logos/                       
-│       ├── templates/                       # Organized by pages folders with HTMLs
-│       ├── application.properties           # Railway properties
-│       └── application.properties.template  # (DB connection, methods' properties, ...)
+│       │   ├── css/
+│       │   ├── js/
+│       │   └── vector-logos/
+│       ├── templates/          # Thymeleaf HTML pages (organized by feature)
+│       ├── application.properties          # Railway/production config
+│       └── application.properties.template # Local setup template
 ```
- 
-## :arrows_clockwise: Loading Test Data
- 
-**Sample seed data is provided in `src/main/resources/db/`.** 
- 
-**1. Open MySQL Workbench and connect to your local instance**
-  
-**2. Run the scripts in order**
- 
-**Step 1 — Users:**
-Open `src/main/resources/db/users_test_data.sql` in Workbench and execute.
- 
-**Step 2 — Communities:**
-Open `src/main/resources/db/community_test_data.sql` in Workbench and execute.
 
-**Test data summary:**
-* 20 Active Users (password for all accounts: `Password123!`, emails end with `@my.csun.edu`, optional fields omitted: `name`, `user_bio`, `profile_picture_path`)
-* 20 Tags (used both by communities and posts - **MAX 5**)
-* 10 Communities (only `community_picture_path = NULL`)
-* Members added to communities
-* Community member roles (`ADMIN`, `MODERATOR`, `REGULAR_MEMBER`)
+---
 
-:white_check_mark: **Verification is included in sql files so will run after data is populated.** 
+## External Integrations
 
-## :camera: Image Upload
+| Service | Purpose | Docs |
+|---|---|---|
+| [Railway](https://railway.app) | Cloud deployment and managed MySQL database | [Docs](https://docs.railway.app) |
+| [Cloudinary](https://cloudinary.com) | Image upload, storage, and CDN delivery | [Docs](https://cloudinary.com/documentation) |
+| [Giphy API](https://developers.giphy.com) | GIF search and embedding in posts | [Docs](https://developers.giphy.com/docs/api/) |
 
-UniConn uses [Cloudinary](https://cloudinary.com/) for image storage and processing. Profile pictures for both users and communities are uploaded to Cloudinary and served via CDN.
+---
 
-### How it works
-Image upload is a two-step process:
+## Image Upload
 
-1. Upload the image — send the file to the upload endpoint, receive a Cloudinary URL back
-2. Save the URL — include the returned URL in the profile or community update request
+Image upload is a two-step process to keep file handling separate from business logic:
 
-This keeps file handling separate from business logic and ensures images are always served from a fast, reliable CDN rather than the application server.
-### Image requirements
+1. **Upload** — send the file to the upload endpoint, receive a Cloudinary URL
+2. **Save** — include the returned URL in the profile or community update request
 
-* Accepted formats: JPEG, PNG, WebP
-* Maximum file size: 2MB
-* All uploaded images are automatically cropped to a square and resized to 256×256 pixels
-
-### Endpoints
+**Requirements:** JPEG, PNG, or WebP · Max 2MB · Auto-cropped to 256×256px
 
 | Method | Endpoint | Description |
-| --- | --- | --- |
-| `POST` | `/api/upload/user` | Upload a user profile picture |
-| `POST` | `/api/upload/community` | Upload a community profile picture |
-| `PATCH` | `/api/users/me/picture` | Save profile picture URL to user account |
+|---|---|---|
+| `POST` | `/api/upload/user` | Upload user profile picture |
+| `POST` | `/api/upload/community` | Upload community picture |
+| `PATCH` | `/api/users/me/picture` | Save picture URL to user account |
 | `PATCH` | `/api/community/{communityId}/picture` | Save picture URL to community |
 
-All endpoints require authentication via `Authorization: Bearer <token>` header.
+All endpoints require `Authorization: Bearer <token>`.
 
-## :computer: Front-end (Hanna)
+---
 
-## :woman_technologist: User Management System (Lily)
+## Local Development
 
-## :two_women_holding_hands: Connection Between Users&Communities (Daria)
+<details>
+<summary>Setup instructions (click to expand)</summary>
 
-## :joystick: Interactive Systems (Abi)
+### Prerequisites
 
-## :pencil: Post Management System (Supti)
+- [Java 21+](https://www.oracle.com/java/technologies/downloads/)
+- [Maven 3.8+](https://maven.apache.org/download.cgi)
+- [MySQL 8+](https://dev.mysql.com/downloads/)
+- [IntelliJ IDEA](https://www.jetbrains.com/idea/) or Eclipse
 
-## :bell: Notification System (Hanna)
+### Steps
 
-## ⚠️ Important
+**1. Clone the repository**
 
-> [!CAUTION]
-> _**Do not edit**_ any entities/composite keys
-- If any changes needed, tell the person whose code it is, and leave comments in code if needed, but _**don't change**_ someone's code
-- Commit changes to your own separate branch (e.g. `feature/name-of-the-feature`)
-- Use [conventional commit messages](https://gist.github.com/qoomon/5dfcdf8eec66a051ecd85625518cfd13) and [PR templates](https://axolo.co/blog/p/part-3-github-pull-request-template) to keep backlog clean and clear
-- <ins>I'll be reviewing pull requests</ins> and merging to `main` branch (except front end, html/css -> `src/resources/static`)
-- `README` is only for essential development notes (e.g. changes needed for system files, additional setup required, test data/guide etc.)
-> [!NOTE]
-> Add testing guide for your feature to README, to test in Postman or in browser (add sections before **⚠️Important** section).
-> 
-> GitHub syntax resources:
-> - [General](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
-> - [Code styling](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-and-highlighting-code-blocks)
-
-## :gear: Configurations
-
-- All student emails must end with `@my.csun.edu`
-- Passwords are stored as BCrypt hashes (password for all test users: `Password123!`)
-> [!IMPORTANT]
-> `spring.jpa.hibernate.ddl-auto` set to `update` — Hibernate will run entities and create tables in database
-> 
-> After first run:
-> - Verify all tables were created in database properly and test if data was populated
-> - Switch `spring.jpa.hibernate.ddl-auto` to `validate` — Hibernate will be checking entity/schema alignment on startup but will not modify the database
-
-```properties
-spring.application.name=UniConn
-
-# Database connection
-spring.datasource.url=jdbc:mysql://localhost:3306/uni_conn
-spring.datasource.username=root
-spring.datasource.password=YOUR_DB_PASSWORD
-
-## Hibernate properties
-spring.jpa.hibernate.ddl-auto=validate
-spring.jpa.open-in-view=false
+```bash
+git clone https://github.com/rachelhann/UniConn-COMP-380.git
 ```
 
-## 🗒️ Notes
+**2. Create the database**
 
-- All entities are available 
-- Add classes to corresponding packages (e.g. `package com.uniconn.backend.services;`)
-- sql uses `snake_case`, in Java `camelCase` (constants `SCREAMING_SNAKE_CASE`), on github `kebab-case`
-- GitHub syntax resources:
-  - [General](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
-  - [Code styling](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-and-highlighting-code-blocks)
- 
+```sql
+CREATE DATABASE uni_conn;
+```
+
+**3. Configure `application.properties`**
+
+Copy `application.properties.template` → `application.properties` and fill in your credentials:
+
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/uni_conn
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+```
+
+**4. Run**
+
+```bash
+mvn spring-boot:run
+```
+
+App starts at `http://localhost:8080`.
+
+</details>
+
+---
+
+## Test Data
+
+Sample seed data is in `src/main/resources/db/`. Run scripts in order in MySQL Workbench:
+
+1. `users_test_data.sql`
+2. `community_test_data.sql`
+3. `posts_test_data.sql`
+
+**Summary:** 20 users · 20 tags · 10 communities · posts with likes and comments  
+All test accounts use password `Password123!` with `@my.csun.edu` emails. Verification queries are included in each file.
+
+---
+
+## Configuration Notes
+
+> [!IMPORTANT]
+> Set `spring.jpa.hibernate.ddl-auto=update` on first run so Hibernate creates all tables.
+> After verifying the schema, switch to `validate` to prevent unintended modifications.
+
+- All student emails must end with `@my.csun.edu`
+- Passwords are stored as BCrypt hashes
+- Naming conventions: `snake_case` in SQL · `camelCase` in Java · `kebab-case` on GitHub
+
+---
+
+## Contributing
+
+> [!CAUTION]
+> Do not edit entities or composite keys without coordinating with the owner. Leave comments if changes are needed — don't modify someone else's code directly.
+
+- Branch off `main` using `feature/your-feature-name`
+- Use [conventional commit messages](https://gist.github.com/qoomon/5dfcdf8eec66a051ecd85625518cfd13)
+- Open a PR using the [PR template](PULL_REQUEST_TEMPLATE.md) — PRs are reviewed before merging
+- Frontend HTML/CSS changes merge directly to `src/resources/static`
+
+---
+
+## Contributors
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/dariatarad">
+        <img src="https://github.com/dariatarad.png" width="80" style="border-radius:50%" alt="Daria Taradina" /><br />
+        <sub><b>Daria Taradina</b></sub>
+      </a><br />
+      <sub>Backend Architecture · Communities · Posts · User Connections · DevOps</sub>
+    </td>
+    <td align="center">
+      <a href="https://github.com/rachelhann">
+        <img src="https://github.com/rachelhann.png" width="80" style="border-radius:50%" alt="Rachel Hanna" /><br />
+        <sub><b>Rachel Hanna</b></sub>
+      </a><br />
+      <sub>Frontend · Auth · Dark Mode · Notifications · UI/UX</sub>
+    </td>
+  </tr>
+</table>
