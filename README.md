@@ -1,14 +1,30 @@
 # UniConn-COMP-380 :unicorn: 
 
-Social platform for CSUN students.
+A (Uni)versity (Conn)ection platform for CSUN students to interact with peers! Discover student communities, spark conversations, and stay in the loop with everything campus. Built with ❤️ by fellow Matadors.
+
+https://uniconn-backend-production.up.railway.app/
 
 ## :computer: Tech Stack
 
-- Java 17+
-- Spring Boot (3.3.5 version)
-- MySQL Community Server and Workbench
-- Maven
-- Front-end: HTML, CSS, JS (Thymeleaf implementation)
+| ⚙️ | **Software / Hardware** |
+| --- | --- |
+| Backend | Java 21, Spring Boot 3.3.5, Spring Security, Hibernate/JPA |
+| Database | MySQL (Railway managed) |
+| Frontend | HTML, CSS, JS (Thymeleaf implementation) |
+| Auth | JWT |
+| Hardware | Cloud-hosted - Railway + Cloudinary media storage |
+
+| ☁️ | **External APIs / Integrations** |
+| --- | --- |
+| Giphy API | GIF search |
+| Cloudinary | Image upload & storage |
+| Railway | Cloud deployment |
+
+## System Architecture Design
+
+<img width="3435" height="1819" alt="image" src="https://github.com/user-attachments/assets/c175489b-556c-4020-9671-c45519e65b72" />
+
+
 
 ## Prerequisites
 
@@ -74,8 +90,13 @@ src/
 │   │   ├── utils/                  # JWT
 │   │   └── validation/             # Tags validator
 │   └── resources/
-│       ├── static/                          # HTML, CSS, JavaScript
-│       ├── db/                              # SQL seed scripts (run manually in Workbench)
+│       ├── db/                     # SQL seed scripts (run manually in Workbench)
+│       ├── static/
+│       |   ├── css/
+│       |   ├── js/
+│       |   └── vector-logos/                       
+│       ├── templates/                       # Organized by pages folders with HTMLs
+│       ├── application.properties           # Railway properties
 │       └── application.properties.template  # (DB connection, methods' properties, ...)
 ```
  
