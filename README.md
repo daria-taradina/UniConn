@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="src/main/resources/static/vector-logos/unicornLogo.png" width="80" alt="UniConn Logo" />   UniConn
+<img src="src/main/resources/static/vector-logos/unicornLogo.png" width="80" alt="UniConn Logo" />   
 
-
+# UniConn
 
 **A (Uni)versity (Conn)ection platform for CSUN students.**  
 Discover communities, spark conversations, and stay in the loop with everything campus.
