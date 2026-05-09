@@ -16,7 +16,6 @@ Discover communities, spark conversations, and stay in the loop with everything 
 | Backend | Java 21, Spring Boot 3.3.5, Spring Security, Hibernate/JPA |
 | Database | MySQL (Railway managed) |
 | Frontend | HTML, CSS, JS (Thymeleaf) |
-| Auth | JWT |
 | Hosting ☁️ | Railway (backend + DB), Cloudinary (media) |
 
 
