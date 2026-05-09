@@ -21,22 +21,21 @@ Discover communities, spark conversations, and stay in the loop with everything 
 
 ## ⚙️ System Architecture
 
-<img width="835" alt="UniConn System Architecture" src="https://github.com/user-attachments/assets/c175489b-556c-4020-9671-c45519e65b72" />
+<img width="635" alt="UniConn System Architecture" src="https://github.com/user-attachments/assets/c175489b-556c-4020-9671-c45519e65b72" />
 
 
 ## ✨ Features
 
-| Feature | Description | Status |
-|---|---|---|
-| **User Profiles** 👤 | View and edit profile, view posts made by user across the platform and posts they like | ✅ Complete |
-| **User Connections** 👥 | Follow/unfollow users, follower and following counts & lists | ✅ Complete |
-| **Communities** 🧩 | Browse, create, moderate, join communities with categories and tags | ✅ Complete |
-| **Post Feed** 👣 | Personalized feed, trending tags, community and profile post views | ✅ Complete |
-| **Post Interactions** 💙💬 | Create posts with GIFs, like, comment, share link, tag filtering | ✅ Complete |
-| **Image Upload** 📷 | Profile and community pictures via Cloudinary CDN | ✅ Complete |
-| **Dark Mode** 🔅🌚 | System-aware dark/light theme toggle | ✅ Complete |
-| **Search** 🔍 | Search users and communities | ✅ Complete |
-| **Notifications** 🔔 | In-app notification system | 🔜 Planned |
+| Feature | Description | 
+|---|---|
+| **User Profiles** 👤 | View and edit profile, view posts made by user across the platform and posts they like | 
+| **User Connections** 👥 | Follow/unfollow users, follower and following counts & lists | 
+| **Communities** 🧩 | Browse, create, moderate, join communities with categories and tags | 
+| **Post Feed** 👣 | Personalized feed, trending tags, community and profile post views | 
+| **Post Interactions** 💙💬 | Create posts with GIFs, like, comment, share link, tag filtering | 
+| **Image Upload** 📷 | Profile and community pictures via Cloudinary CDN | 
+| **Dark Mode** 🔅🌚 | System-aware dark/light theme toggle | 
+| **Search** 🔍 | Search users and communities | 
 
 ## 🗂 Project Structure
 
