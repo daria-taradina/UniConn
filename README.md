@@ -13,7 +13,6 @@ Discover communities, spark conversations, and stay in the loop with everything 
 
 </div>
 
----
 
 ## Tech Stack
 
@@ -25,19 +24,16 @@ Discover communities, spark conversations, and stay in the loop with everything 
 | Auth | JWT |
 | Hosting | Railway (backend + DB), Cloudinary (media) |
 
----
 
 ## System Architecture
 
 <img width="3435" alt="UniConn System Architecture" src="https://github.com/user-attachments/assets/c175489b-556c-4020-9671-c45519e65b72" />
 
----
 
 ## Features
 
 | Feature | Description | Status |
 |---|---|---|
-| **User Authentication** | JWT-based login, registration, password reset via email | ✅ Complete |
 | **User Profiles** | View and edit profile, profile picture upload via Cloudinary | ✅ Complete |
 | **User Connections** | Follow/unfollow users, follower and following counts | ✅ Complete |
 | **Communities** | Browse, create, join communities with categories and tags | ✅ Complete |
@@ -48,8 +44,6 @@ Discover communities, spark conversations, and stay in the loop with everything 
 | **Dark Mode** | System-aware dark/light theme toggle | ✅ Complete |
 | **Search** | Search users and communities | ✅ Complete |
 | **Notifications** | In-app notification system | 🔜 Planned |
-
----
 
 ## Project Structure
 
@@ -77,7 +71,6 @@ src/
 │       └── application.properties.template # Local setup template
 ```
 
----
 
 ## External Integrations
 
@@ -87,7 +80,7 @@ src/
 | [Cloudinary](https://cloudinary.com) | Image upload, storage, and CDN delivery | [Docs](https://cloudinary.com/documentation) |
 | [Giphy API](https://developers.giphy.com) | GIF search and embedding in posts | [Docs](https://developers.giphy.com/docs/api/) |
 
----
+
 
 ## Image Upload
 
@@ -107,7 +100,7 @@ Image upload is a two-step process to keep file handling separate from business 
 
 All endpoints require `Authorization: Bearer <token>`.
 
----
+
 
 ## Local Development
 
@@ -155,7 +148,7 @@ App starts at `http://localhost:8080`.
 
 </details>
 
----
+
 
 ## Test Data
 
@@ -168,7 +161,6 @@ Sample seed data is in `src/main/resources/db/`. Run scripts in order in MySQL W
 **Summary:** 20 users · 20 tags · 10 communities · posts with likes and comments  
 All test accounts use password `Password123!` with `@my.csun.edu` emails. Verification queries are included in each file.
 
----
 
 ## Configuration Notes
 
@@ -180,7 +172,7 @@ All test accounts use password `Password123!` with `@my.csun.edu` emails. Verifi
 - Passwords are stored as BCrypt hashes
 - Naming conventions: `snake_case` in SQL · `camelCase` in Java · `kebab-case` on GitHub
 
----
+
 
 ## Contributing
 
@@ -192,7 +184,6 @@ All test accounts use password `Password123!` with `@my.csun.edu` emails. Verifi
 - Open a PR using the [PR template](PULL_REQUEST_TEMPLATE.md) — PRs are reviewed before merging
 - Frontend HTML/CSS changes merge directly to `src/resources/static`
 
----
 
 ## Contributors
 
