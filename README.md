@@ -59,7 +59,9 @@ src/
 │       │   ├── css/            # Stylesheets
 │       │   ├── js/             # Client-side feature logic
 │       │   └── vector-logos/   # Custom design icons
-│       ├── templates/                        # Thymeleaf HTML pages (organized by feature)
+│       ├── templates/
+│       │   ├── fragments/          # Shared Thymeleaf fragments (navbar, modals)
+│       │   └── ...                 # HTML pages organized by feature
 │       ├── application.properties            # Railway config
 │       └── application.properties.template   # Local setup template
 
@@ -102,8 +104,8 @@ src/
       <sub>Design Lead · Frontend · UI/UX</sub>
     </td>
     <td align="center" width="340">
-      <a href="https://github.com/dariatarad">
-        <img src="https://github.com/LilyF217.png?size=150" width="90" alt="Daria Taradina" />
+      <a href="https://github.com/LilyF217">
+        <img src="https://github.com/LilyF217.png?size=150" width="90" alt="Lily F" />
       </a>
       <br /><br />
       <a href="https://github.com/LilyF217">

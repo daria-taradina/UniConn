@@ -1,3 +1,9 @@
+.feed-section-label {
+  font-size: 0.85em;
+  color: #888;
+  margin: -8px 0 8px 4px;
+}
+
 /* FEED POSTS LIST */
 .feed-posts-list {
   margin-top: 40px;

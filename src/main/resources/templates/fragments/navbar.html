@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<th:block th:fragment="navbar">
+  <nav class="navbar">
+    <div class="navbar-left">
+      <img class="logo-icon" th:src="@{/vector-logos/unicornLogo.png}" alt="UniConn Logo" width="100" height="100">
+      <a href="/feed" class="main">UniConn</a><hr><br>
+    </div>
+    <div class="navbar-right">
+      <a href="#" class="nav-icon" title="Search" id="search-toggle">
+        <img th:src="@{/vector-logos/magnifyGlass.svg}" alt="Search" width="36" height="36">
+      </a>
+      <!-- NOTIFICATIONS DISABLED
+      <a href="#" class="nav-icon" title="Notifications" id="notification-toggle">
+        <img th:src="@{/vector-logos/notifLogo.svg}" alt="Notifications" width="30" height="36">
+      </a>
+      -->
+      <a th:href="@{/profile}" class="nav-icon" title="Profile">
+        <img th:src="@{/vector-logos/usernameSignIn.svg}" alt="Profile" width="26" height="36">
+      </a>
+      <button id="dark-mode-toggle" class="dark-mode-btn" title="Toggle dark mode">🌙</button>
+      <span class="signout-divider">|</span>
+      <a href="#" class="signout-link" onclick="['token','currentUsername','currentUserId','myProfilePosts','myCommunities','profilePicture'].forEach(k=>localStorage.removeItem(k)); window.location.href='/login'; return false;">Sign Out</a>
+    </div>
+  </nav><hr class="navbar-divider">
+</th:block>
+
+<th:block th:fragment="notification-modal">
+<!-- NOTIFICATION MODAL
+<div id="notification-modal" class="search-modal-overlay" aria-hidden="true">
+  <div class="search-modal">
+    <div class="header-right">
+      <h3 class="search-modal-title">Notifications</h3>
+    </div>
+    <button class="search-modal-close" id="notification-close" aria-label="Close">&times;</button>
+    <ul id="notification-list" class="search-results-list">
+      <li class="notif-empty-item">No notifications yet.</li>
+    </ul>
+  </div>
+</div>
+-->
+</th:block>
+
+<div th:fragment="search-modal" id="search-modal" class="search-modal-overlay" aria-hidden="true">
+  <div class="search-modal">
+    <div class="header-right">
+      <h3 class="search-modal-title">Search</h3>
+    </div>
+    <button class="search-modal-close" id="search-close" aria-label="Close">&times;</button>
+    <input type="text" id="search-input" class="search-modal-input" placeholder="Search by title, username, or community...">
+    <ul id="search-results" class="search-results-list"></ul>
+  </div>
+</div>
+
+</body>
+</html>

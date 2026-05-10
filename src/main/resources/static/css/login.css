@@ -217,3 +217,11 @@ button:hover {
 .intro-bubble p {
   margin: 0;
 }
+
+.navbar .dark-mode-btn { margin-left: auto; }
+
+.form-error {
+  color: #e05c5c;
+  font-size: 0.9em;
+  min-height: 1.4em;
+}
