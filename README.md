@@ -21,8 +21,7 @@ Discover communities, spark conversations, and stay in the loop with everything 
 
 ## ⚙️ System Architecture
 
-<img width="635" alt="UniConn System Architecture" src="https://github.com/user-attachments/assets/c175489b-556c-4020-9671-c45519e65b72" />
-
+<img width="635" alt="UniConn System Architecture" src="https://github.com/user-attachments/assets/1cdbde73-acbc-4795-a028-3e72557e35a9" />
 
 ## ✨ Features
 
