@@ -28,6 +28,7 @@ Discover communities, spark conversations, and stay in the loop with everything 
 
 | Feature | Description | 
 |---|---|
+| **User Authentication** 🔐 | JWT-based login, registration, password reset via secret question |
 | **User Profiles** 👤 | View and edit profile, view posts made by user across the platform and posts they like | 
 | **User Connections** 👥 | Follow/unfollow users, follower and following counts & lists | 
 | **Communities** 🧩 | Browse, create, moderate, join communities with categories and tags | 
@@ -51,16 +52,18 @@ src/
 │   │   ├── exception/          # GlobalExceptionHandler and custom exceptions
 │   │   ├── repositories/       # Spring Data JPA repositories
 │   │   ├── services/           # Business logic
+│   │   ├── utils/              # JWT
 │   │   └── validation/         # Custom annotation validators (tags)
 │   └── resources/
 │       ├── db/                 # SQL seed scripts (run manually in Workbench)
 │       ├── static/
-│       │   ├── css/
-│       │   ├── js/
-│       │   └── vector-logos/
-│       ├── templates/          # Thymeleaf HTML pages (organized by feature)
-│       ├── application.properties          # Railway/production config
-│       └── application.properties.template # Local setup template
+│       │   ├── css/            # Stylesheets
+│       │   ├── js/             # Client-side feature logic
+│       │   └── vector-logos/   # Custom design icons
+│       ├── templates/                        # Thymeleaf HTML pages (organized by feature)
+│       ├── application.properties            # Railway config
+│       └── application.properties.template   # Local setup template
+
 ```
 
 
@@ -98,6 +101,17 @@ src/
       </a>
       <br /><br />
       <sub>Design Lead · Frontend · UI/UX</sub>
+    </td>
+    <td align="center" width="340">
+      <a href="https://github.com/dariatarad">
+        <img src="https://github.com/LilyF217.png?size=150" width="90" alt="Daria Taradina" />
+      </a>
+      <br /><br />
+      <a href="https://github.com/LilyF217">
+        <img src="https://img.shields.io/badge/LilyF217-9fc5e8?style=for-the-badge&logo=github&logoColor=333" />
+      </a>
+      <br /><br />
+      <sub>Security · Auth</sub>
     </td>
   </tr>
 </table>
