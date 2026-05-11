@@ -141,7 +141,6 @@ public class PostInteractionService extends BaseService {
         if (!isAuthor) {
             Post post = comment.getPost();
             if (post.getCommunity() == null) {
-                // profile post — author only
                 throw new UnauthorizedException("You are not allowed to delete this comment");
             }
 

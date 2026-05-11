@@ -139,7 +139,7 @@ public class PostManagementService extends BaseService {
     	return getPersonalizedFeed(currentUser);
     }
 
-    // ALGORITHM 1 — new/inactive user: posts from trending tags
+    // ALGORITHM 1 - new/inactive user: posts from trending tags
     private List<PostSummaryDTO> getTrendingFeed(User currentUser) {
     	LocalDateTime since = LocalDateTime.now().minusDays(30);
     	List<String> trendingTagNames = postRepository.findTrendingTagsRaw(since)
@@ -155,15 +155,15 @@ public class PostManagementService extends BaseService {
              .stream()
              .map(p -> mapToSummaryDTO(p, currentUser.getUserId()))
              .collect(Collectors.toList());
- }
+    }
 
- // ALGORITHM 2 — active user: posts from followed users + joined communities
- private List<PostSummaryDTO> getPersonalizedFeed(User currentUser) {
-     return postRepository.findFeedPostsForUser(currentUser.getUserId())
+    // ALGORITHM 2 - active user: posts from followed users + joined communities
+    private List<PostSummaryDTO> getPersonalizedFeed(User currentUser) {
+    	return postRepository.findFeedPostsForUser(currentUser.getUserId())
              .stream()
              .map(p -> mapToSummaryDTO(p, currentUser.getUserId()))
              .collect(Collectors.toList());
- }
+    }
  	// FED TYPE
  	@Transactional(readOnly = true)
  	public String getFeedType(Integer userId) {

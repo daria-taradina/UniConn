@@ -197,7 +197,7 @@ public class CommunityService extends BaseService {
     }
  
     // Communities where user is a member but NOT the creator
-    // (REGULAR_MEMBER or MODERATOR role)
+    // (REGULAR_MEMBER role)
 	@Transactional(readOnly = true)
 	public List<CommunityResponseDTO> getCommunitiesIJoined() {
 	    User currentUser = getAuthenticatedUser();

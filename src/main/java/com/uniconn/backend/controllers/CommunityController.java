@@ -27,7 +27,7 @@ public class CommunityController {
     }
 
 	// ---------------------------------------------------------------
-    // EXPLORE — no auth required
+    // EXPLORE - no auth required (for future redesign of the app)
     // GET /api/community/all
     // GET /api/community/category/academics
     // ---------------------------------------------------------------
@@ -43,7 +43,7 @@ public class CommunityController {
     }
  
     // ---------------------------------------------------------------
-    // MY COMMUNITIES — auth required
+    // MY COMMUNITIES - auth required
     // GET /api/community/my-communities          -> all joined
     // GET /api/community/my-communities/created  -> created by me
     // GET /api/community/my-communities/joined   -> member of (not creator)
@@ -67,7 +67,10 @@ public class CommunityController {
     public ResponseEntity<List<CommunityResponseDTO>> getCommunitiesByUser(@PathVariable Integer userId) {
         return ResponseEntity.ok(communityService.getCommunitiesByUserId(userId));
     }
-
+    
+    // ---------------------------------------------------------------
+    // TRENDING TAGS - communities related to top 5 used tags
+    // ---------------------------------------------------------------
     @GetMapping("/trending-tags")
     public ResponseEntity<List<String>> getTrendingTags() {
         return ResponseEntity.ok(communityService.getTrendingTags());

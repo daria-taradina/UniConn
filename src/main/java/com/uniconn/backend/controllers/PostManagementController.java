@@ -21,18 +21,18 @@ public class PostManagementController {
     }
 
     // ---------------------------------------------------------------
+    // CREATE POST - community/profile
     // POST /api/posts
-    // Create a post (community or profile)
     // ---------------------------------------------------------------
     @PostMapping
     public ResponseEntity<PostSummaryDTO> createPost(@RequestBody @Valid PostCreateDTO dto) {
         return ResponseEntity.status(201).body(postManagementService.createPost(dto));
     }
 
-    // ---------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    // DELETE POST - soft delete(author always, community admin if community post)
     // DELETE /api/posts/{postId}
-    // Soft delete - author always, community admin if community post
-    // ---------------------------------------------------------------
+    // ----------------------------------------------------------------------------
     @DeleteMapping("/{postId}")
     public ResponseEntity<Void> deletePost(@PathVariable Integer postId) {
         postManagementService.deletePost(postId);
@@ -47,23 +47,26 @@ public class PostManagementController {
     }
 
     // ---------------------------------------------------------------
+    // FEED - posts from followed users + member communities
     // GET /api/posts/feed/{userId}
-    // User feed: posts from followed users + member communities
     // ---------------------------------------------------------------
     @GetMapping("/feed/{userId}")
     public ResponseEntity<List<PostSummaryDTO>> getFeed(@PathVariable Integer userId) {
         return ResponseEntity.ok(postManagementService.getFeedForUser(userId));
     }
     
+    // ---------------------------------------------------------------
+    // FEED TYPE - 2 algorithms in service layer
+    // ---------------------------------------------------------------   
     @GetMapping("/feed/{userId}/type")
     public ResponseEntity<Map<String, String>> getFeedType(@PathVariable Integer userId) {
         return ResponseEntity.ok(Map.of("type", postManagementService.getFeedType(userId)));
     }
 
-    // ---------------------------------------------------------------
+    // -----------------------------------------------------------------------
+    // TRENDING TOPICS - posts' tags (last 30 days, ordered by post count desc)
     // GET /api/posts/trending
-    // Trending tags (last 30 days, ordered by post count desc)
-    // ---------------------------------------------------------------
+    // -----------------------------------------------------------------------
     @GetMapping("/trending")
     public ResponseEntity<List<TrendingTagDTO>> getTrendingTags() {
         return ResponseEntity.ok(postManagementService.getTrendingTags());
@@ -92,7 +95,7 @@ public class PostManagementController {
 
     // ---------------------------------------------------------------
     // GET /api/posts/profile/{userId}
-    // Profile posts (Twitter-style, no community) authored by a user
+    // Profile posts
     // ---------------------------------------------------------------
     @GetMapping("/profile/{userId}")
     public ResponseEntity<List<PostSummaryDTO>> getProfilePosts(@PathVariable Integer userId) {
@@ -110,7 +113,7 @@ public class PostManagementController {
 
     // ---------------------------------------------------------------
     // GET /api/posts/user/{userId}/community
-    // Posts a user authored inside communities
+    // Posts user made inside communities
     // ---------------------------------------------------------------
     @GetMapping("/user/{userId}/community")
     public ResponseEntity<List<PostSummaryDTO>> getCommunityPostsByUser(@PathVariable Integer userId) {

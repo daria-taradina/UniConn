@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 	
-	// Spring throws this — multiple field errors, returns a map
+	// 400 - @Valid annotation failures; collects all field errors into one map
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidation(
             MethodArgumentNotValidException ex) {
@@ -20,34 +20,33 @@ public class GlobalExceptionHandler {
         ex.getBindingResult().getFieldErrors()
           .forEach(e -> errors.put(e.getField(), e.getDefaultMessage()));
         return ResponseEntity.badRequest().body(errors);
-        // returns: { "communityName": "must not be blank", "email": "must be a valid email" }
     }
         
-    // You throw this — single specific error, returns one message
+    // 404 - thrown manually when requested resource doesn't exist
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleNotFound(
             ResourceNotFoundException ex) {
         return ResponseEntity.status(404)
             .body(Map.of("error", ex.getMessage()));
-        // returns: { "error": "User with id 5 not found" }
     }
     
-    // You throw this — single specific error, returns one message
+    // 409 - thrown manually when resource already exists (e.g., duplicate community name)
     @ExceptionHandler(ResourceAlreadyExistsException.class)
     public ResponseEntity<Map<String, String>> handleAlreadyExists(
             ResourceAlreadyExistsException ex) {
         return ResponseEntity.status(409)
             .body(Map.of("error", ex.getMessage()));
-        // returns: { "error": "User with this name already exists" }
     }
 
+    // 403 - thrown manually when authenticated user lacks permission
     @ExceptionHandler(UnauthorizedException.class)
     public ResponseEntity<Map<String, String>> handleUnauthorized(
             UnauthorizedException ex) {
         return ResponseEntity.status(403)
             .body(Map.of("error", ex.getMessage()));
     }
-
+    
+    // 400 - Spring throws it on DB constraint violations (e.g., unique, not-null)
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<Map<String, String>> handleDbConstraint(
             DataIntegrityViolationException ex) {
@@ -55,15 +54,15 @@ public class GlobalExceptionHandler {
             .body(Map.of("error", "A database constraint was violated"));
     }
     
-    // You throw this — single specific error, returns one message
+    // 400 - thrown manually for bad input that passes @Valid but fails at service layer
     @ExceptionHandler(InvalidInputException.class)
     public ResponseEntity<Map<String, String>> handleInvalidInput(
             InvalidInputException ex) {
         return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
-        // returns: { "error": "Invalid tag name: @@@" }
     }
 
-    @ExceptionHandler(Exception.class) // catch-all — always put this last
+    // 500 - catch-all for anything unhandled 
+    @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleGeneral(Exception ex) {
         return ResponseEntity.internalServerError()
             .body(Map.of("error", "Something went wrong"));

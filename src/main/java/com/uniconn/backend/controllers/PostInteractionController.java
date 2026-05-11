@@ -17,28 +17,40 @@ public class PostInteractionController {
     public PostInteractionController(PostInteractionService postInteractionService) {
         this.postInteractionService = postInteractionService;
     }
-
+    
+    // ---------------------------------------------------------------
+    // LIKE POST
     // POST /api/posts/{postId}/like
+    // ---------------------------------------------------------------
     @PostMapping("/{postId}/like")
     public ResponseEntity<Void> likePost(@PathVariable Integer postId) {
         postInteractionService.likePost(postId);
         return ResponseEntity.noContent().build();
     }
-
+    
+    // ---------------------------------------------------------------
+    // UNLIKE POST
     // DELETE /api/posts/{postId}/like
+    // ---------------------------------------------------------------
     @DeleteMapping("/{postId}/like")
     public ResponseEntity<Void> unlikePost(@PathVariable Integer postId) {
         postInteractionService.unlikePost(postId);
         return ResponseEntity.noContent().build();
     }
-
+    
+    // ---------------------------------------------------------------
+    // CREATE COMMENT
     // POST /api/posts/comments
+    // ---------------------------------------------------------------
     @PostMapping("/comments")
     public ResponseEntity<CommentSummaryDTO> createComment(@RequestBody @Valid CommentCreateDTO dto) {
         return ResponseEntity.status(201).body(postInteractionService.createComment(dto));
     }
 
+    // ---------------------------------------------------------------
+    // DELETE COMMENT - owner, admin, owner of post in profile
     // DELETE /api/posts/comments/{commentId}
+    // ---------------------------------------------------------------
     @DeleteMapping("/comments/{commentId}")
     public ResponseEntity<Void> deleteComment(@PathVariable Integer commentId) {
         postInteractionService.deleteComment(commentId);
@@ -51,14 +63,20 @@ public class PostInteractionController {
         return ResponseEntity.ok(postInteractionService.getCommentsForPost(postId));
     }
     
+    // ---------------------------------------------------------------
+    // LIKE COMMENT
     // POST /api/posts/comments/{commentId}/like
+    // ---------------------------------------------------------------
     @PostMapping("/comments/{commentId}/like")
     public ResponseEntity<Void> likeComment(@PathVariable Integer commentId) {
         postInteractionService.likeComment(commentId);
         return ResponseEntity.noContent().build();
     }
 
+    // ---------------------------------------------------------------
+    // UNLIKE COMMENT
     // DELETE /api/posts/comments/{commentId}/like
+    // ---------------------------------------------------------------
     @DeleteMapping("/comments/{commentId}/like")
     public ResponseEntity<Void> unlikeComment(@PathVariable Integer commentId) {
         postInteractionService.unlikeComment(commentId);

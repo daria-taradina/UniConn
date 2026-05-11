@@ -18,10 +18,10 @@ public class UserFollowController {
 		this.userFollowService = userFollowService;
 	}
 	
-	// -------------------------------------------------------------------------------
-    // FOLLOWERS POPUP - returns follower list (optionally filter with ?search=daria)
+	// --------------------------------------------------------------------------------
+    // FOLLOWERS POPUP - returns followers list (optionally filter with ?search=daria)
     // GET /api/users/{userId}/followers
-	// -------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------
 	@GetMapping("/{userId}/followers")
 	public ResponseEntity<List<UserSummaryDTO>> getFollowers(
 			@PathVariable Integer userId,
