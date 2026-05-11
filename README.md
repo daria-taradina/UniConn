@@ -27,6 +27,10 @@ Discover communities, spark conversations, and stay in the loop with everything 
 
 <img width="635" alt="UniConn System Architecture" src="https://github.com/user-attachments/assets/1cdbde73-acbc-4795-a028-3e72557e35a9" />
 
+## 🗺 Sitemap
+
+<img width="1527" alt="UniConn Sitemap" src="https://github.com/user-attachments/assets/db6fd94c-cd6f-4143-af0b-ddb7909c05b3" />
+
 ## ✨ Features
 
 | Feature | Description | 
