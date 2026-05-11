@@ -13,7 +13,7 @@ Discover communities, spark conversations, and stay in the loop with everything 
 
 | Layer | Technology |
 |---|---|
-| Backend | Java 21, Spring Boot 3.3.5, Spring Security, Hibernate/JPA |
+| Backend | Java 17, Spring Boot 3.3.5, Spring Security, Hibernate/JPA |
 | Database | MySQL (Railway managed) |
 | Frontend | HTML, CSS, JS (Thymeleaf) |
 | Hosting ☁️ | Railway (backend + DB), Cloudinary (media) |
@@ -31,7 +31,7 @@ Discover communities, spark conversations, and stay in the loop with everything 
 | **User Profiles** 👤 | View and edit profile, view posts made by user across the platform and posts they like | 
 | **User Connections** 👥 | Follow/unfollow users, follower and following counts & lists | 
 | **Communities** 🧩 | Browse, create, moderate, join communities with categories and tags | 
-| **Post Feed** 👣 | Personalized feed, trending tags, community and profile post views | 
+| **Feed** 👣 | Personalized feed, trending tags, community and profile post views | 
 | **Post Interactions** 💙💬 | Create posts with GIFs, like, comment, share link, tag filtering | 
 | **Image Upload** 📷 | Profile and community pictures via Cloudinary CDN | 
 | **Dark Mode** 🔅🌚 | System-aware dark/light theme toggle | 
