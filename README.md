@@ -7,7 +7,11 @@ Discover communities, spark conversations, and stay in the loop with everything 
 
 *Built with💙 by fellow Matadors — COMP 380/L · Spring 2026 · CSUN*
 
-
+> [!NOTE]
+> 🔐 UniConn Registration 
+> * `Username`: not null, up to 30 characters, lowercase (frontend automatically converts)
+> * `Email`: must end with `@my.csun.edu` 
+> * `Password`: must be 8+ characters, no spaces
 
 ## 💻 Tech Stack
 
@@ -30,7 +34,7 @@ Discover communities, spark conversations, and stay in the loop with everything 
 | **User Authentication** 🔐 | JWT-based login, registration, password reset via secret question |
 | **User Profiles** 👤 | View and edit profile, view posts made by user across the platform and posts they like | 
 | **User Connections** 👥 | Follow/unfollow users, follower and following counts & lists | 
-| **Communities** 🧩 | Browse, create, moderate, join communities with categories and tags | 
+| **Communities** ♣️ | Browse, create, moderate, join communities with categories and tags | 
 | **Feed** 👣 | Personalized feed, trending tags, community and profile post views | 
 | **Post Interactions** 💙💬 | Create posts with GIFs, like, comment, share link, tag filtering | 
 | **Image Upload** 📷 | Profile and community pictures via Cloudinary CDN | 
