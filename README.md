@@ -108,18 +108,18 @@ src/
       <a href="https://github.com/rachelhann">
         <img src="https://img.shields.io/badge/rachelhann-c9b8e8?style=for-the-badge&logo=github&logoColor=333" />
       </a>
-      <br /><br />
+      <br />
       <sub>Design Lead · Frontend · UI/UX</sub>
     </td>
     <td align="center" width="340">
       <a href="https://github.com/LilyF217">
         <img src="https://github.com/LilyF217.png?size=150" width="90" alt="Lily F" />
       </a>
-      <br /><br />
+      <br />
       <a href="https://github.com/LilyF217">
         <img src="https://img.shields.io/badge/LilyF217-9fc5e8?style=for-the-badge&logo=github&logoColor=333" />
       </a>
-      <br /><br />
+      <br />
       <sub>Security · Auth</sub>
     </td>
   </tr>
