@@ -29,7 +29,7 @@ Discover communities, spark conversations, and stay in the loop with everything 
 
 ## 🗺 Sitemap
 
-<img width="1527" alt="UniConn Sitemap" src="https://github.com/user-attachments/assets/db6fd94c-cd6f-4143-af0b-ddb7909c05b3" />
+<img width="1422" height="703" alt="UniConn Sitemap" src="https://github.com/user-attachments/assets/2552d407-b550-4cd6-9e75-ffc36ce33c91" />
 
 ## ✨ Features
 
