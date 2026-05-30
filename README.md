@@ -91,11 +91,11 @@ src/
   <tr>
     <td align="center" width="340">
       <a href="https://github.com/dariatarad">
-        <img src="https://github.com/dariatarad.png?size=150" width="90" alt="Daria Taradina" />
+        <img src="https://github.com/daria-taradina.png?size=150" width="90" alt="Daria Taradina" />
       </a>
       <br /><br />
-      <a href="https://github.com/dariatarad">
-        <img src="https://img.shields.io/badge/dariatarad-e8b4d0?style=for-the-badge&logo=github&logoColor=333" />
+      <a href="https://github.com/daria-taradina">
+        <img src="https://img.shields.io/badge/daria-taradina-e8b4d0?style=for-the-badge&logo=github&logoColor=333" />
       </a>
       <br />
       <sub>Tech Lead · Backend · Cloud & Deployment</sub>
